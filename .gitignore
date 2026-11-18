@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+
+# Video no usado en la web (grabación de pantalla vertical)
+public/video/video-001.mp4

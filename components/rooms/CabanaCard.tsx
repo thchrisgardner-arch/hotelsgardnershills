@@ -1,0 +1,99 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import type { Cabana } from "@/data/cabanas";
+
+const PENDIENTE = "Por confirmar";
+
+/**
+ * Ficha de cabaña (estructura de la referencia de alojamiento):
+ * galería en arco con flechas, nombre grande y, debajo, descripción + datos con íconos.
+ */
+export function CabanaCard({ cabana }: { cabana: Cabana }) {
+  const [i, setI] = useState(0);
+  const n = cabana.fotos.length;
+  const go = (d: number) => setI((v) => (v + d + n) % n);
+  const nombre = cabana.nombre ?? `Cabaña ${cabana.numero}`;
+
+  const icon = "h-[18px] w-[18px] shrink-0 text-carmesi";
+
+  return (
+    <article aria-labelledby={`${cabana.id}-t`} className="flex flex-col">
+      {/* Galería en arco */}
+      <div className="group relative aspect-[5/4] overflow-hidden rounded-t-[999px] bg-rosa" data-reveal-media>
+        <div data-media-inner className="absolute inset-0">
+          {cabana.fotos.map((src, k) => (
+            <Image
+              key={src + k}
+              src={src}
+              alt={`${nombre}, foto ${k + 1} de ${n}`}
+              fill
+              sizes="(min-width: 1024px) 46vw, 100vw"
+              className={`object-cover transition-opacity duration-700 ease-[var(--ease-soft)] ${k === i ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+        </div>
+        {n > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label={`Foto anterior de ${nombre}`}
+              className="absolute bottom-6 left-6 grid h-11 w-11 place-items-center rounded-full bg-crema/85 text-granate transition-colors hover:bg-granate hover:text-crema"
+            >
+              <svg viewBox="0 0 16 16" className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label={`Foto siguiente de ${nombre}`}
+              className="absolute bottom-6 right-6 grid h-11 w-11 place-items-center rounded-full bg-crema/85 text-granate transition-colors hover:bg-granate hover:text-crema"
+            >
+              <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
+            </button>
+            <div className="absolute bottom-9 left-1/2 flex -translate-x-1/2 gap-2" aria-hidden>
+              {cabana.fotos.map((_, k) => (
+                <span key={k} className={`h-1.5 rounded-full bg-crema transition-all duration-500 ${k === i ? "w-6" : "w-1.5 opacity-60"}`} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <h3
+        id={`${cabana.id}-t`}
+        data-reveal
+        className="mt-8 font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.4vw,3.4rem)] uppercase leading-none text-carmesi"
+      >
+        {nombre}
+      </h3>
+
+      <div data-reveal className="mt-6 grid gap-8 sm:grid-cols-[1fr_auto] sm:gap-12">
+        <div>
+          <p className="max-w-md text-granate/85">{cabana.descripcion}</p>
+          <a
+            href="#reservas"
+            className="mt-5 inline-block border-b border-carmesi/60 pb-1 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
+          >
+            Reservar esta cabaña
+          </a>
+        </div>
+        <ul className="space-y-3 text-[1rem] text-granate/80 sm:min-w-[190px]">
+          <li className="flex items-center gap-3">
+            <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+            <span><span className="sr-only">Tamaño: </span>{cabana.tamano ?? `Tamaño ${PENDIENTE.toLowerCase()}`}</span>
+          </li>
+          <li className="flex items-center gap-3">
+            <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-4 3.6-6 7-6s6.2 2 7 6" /></svg>
+            <span><span className="sr-only">Capacidad: </span>{cabana.capacidad ?? `Capacidad ${PENDIENTE.toLowerCase()}`}</span>
+          </li>
+          <li className="flex items-center gap-3">
+            <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M2.5 19.5 9 10l4 5 3-3.5 5.5 8" /><circle cx="17" cy="6" r="2" /></svg>
+            <span>{cabana.vista}</span>
+          </li>
+        </ul>
+      </div>
+    </article>
+  );
+}

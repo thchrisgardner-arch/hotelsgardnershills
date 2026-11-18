@@ -1,0 +1,141 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+@source "../lib";
+@source "../data";
+
+/* ─────────────────────────────────────────────
+   Gardners Hills — Design tokens
+   Colores medidos en las muestras del Manual de marca V2 (p. 59).
+   ───────────────────────────────────────────── */
+@theme {
+  --color-granate: #781006;
+  --color-carmesi: #d1111c;
+  --color-coral: #e84621;
+  --color-marfil: #ffe9cf;
+  --color-rosa: #f5aebc;
+  --color-verde: #005326;
+  --color-dorado: #f6a000;
+  --color-blanco: #ffffff;
+  /* Crema: tinte claro del marfil, fondo base de los wireframes y el XD */
+  --color-crema: #fff7ec;
+
+  /* Tipografía: Palo Compressed Medium → provisional Instrument Serif.
+     Al recibir Palo, reemplazar --font-display en app/layout.tsx. */
+  --font-display: var(--font-title), "Times New Roman", serif;
+  --font-sans: "Helvetica Neue", Helvetica, var(--font-body-fallback), Arial, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --header-h: 84px;
+}
+
+html {
+  background: var(--color-crema);
+  color: var(--color-granate);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  /* 400: con peso 500 "Helvetica Neue" carga una variante condensada en Windows */
+  font-weight: 400;
+  /* Descripciones a 18px / 1.4 (referencia: Grand Hotel Miramare) */
+  font-size: 1.125rem;
+  line-height: 1.4;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-carmesi);
+  color: var(--color-marfil);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Tipografía editorial ── */
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+}
+.t-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.t-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Línea de título revelable: cada línea va en .line > span */
+.line {
+  display: block;
+  overflow: hidden;
+  /* holgura para tildes (Ñ, Í, Ú) y descendentes con interlineado cerrado */
+  padding-top: 0.14em;
+  margin-top: -0.14em;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line > span {
+  display: block;
+}
+
+/* ── Logo como máscara (respeta la forma original, color de paleta) ── */
+.logo-mask {
+  display: block;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* ── Foco visible accesible ── */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* ── Movimiento reducido ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Inputs de fecha: icono en color de marca */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+  cursor: pointer;
+}
