@@ -1,22 +1,23 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/data/site";
+import { reservas } from "@/data/reservas";
+import { RangeCalendar } from "./RangeCalendar";
 
 type Panel = "fechas" | "quien" | null;
+type Cabana = { adultos: number; ninos: number };
 
 /**
  * Barra de reservas fija en la parte baja (Cuándo · Quién · Promoción · Buscar).
+ * - Cuándo: calendario de dos meses con selección de rango.
+ * - Quién: huéspedes por cabaña, con opción de añadir cabañas.
  * No simula disponibilidad: «Buscar» envía la solicitud por WhatsApp.
- * Al integrar el motor de reservas, sustituir `buscar` por su URL de búsqueda.
  */
 export function BookingBar() {
-  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const [llegada, setLlegada] = useState("");
   const [salida, setSalida] = useState("");
-  const [adultos, setAdultos] = useState(2);
-  const [ninos, setNinos] = useState(0);
-  const [habitaciones, setHabitaciones] = useState(1);
+  const [cabanas, setCabanas] = useState<Cabana[]>([{ adultos: 2, ninos: 0 }]);
   const [codigo, setCodigo] = useState("");
   const [panel, setPanel] = useState<Panel>(null);
   const [error, setError] = useState<string | null>(null);
@@ -36,12 +37,26 @@ export function BookingBar() {
   }, []);
 
   const corto = (d: string) =>
-    new Date(d + "T12:00:00").toLocaleDateString("es-CO", { day: "numeric", month: "short" }).replace(".", "");
+    new Date(d + "T12:00:00").toLocaleDateString("es-CO", { day: "numeric", month: "short" }).replace(".", "").replace(" de ", " ");
   const largo = (d: string) =>
-    new Date(d + "T12:00:00").toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" });
+    new Date(d + "T12:00:00").toLocaleDateString("es-CO", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const noches = llegada && salida ? Math.round((+new Date(salida) - +new Date(llegada)) / 86400000) : 0;
+
+  const totalAdultos = cabanas.reduce((s, c) => s + c.adultos, 0);
+  const totalNinos = cabanas.reduce((s, c) => s + c.ninos, 0);
+  const plural = (n: number, a: string, b: string) => `${n} ${n === 1 ? a : b}`;
 
   const fechasLabel = llegada && salida ? `${corto(llegada)} — ${corto(salida)}` : llegada ? `${corto(llegada)} — Salida` : "Entrada — Salida";
-  const quienLabel = `${adultos} ${adultos === 1 ? "adulto" : "adultos"}${ninos ? ` · ${ninos} ${ninos === 1 ? "niño" : "niños"}` : ""} · ${habitaciones} ${habitaciones === 1 ? "cabaña" : "cabañas"}`;
+  const quienLabel = [
+    plural(totalAdultos, "adulto", "adultos"),
+    totalNinos ? plural(totalNinos, "niño", "niños") : null,
+    plural(cabanas.length, "cabaña", "cabañas"),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  const setCab = (i: number, k: keyof Cabana, v: number) =>
+    setCabanas((cs) => cs.map((c, j) => (j === i ? { ...c, [k]: v } : c)));
 
   function buscar() {
     setError(null);
@@ -49,16 +64,11 @@ export function BookingBar() {
       setPanel("fechas");
       return setError("Elige tus fechas de entrada y salida.");
     }
-    if (salida <= llegada) {
-      setPanel("fechas");
-      return setError("La salida debe ser posterior a la entrada.");
-    }
     const msg = [
       "Hola, Gardners Hills. Quisiera consultar disponibilidad:",
       `• Entrada: ${largo(llegada)}`,
-      `• Salida: ${largo(salida)}`,
-      `• Huéspedes: ${adultos} adultos${ninos ? `, ${ninos} niños` : ""}`,
-      `• Cabañas: ${habitaciones}`,
+      `• Salida: ${largo(salida)} (${plural(noches, "noche", "noches")})`,
+      ...cabanas.map((c, i) => `• Cabaña ${i + 1}: ${plural(c.adultos, "adulto", "adultos")}${c.ninos ? `, ${plural(c.ninos, "niño", "niños")}` : ""}`),
       codigo ? `• Código de promoción: ${codigo}` : "",
     ]
       .filter(Boolean)
@@ -67,59 +77,98 @@ export function BookingBar() {
     setPanel(null);
   }
 
-  const cell = "flex items-center gap-3.5 px-6 py-3 text-left transition-colors hover:bg-granate/[0.04] focus-visible:bg-granate/[0.06]";
+  const panelBox = "absolute bottom-full mb-3 rounded-md border border-granate/12 bg-crema shadow-[0_18px_50px_-18px_rgba(120,16,6,0.45)]";
+  const cell = "flex items-center gap-3.5 px-6 py-3 text-left transition-colors hover:bg-granate/[0.04]";
   const small = "block text-[0.78rem] leading-tight text-granate/60";
-  const value = "block whitespace-nowrap text-[1.125rem] leading-snug text-granate";
+  const value = "block whitespace-nowrap text-[1.05rem] leading-snug text-granate";
+  const step =
+    "grid h-9 w-9 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
 
   return (
-    <div
-      ref={root}
-      className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 md:block"
-      role="search"
-      aria-label="Buscar disponibilidad"
-    >
-      {/* Paneles */}
+    <div ref={root} className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 md:block" role="search" aria-label="Buscar disponibilidad">
+      {/* ── Calendario ── */}
       {panel === "fechas" && (
-        <div className="absolute bottom-full left-0 mb-3 w-[380px] rounded-md border border-granate/10 bg-blanco p-6 shadow-[0_12px_40px_-12px_rgba(120,16,6,0.35)]">
-          <p className="mb-4 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-granate/60">Fechas de estancia</p>
-          <div className="grid grid-cols-2 gap-4">
-            <label className="block">
-              <span className={small}>Entrada</span>
-              <input type="date" min={today} value={llegada} onChange={(e) => { setLlegada(e.target.value); if (salida && e.target.value >= salida) setSalida(""); }} className="mt-1 w-full border-b border-granate/30 bg-transparent py-1.5 text-granate outline-none [color-scheme:light] focus:border-granate" />
-            </label>
-            <label className="block">
-              <span className={small}>Salida</span>
-              <input type="date" min={llegada || today} value={salida} onChange={(e) => setSalida(e.target.value)} className="mt-1 w-full border-b border-granate/30 bg-transparent py-1.5 text-granate outline-none [color-scheme:light] focus:border-granate" />
-            </label>
+        <div role="dialog" aria-label="Elige tus fechas" className={`${panelBox} left-1/2 w-[min(880px,calc(100vw-2rem))] -translate-x-1/2 px-8 pb-6 pt-7`}>
+          <RangeCalendar
+            llegada={llegada}
+            salida={salida}
+            onChange={(a, b) => {
+              setLlegada(a);
+              setSalida(b);
+              setError(null);
+            }}
+            onComplete={() => setTimeout(() => setPanel("quien"), 250)}
+          />
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-granate/12 pt-5 text-[0.9rem] text-granate/70">
+            <p className="flex items-center gap-2">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8v.5" /></svg>
+              {reservas.nota}
+            </p>
+            <p className="text-granate" aria-live="polite">
+              {error ? <span className="text-carmesi">{error}</span> : noches ? plural(noches, "noche", "noches") : llegada ? "Elige la fecha de salida" : "Elige la fecha de entrada"}
+            </p>
           </div>
-          {error && <p className="mt-4 text-sm text-carmesi">{error}</p>}
-          <button type="button" onClick={() => setPanel(null)} className="mt-5 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-granate underline underline-offset-4">
-            Listo
-          </button>
-        </div>
-      )}
-      {panel === "quien" && (
-        <div className="absolute bottom-full left-[200px] mb-3 w-[320px] rounded-md border border-granate/10 bg-blanco p-6 shadow-[0_12px_40px_-12px_rgba(120,16,6,0.35)]">
-          {[
-            { label: "Adultos", v: adultos, set: setAdultos, min: 1 },
-            { label: "Niños", v: ninos, set: setNinos, min: 0 },
-            { label: "Cabañas", v: habitaciones, set: setHabitaciones, min: 1 },
-          ].map((r) => (
-            <div key={r.label} className="flex items-center justify-between border-b border-granate/10 py-3 last:border-0">
-              <span className="text-granate">{r.label}</span>
-              <div className="flex items-center gap-4">
-                <button type="button" aria-label={`Quitar ${r.label.toLowerCase()}`} disabled={r.v <= r.min} onClick={() => r.set(r.v - 1)} className="grid h-8 w-8 place-items-center rounded-full border border-granate/40 text-granate disabled:opacity-30">−</button>
-                <span className="w-4 text-center text-granate" aria-live="polite">{r.v}</span>
-                <button type="button" aria-label={`Añadir ${r.label.toLowerCase()}`} disabled={r.v >= 12} onClick={() => r.set(r.v + 1)} className="grid h-8 w-8 place-items-center rounded-full border border-granate/40 text-granate disabled:opacity-30">+</button>
-              </div>
-            </div>
-          ))}
         </div>
       )}
 
-      {/* Barra */}
-      <div className="flex items-stretch rounded-md border border-granate/10 bg-blanco p-2 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.35)]">
-        <button type="button" onClick={() => setPanel(panel === "fechas" ? null : "fechas")} aria-expanded={panel === "fechas"} className={cell}>
+      {/* ── Huéspedes por cabaña ── */}
+      {panel === "quien" && (
+        <div role="dialog" aria-label="Huéspedes" className={`${panelBox} left-[190px] w-[380px] overflow-hidden`}>
+          <div className="max-h-[56vh] overflow-y-auto">
+            {cabanas.map((c, i) => (
+              <div key={i} className="border-b border-granate/12 px-6 pb-5 pt-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="font-[family-name:var(--font-display)] text-[1.5rem] leading-none text-granate">
+                    Cabaña <span className="t-italic">{i + 1}</span>
+                  </p>
+                  {cabanas.length > 1 && (
+                    <button type="button" onClick={() => setCabanas((cs) => cs.filter((_, j) => j !== i))} className="text-[0.7rem] font-medium uppercase tracking-[0.14em] text-granate/60 underline underline-offset-4 hover:text-carmesi">
+                      Quitar
+                    </button>
+                  )}
+                </div>
+                {([
+                  { k: "adultos", label: "Adultos", sub: reservas.edadAdultos, min: 1, max: reservas.maxAdultosPorCabana },
+                  { k: "ninos", label: "Niños", sub: reservas.edadNinos, min: 0, max: reservas.maxNinosPorCabana },
+                ] as const).map((r) => (
+                  <div key={r.k} className="flex items-center justify-between py-2.5">
+                    <div>
+                      <p className="text-granate">{r.label}</p>
+                      {r.sub && <p className="text-[0.85rem] text-granate/60">{r.sub}</p>}
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <button type="button" className={step} disabled={c[r.k] <= r.min} onClick={() => setCab(i, r.k, c[r.k] - 1)} aria-label={`Quitar ${r.label.toLowerCase()} en cabaña ${i + 1}`}>
+                        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10" /></svg>
+                      </button>
+                      <span className="w-5 text-center text-[1.1rem] text-granate" aria-live="polite">{c[r.k]}</span>
+                      <button type="button" className={step} disabled={c[r.k] >= r.max} onClick={() => setCab(i, r.k, c[r.k] + 1)} aria-label={`Añadir ${r.label.toLowerCase()} en cabaña ${i + 1}`}>
+                        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10M8 3v10" /></svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="space-y-3 p-5">
+            <button
+              type="button"
+              disabled={cabanas.length >= reservas.maxCabanas}
+              onClick={() => setCabanas((cs) => [...cs, { adultos: 2, ninos: 0 }])}
+              className="w-full rounded-[4px] border border-granate/60 py-3 text-[0.95rem] text-granate transition-colors hover:bg-granate hover:text-crema disabled:opacity-40"
+            >
+              Añadir cabaña
+            </button>
+            <button type="button" onClick={() => setPanel(null)} className="w-full py-1 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-granate/70 hover:text-carmesi">
+              Listo
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Barra ── */}
+      <div className="flex items-stretch rounded-md border border-granate/10 bg-crema p-2 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.35)]">
+        <button type="button" onClick={() => setPanel(panel === "fechas" ? null : "fechas")} aria-expanded={panel === "fechas"} aria-haspopup="dialog" className={`${cell} ${panel === "fechas" ? "bg-granate/[0.06]" : ""}`}>
           <svg viewBox="0 0 24 24" className="h-6 w-6 text-granate" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><rect x="3.5" y="5" width="17" height="15" rx="1.5" /><path d="M3.5 9.5h17M8 3v4M16 3v4" /></svg>
           <span>
             <span className={small}>Cuándo</span>
@@ -127,7 +176,7 @@ export function BookingBar() {
           </span>
         </button>
         <span aria-hidden className="my-2 w-px bg-granate/12" />
-        <button type="button" onClick={() => setPanel(panel === "quien" ? null : "quien")} aria-expanded={panel === "quien"} className={cell}>
+        <button type="button" onClick={() => setPanel(panel === "quien" ? null : "quien")} aria-expanded={panel === "quien"} aria-haspopup="dialog" className={`${cell} ${panel === "quien" ? "bg-granate/[0.06]" : ""}`}>
           <svg viewBox="0 0 24 24" className="h-6 w-6 text-granate" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><circle cx="9" cy="8.5" r="3.2" /><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5" /><circle cx="16.8" cy="9.5" r="2.5" /><path d="M16.5 14c2.2.1 3.6 1.6 4 4" /></svg>
           <span>
             <span className={small}>Quién</span>
@@ -142,17 +191,14 @@ export function BookingBar() {
             <input
               value={codigo}
               onChange={(e) => setCodigo(e.target.value)}
+              onFocus={() => setPanel(null)}
               placeholder="Código"
               aria-label="Código de promoción"
-              className="block w-28 bg-transparent text-[1.125rem] leading-snug text-granate outline-none placeholder:text-granate/45"
+              className="block w-28 bg-transparent text-[1.05rem] leading-snug text-granate outline-none placeholder:text-granate/45"
             />
           </span>
         </label>
-        <button
-          type="button"
-          onClick={buscar}
-          className="ml-2 rounded-[4px] bg-granate px-8 text-[1.125rem] font-medium text-crema transition-colors duration-500 hover:bg-carmesi active:bg-carmesi/90"
-        >
+        <button type="button" onClick={buscar} className="ml-2 rounded-[4px] bg-granate px-8 text-[1rem] font-medium text-crema transition-colors duration-500 hover:bg-carmesi active:bg-carmesi/90">
           Buscar
         </button>
       </div>
