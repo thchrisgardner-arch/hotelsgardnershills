@@ -118,6 +118,11 @@ html.lenis body {
   mask-position: center;
 }
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ── Foco visible accesible ── */
 :where(a, button, input, select, textarea):focus-visible {
   outline: 2px solid currentColor;
