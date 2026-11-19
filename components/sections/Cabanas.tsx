@@ -1,4 +1,4 @@
-import { cabanas } from "@/data/cabanas";
+import { cabanas, totalCabanas } from "@/data/cabanas";
 import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { CabanaCard } from "@/components/rooms/CabanaCard";
@@ -25,7 +25,7 @@ export function Cabanas() {
           Abre el ventanal y deja que la luz y el viento de la sierra entren contigo.
         </p>
         <p data-reveal className="mx-auto mt-6 max-w-xl text-granate/85">
-          Cada cabaña es más que un refugio: es una invitación a detenerse, respirar y encontrar equilibrio. Un diseño
+          {totalCabanas} cabañas en dos categorías, Medium y Premium, de arquitectura blanca y madera. Un diseño
           minimalista y funcional que dialoga con el entorno.
         </p>
       </div>
@@ -49,7 +49,7 @@ export function Cabanas() {
         </div>
         <ul className="grid gap-x-8 gap-y-24 lg:grid-cols-2">
           {cabanas.map((c) => (
-            <li key={c.id}>
+            <li key={c.slug}>
               <CabanaCard cabana={c} />
             </li>
           ))}

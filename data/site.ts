@@ -33,15 +33,22 @@ export const site = {
  * el contenido es el de Gardners Hills (secciones del wireframe V2).
  */
 export const menuPrincipal = [
-  { label: "Inicio", href: "/" },
-  { label: "Cabañas", href: "/cabanas" },
-  { label: "Servicios", href: "/servicios" },
-  { label: "Gastronomía & Bar", href: "/gastronomia" },
-  { label: "Actividades", href: "/actividades" },
-  { label: "Galería", href: "/galeria" },
-  { label: "Reservas", href: "/reservas" },
-  { label: "Contacto", href: "/contacto" },
+  { label: "Inicio", en: "Home", href: "/" },
+  { label: "Cabañas", en: "Cabins", href: "/cabanas" },
+  { label: "Servicios", en: "Services", href: "/servicios" },
+  { label: "Gastronomía & Bar", en: "Food & Bar", href: "/gastronomia" },
+  { label: "Actividades", en: "Activities", href: "/actividades" },
+  { label: "Galería", en: "Gallery", href: "/galeria" },
+  { label: "Reservas", en: "Bookings", href: "/reservas" },
+  { label: "Contacto", en: "Contact", href: "/contacto" },
 ];
+
+/** Páginas legales (footer) */
+export const legales = [
+  { clave: "terminos", href: "/terminos" },
+  { clave: "privacidad", href: "/privacidad" },
+  { clave: "cookies", href: "/cookies" },
+] as const;
 export const menuSecundario = [
   { label: "WhatsApp +57 300 145 8356", href: "https://wa.me/573001458356" },
   { label: "hotel@gardnerhills.co", href: "mailto:hotel@gardnerhills.co" },

@@ -1,33 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { Lines } from "@/components/ui/Lines";
 import { Pill } from "@/components/ui/Pill";
-import { site } from "@/data/site";
+import { site, menuPrincipal, legales } from "@/data/site";
+import { useLang, type Clave } from "@/lib/i18n";
 
-const cols = [
-  {
-    titulo: "Hotel",
-    links: [
-      { label: "Inicio", href: "/" },
-      { label: "Cabañas", href: "/cabanas" },
-      { label: "Servicios", href: "/servicios" },
-      { label: "Gastronomía & Bar", href: "/gastronomia" },
-    ],
-  },
-  {
-    titulo: "Explorar",
-    links: [
-      { label: "Actividades", href: "/actividades" },
-      { label: "Galería", href: "/galeria" },
-      { label: "Reservas", href: "/reservas" },
-      { label: "Contacto", href: "/contacto" },
-    ],
-  },
+const porRuta = (hrefs: string[]) => menuPrincipal.filter((m) => hrefs.includes(m.href));
+const cols: { titulo: Clave; links: typeof menuPrincipal }[] = [
+  { titulo: "hotel", links: porRuta(["/", "/cabanas", "/servicios", "/gastronomia"]) },
+  { titulo: "explorar", links: porRuta(["/actividades", "/galeria", "/reservas", "/contacto"]) },
 ];
 
 /** Footer del wireframe / XD: «Una experiencia que nunca olvidarás» + logo a todo el ancho */
 export function Footer() {
   const { contact, instagram, facebook } = site;
+  const { lang, t } = useLang();
   return (
     <footer id="contacto" className="border-t border-granate/15 px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24">
       <div className="grid gap-14 lg:grid-cols-12">
@@ -35,20 +24,20 @@ export function Footer() {
           <Lines
             as="p"
             className="font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.6vw,4.6rem)] leading-[1]"
-            lines={["Una experiencia", <span key="i" className="pl-[1.2em]">que <span className="t-italic">nunca olvidarás</span></span>]}
+            lines={[t("experiencia1"), <span key="i" className="pl-[1.2em]">{t("experiencia2a")} <span className="t-italic">{t("experiencia2b")}</span></span>]}
           />
           <div data-reveal className="mt-10">
-            <Pill href="/reservas">Reservar ahora</Pill>
+            <Pill href="/reservas">{t("reservarAhora")}</Pill>
           </div>
         </div>
 
         {cols.map((c) => (
           <nav key={c.titulo} aria-label={c.titulo} className="lg:col-span-2">
-            <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{c.titulo}</h2>
+            <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{t(c.titulo)}</h2>
             <ul className="space-y-2.5 text-[1.2rem]">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition-colors hover:text-carmesi">{l.label}</Link>
+                  <Link href={l.href} className="transition-colors hover:text-carmesi">{lang === "en" ? l.en : l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -56,11 +45,11 @@ export function Footer() {
         ))}
 
         <div className="lg:col-span-3">
-          <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">Contacto</h2>
+          <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{t("contacto")}</h2>
           <ul className="space-y-2.5 text-[1.2rem]">
             <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-carmesi">WhatsApp {contact.whatsappLabel}</a></li>
             <li><a href={`mailto:${contact.email}`} className="hover:text-carmesi">{contact.email}</a></li>
-            <li className="text-granate/75">Villanueva, La Guajira · Colombia</li>
+            <li className="text-granate/75">{t("ubicacion")}</li>
           </ul>
         </div>
       </div>
@@ -72,8 +61,9 @@ export function Footer() {
 
       <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[0.84rem] font-normal uppercase tracking-[0.18em] text-granate/70">
         <div className="flex gap-8">
-          <span>Términos y condiciones</span>
-          <span>Política de privacidad</span>
+          {legales.map((l) => (
+            <Link key={l.href} href={l.href} className="transition-colors hover:text-carmesi">{t(l.clave)}</Link>
+          ))}
         </div>
         <div className="flex items-center gap-5">
           <a href={instagram ?? undefined} aria-label="Instagram (por confirmar)" className={instagram ? "hover:text-carmesi" : "pointer-events-none opacity-50"}>

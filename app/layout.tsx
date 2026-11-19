@@ -15,6 +15,9 @@ import { MobileBookBar } from "@/components/navigation/MobileBookBar";
 import { Footer } from "@/components/layout/Footer";
 import { BookingBar } from "@/components/booking/BookingBar";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { CookieBanner } from "@/components/ui/CookieBanner";
+import { LangProvider } from "@/lib/i18n";
+import { JsonLd } from "@/components/layout/JsonLd";
 
 const description =
   "Hotel boutique de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene.";
@@ -51,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <body>
+        <LangProvider>
         <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-crema focus:p-3">
           Saltar al contenido
         </a>
@@ -60,6 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileBookBar />
         <BookingBar />
         <WhatsAppButton />
+        <CookieBanner />
+        <JsonLd />
+        </LangProvider>
       </body>
     </html>
   );

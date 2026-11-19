@@ -33,13 +33,17 @@ Para arrancarlo: `npm run dev` → http://localhost:5206 (preview "gardners-hill
 - [ ] Dominio definitivo (se usa `gardnerhills.co`, deducido del correo)
 - [ ] Fotos de spa, gym, interiores y actividades
 - [ ] Spa y gym: tratamientos, horarios y equipamiento
-- [ ] Cabañas: nombres, capacidad, características
+- [ ] Cabañas: validar los datos provisionales de `data/cabanas.ts` (4 Medium de 28 m² y 6 Premium de 36 m² + patio de 14 m² con tina; camas, capacidad y dotación inventadas con autorización, tomando como referencia las habitaciones de OSH)
 - [ ] Experiencias y actividades confirmadas
 - [ ] Logo en SVG; archivo de Palo Compressed Medium y licencias web de las fuentes
 - [ ] Motor de reservas. Por ahora el formulario abre WhatsApp con la solicitud ya escrita
-- [ ] Textos legales
+- [ ] Textos legales: borrador en `data/legales.ts`. Faltan razón social, NIT, RNT, dirección, horarios de check-in/out y política de cancelación. Que lo revise un abogado
+- [ ] ID de Google Analytics (`NEXT_PUBLIC_GA_ID` en Vercel). Solo se carga si el visitante acepta cookies
 
 ## Páginas (2026-11-19)
+
+Sitio multipágina: `/`, `/cabanas`, `/cabanas/medium`, `/cabanas/premium`, `/servicios`, `/gastronomia`, `/actividades`, `/galeria`, `/reservas`, `/contacto`, `/terminos`, `/privacidad`, `/cookies`.
+Cabecera (con selector ES / EN), footer, barra de reservas, WhatsApp y aviso de cookies son comunes (en `app/layout.tsx`).
 
 Sitio multipágina: `/`, `/la-casa`, `/cabanas`, `/servicios`, `/actividades`, `/galeria`, `/reservas`, `/contacto`.
 Cabecera, footer, barra de reservas y WhatsApp son comunes (en `app/layout.tsx`).
@@ -50,5 +54,8 @@ Cabecera, footer, barra de reservas y WhatsApp son comunes (en `app/layout.tsx`)
 
 ## Siguiente en desarrollo
 
-- [ ] Revisar móvil y tablet de todas las páginas
-- [ ] Datos estructurados `LodgingBusiness` e imagen Open Graph
+- [ ] Revisar móvil y tablet de todas las páginas (en pausa: por ahora solo escritorio)
+- [ ] Inglés: el selector ya traduce cabecera, menú, footer y aviso de cookies; falta el contenido de cada página y la barra de reservas
+- [ ] Comprimir `public/video/hero-banner.mp4` (11 MB) a unos 3–4 MB; requiere ffmpeg
+- [ ] Diario/blog con SEO local
+- [x] Datos estructurados (Hotel) e imagen Open Graph

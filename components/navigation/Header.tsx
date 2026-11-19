@@ -9,6 +9,7 @@ import { Logo } from "@/components/ui/Logo";
 import { Pill } from "@/components/ui/Pill";
 import { menuPrincipal, menuSecundario } from "@/data/site";
 import { motion } from "@/lib/motion";
+import { useLang } from "@/lib/i18n";
 
 /**
  * Navegación inspirada en Grand Hotel Miramare:
@@ -22,6 +23,7 @@ export function Header() {
   const menu = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
+  const { lang, setLang, t } = useLang();
 
   // Claro sobre la cabecera oscura de cada página ([data-header-light]); sólido al pasarla.
   // Páginas sin cabecera oscura: sólido desde el inicio.
@@ -83,7 +85,7 @@ export function Header() {
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="menu-principal"
-            aria-label="Abrir menú"
+            aria-label={t("abrirMenu")}
             className="group flex h-11 w-12 flex-col justify-center gap-[7px] justify-self-start"
           >
             <span className="h-px w-11 bg-current" />
@@ -98,13 +100,31 @@ export function Header() {
             </span>
           </Link>
 
-          <Link
-            href="/reservas"
-            className="group relative justify-self-end text-[0.92rem] font-normal uppercase tracking-[0.16em]"
-          >
-            Reservar
-            <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-soft)] group-hover:origin-left group-hover:scale-x-100" />
-          </Link>
+          <div className="flex items-center gap-7 justify-self-end">
+            {/* Cambio de idioma */}
+            <div role="group" aria-label={t("idioma")} className="flex items-center gap-1.5 text-[0.92rem] font-normal uppercase tracking-[0.16em]">
+              {(["es", "en"] as const).map((l, k) => (
+                <span key={l} className="flex items-center gap-1.5">
+                  {k > 0 && <span aria-hidden className="opacity-40">/</span>}
+                  <button
+                    type="button"
+                    onClick={() => setLang(l)}
+                    aria-pressed={lang === l}
+                    className={`transition-opacity ${lang === l ? "opacity-100" : "opacity-45 hover:opacity-100"}`}
+                  >
+                    {l}
+                  </button>
+                </span>
+              ))}
+            </div>
+            <Link
+              href="/reservas"
+              className="group relative text-[0.92rem] font-normal uppercase tracking-[0.16em]"
+            >
+              {t("reservar")}
+              <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-soft)] group-hover:origin-left group-hover:scale-x-100" />
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -124,7 +144,7 @@ export function Header() {
             data-m-close
             type="button"
             onClick={() => setOpen(false)}
-            aria-label="Cerrar menú"
+            aria-label={t("cerrarMenu")}
             className="relative h-11 w-11 justify-self-start"
           >
             <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current" />
@@ -150,7 +170,7 @@ export function Header() {
                         pathname === n.href ? "italic text-carmesi" : "text-granate"
                       }`}
                     >
-                      <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{n.label}</span>
+                      <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{lang === "en" ? n.en : n.label}</span>
                     </Link>
                   </li>
                 ))}
@@ -172,12 +192,12 @@ export function Header() {
               <Image src="/images/cabanas/cabana-arco.jpg" alt="Cabaña de Gardners Hills frente a la sierra" fill sizes="460px" className="object-cover" />
             </div>
             <p className="t-italic mt-8 text-[clamp(1.8rem,2.6vw,2.6rem)] leading-[1.05] text-granate">
-              Un refugio donde
+              {t("frase1")}
               <br />
-              el tiempo se detiene.
+              {t("frase2")}
             </p>
             <div className="mt-7">
-              <Pill href="/reservas">Reservar tu estancia</Pill>
+              <Pill href="/reservas">{t("reservarEstancia")}</Pill>
             </div>
           </div>
         </div>
