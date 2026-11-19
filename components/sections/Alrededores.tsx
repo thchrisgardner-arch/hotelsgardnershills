@@ -20,7 +20,7 @@ export function Alrededores() {
             prisa.
           </p>
           <div data-reveal className="mt-8">
-            <Pill href="#reservas">Reserva más</Pill>
+            <Pill href="/actividades">Ver actividades</Pill>
           </div>
         </div>
       </div>

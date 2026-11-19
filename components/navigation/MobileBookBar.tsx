@@ -34,7 +34,7 @@ export function MobileBookBar() {
       }`}
     >
       <a
-        href="#reservas"
+        href="/reservas"
         tabIndex={show ? 0 : -1}
         aria-hidden={!show}
         className="t-label flex w-full items-center justify-between bg-carmesi px-5 py-4 text-marfil"

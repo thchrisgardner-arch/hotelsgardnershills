@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * Hero del XD: video oficial a pantalla completa, titular centrado
  * («Tu sueño en Gardners Hills / Quédate con nosotros») y accesos inferiores.
@@ -5,7 +7,7 @@
  */
 export function Hero() {
   return (
-    <section id="inicio" aria-labelledby="hero-title" className="relative h-[100svh] min-h-[620px] overflow-hidden bg-granate text-marfil">
+    <section id="inicio" data-header-light aria-labelledby="hero-title" className="relative h-[100svh] min-h-[620px] overflow-hidden bg-granate text-marfil">
       <div data-hero-media className="absolute inset-0" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>
         <div data-media-inner className="absolute inset-0">
           <video
@@ -40,9 +42,9 @@ export function Hero() {
         </h1>
 
         <nav aria-label="Accesos" data-hero-fade className="mt-16 grid w-full grid-cols-3 text-[0.72rem] font-medium uppercase tracking-[0.24em]">
-          <a href="#casa" className="justify-self-start hover:text-rosa transition-colors">Acerca de.</a>
-          <a href="#cabanas" className="justify-self-center hover:text-rosa transition-colors">Cabañas.</a>
-          <a href="#reservas" className="justify-self-end hover:text-rosa transition-colors">Reserva.</a>
+          <Link href="/la-casa" className="justify-self-start hover:text-rosa transition-colors">Acerca de.</Link>
+          <Link href="/cabanas" className="justify-self-center hover:text-rosa transition-colors">Cabañas.</Link>
+          <Link href="/reservas" className="justify-self-end hover:text-rosa transition-colors">Reserva.</Link>
         </nav>
       </div>
     </section>

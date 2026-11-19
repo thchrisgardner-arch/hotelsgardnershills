@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { Lines } from "@/components/ui/Lines";
 import { Pill } from "@/components/ui/Pill";
@@ -7,19 +8,19 @@ const cols = [
   {
     titulo: "Hotel",
     links: [
-      { label: "La casa", href: "#casa" },
-      { label: "Cabañas", href: "#cabanas" },
-      { label: "Esencia", href: "#esencia" },
-      { label: "Reservar", href: "#reservas" },
+      { label: "Inicio", href: "/" },
+      { label: "La casa", href: "/la-casa" },
+      { label: "Cabañas", href: "/cabanas" },
+      { label: "Servicios", href: "/servicios" },
     ],
   },
   {
     titulo: "Explorar",
     links: [
-      { label: "Servicios", href: "#servicios" },
-      { label: "Entorno", href: "#entorno" },
-      { label: "Actividades", href: "#actividades" },
-      { label: "Galería", href: "#galeria" },
+      { label: "Actividades", href: "/actividades" },
+      { label: "Galería", href: "/galeria" },
+      { label: "Reservas", href: "/reservas" },
+      { label: "Contacto", href: "/contacto" },
     ],
   },
 ];
@@ -37,7 +38,7 @@ export function Footer() {
             lines={["Una experiencia", <span key="i" className="pl-[1.2em]">que <span className="t-italic">nunca olvidarás</span></span>]}
           />
           <div data-reveal className="mt-10">
-            <Pill href="#reservas">Reservar ahora</Pill>
+            <Pill href="/reservas">Reservar ahora</Pill>
           </div>
         </div>
 
@@ -47,7 +48,7 @@ export function Footer() {
             <ul className="space-y-2.5 text-[1.125rem]">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="transition-colors hover:text-carmesi">{l.label}</a>
+                  <Link href={l.href} className="transition-colors hover:text-carmesi">{l.label}</Link>
                 </li>
               ))}
             </ul>

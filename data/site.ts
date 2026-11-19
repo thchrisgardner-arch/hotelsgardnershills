@@ -28,40 +28,21 @@ export const site = {
   url: "https://gardnerhills.co", // dominio inferido del correo; confirmar
 };
 
-/** Navegación repartida a ambos lados del logo (wireframe V2) */
-export const navLeft = [
-  { label: "La casa", href: "#casa" },
-  { label: "Esencia", href: "#esencia" },
-  { label: "Servicios", href: "#servicios" },
-];
-export const navRight = [
-  { label: "Entorno", href: "#entorno" },
-  { label: "Actividades", href: "#actividades" },
-  { label: "Galería", href: "#galeria" },
-];
 /**
  * Menú a pantalla completa. Estructura inspirada en Grand Hotel Miramare;
  * el contenido es el de Gardners Hills (secciones del wireframe V2).
  */
 export const menuPrincipal = [
-  { label: "La casa", href: "#casa" },
-  { label: "Cabañas", href: "#cabanas" },
-  { label: "Esencia", href: "#esencia" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Entorno", href: "#entorno" },
-  { label: "Actividades", href: "#actividades" },
-  { label: "Galería", href: "#galeria" },
+  { label: "Inicio", href: "/" },
+  { label: "La casa", href: "/la-casa" },
+  { label: "Cabañas", href: "/cabanas" },
+  { label: "Servicios", href: "/servicios" },
+  { label: "Actividades", href: "/actividades" },
+  { label: "Galería", href: "/galeria" },
+  { label: "Reservas", href: "/reservas" },
+  { label: "Contacto", href: "/contacto" },
 ];
 export const menuSecundario = [
   { label: "WhatsApp +57 300 145 8356", href: "https://wa.me/573001458356" },
   { label: "hotel@gardnerhills.co", href: "mailto:hotel@gardnerhills.co" },
-];
-
-export const nav = [
-  { label: "Inicio", href: "#inicio" },
-  ...navLeft,
-  { label: "Cabañas", href: "#cabanas" },
-  ...navRight,
-  { label: "Reservas", href: "#reservas" },
-  { label: "Contacto", href: "#contacto" },
 ];

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/Logo";
 import { Pill } from "@/components/ui/Pill";
 import { menuPrincipal, menuSecundario } from "@/data/site";
@@ -19,12 +21,27 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const menu = useRef<HTMLDivElement>(null);
 
+  const pathname = usePathname();
+
+  // Claro sobre la cabecera oscura de cada página ([data-header-light]); sólido al pasarla.
+  // Páginas sin cabecera oscura: sólido desde el inicio.
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > window.innerHeight * 0.85);
+    let limite = 0;
+    const medir = () => {
+      const hero = document.querySelector<HTMLElement>("[data-header-light]");
+      limite = hero ? Math.max(hero.offsetHeight - 90, 0) : 0;
+    };
+    const onScroll = () => setSolid(!limite || window.scrollY > limite);
+    medir();
     onScroll();
+    const onResize = () => { medir(); onScroll(); };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const el = menu.current;
@@ -73,17 +90,17 @@ export function Header() {
             <span className="h-px w-11 bg-current" />
           </button>
 
-          <a href="#inicio" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
+          <Link href="/" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
             <Logo className="w-full" />
-          </a>
+          </Link>
 
-          <a
-            href="#reservas"
+          <Link
+            href="/reservas"
             className="group relative justify-self-end text-[0.78rem] font-medium uppercase tracking-[0.16em]"
           >
             Reservar
             <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-soft)] group-hover:origin-left group-hover:scale-x-100" />
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -109,9 +126,9 @@ export function Header() {
             <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current" />
             <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-current" />
           </button>
-          <a href="#inicio" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
+          <Link href="/" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
             <Logo className="w-full" />
-          </a>
+          </Link>
           <span />
         </div>
 
@@ -121,13 +138,16 @@ export function Header() {
               <ul>
                 {menuPrincipal.map((n) => (
                   <li key={n.href} className="overflow-hidden">
-                    <a
+                    <Link
                       data-m-link
                       href={n.href}
-                      className="group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.4vw,4.4rem)] leading-[1.05] text-granate transition-colors hover:text-carmesi"
+                      aria-current={pathname === n.href ? "page" : undefined}
+                      className={`group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-display)] text-[clamp(2.2rem,4vw,4rem)] leading-[1.05] transition-colors hover:text-carmesi ${
+                        pathname === n.href ? "text-carmesi italic" : "text-granate"
+                      }`}
                     >
                       <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{n.label}</span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -153,7 +173,7 @@ export function Header() {
               el tiempo se detiene.
             </p>
             <div className="mt-7">
-              <Pill href="#reservas">Reservar tu estancia</Pill>
+              <Pill href="/reservas">Reservar tu estancia</Pill>
             </div>
           </div>
         </div>

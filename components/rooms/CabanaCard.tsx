@@ -73,7 +73,7 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
         <div>
           <p className="max-w-md text-granate/85">{cabana.descripcion}</p>
           <a
-            href="#reservas"
+            href="/reservas"
             className="mt-5 inline-block border-b border-carmesi/60 pb-1 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
           >
             Reservar esta cabaña

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, onIntroDone, prefersReducedMotion, scrollToHash } from "@/lib/motion";
+import { finishIntro, motion, onIntroDone, prefersReducedMotion, scrollToHash } from "@/lib/motion";
 
 /**
  * Orquesta todo el movimiento del sitio a partir de atributos data-*:
@@ -14,10 +14,12 @@ import { motion, onIntroDone, prefersReducedMotion, scrollToHash } from "@/lib/m
  *  - data-parallax="n"   → parallax moderado (n = intensidad, p. ej. 0.12)
  *  - data-hero-*         → se animan al terminar el preloader
  */
-export function MotionController() {
+export function MotionController({ intro = false }: { intro?: boolean }) {
   useEffect(() => {
     const reduced = prefersReducedMotion();
     gsap.registerPlugin(ScrollTrigger);
+    // Páginas internas: no hay preloader, el contenido arranca de inmediato
+    if (!intro) finishIntro();
 
     // La intro siempre abre en el hero (sin restaurar scroll), salvo que se llegue con un ancla
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -140,7 +142,7 @@ export function MotionController() {
       lenis.destroy();
       motion.lenis = null;
     };
-  }, []);
+  }, [intro]);
 
   return null;
 }

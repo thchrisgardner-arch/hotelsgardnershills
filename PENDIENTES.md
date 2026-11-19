@@ -39,8 +39,16 @@ Para arrancarlo: `npm run dev` → http://localhost:5206 (preview "gardners-hill
 - [ ] Motor de reservas. Por ahora el formulario abre WhatsApp con la solicitud ya escrita
 - [ ] Textos legales
 
+## Páginas (2026-11-19)
+
+Sitio multipágina: `/`, `/la-casa`, `/cabanas`, `/servicios`, `/actividades`, `/galeria`, `/reservas`, `/contacto`.
+Cabecera, footer, barra de reservas y WhatsApp son comunes (en `app/layout.tsx`).
+
+- `/reservas`: no hay tarifas publicadas hasta tenerlas (aparecerán en el calendario vía `data/reservas.ts`)
+- `/contacto`: el mapa se activa al rellenar `location.mapsUrl` en `data/site.ts`; el formulario abre el correo
+- `/servicios` y `/actividades`: Spa, Gym y actividades siguen en bloque rosa hasta tener fotos
+
 ## Siguiente en desarrollo
 
-- [ ] Revisar móvil y tablet
-- [ ] Páginas interiores de los wireframes: Actividades, Servicios, Tarifas/Booking, Galería, Contacto (con mapa)
+- [ ] Revisar móvil y tablet de todas las páginas
 - [ ] Datos estructurados `LodgingBusiness` e imagen Open Graph
