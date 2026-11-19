@@ -29,6 +29,9 @@
 }
 
 :root {
+  /* Familias autoalojadas (ver app/layout.tsx) */
+  --font-title: "Instrument Serif";
+  --font-body-fallback: "Inter Variable";
   --gutter: clamp(1rem, 4vw, 3.5rem);
   --header-h: 84px;
 }

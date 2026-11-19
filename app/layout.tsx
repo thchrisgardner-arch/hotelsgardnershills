@@ -1,24 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+/*
+ * Fuentes autoalojadas (paquetes @fontsource): no dependen de Google Fonts al compilar,
+ * que es lo que rompía el build en Vercel ("An error occurred in next/font").
+ * - Instrument Serif: provisional hasta recibir Palo Compressed Medium (AUDITORIA-FASE-1.md §4)
+ * - Inter: respaldo para equipos sin Helvetica Neue
+ */
+import "@fontsource/instrument-serif/latin-400.css";
+import "@fontsource/instrument-serif/latin-400-italic.css";
+import "@fontsource-variable/inter/wght.css";
 import "./globals.css";
 import { site } from "@/data/site";
-
-// Provisional hasta recibir Palo Compressed Medium (ver AUDITORIA-FASE-1.md §4)
-const title = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-title",
-  display: "swap",
-});
-
-// Respaldo para equipos sin Helvetica Neue (Inter: ancho normal, como Helvetica)
-const bodyFallback = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-body-fallback",
-  display: "swap",
-});
 
 const description =
   "Hotel boutique de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene.";
@@ -53,7 +44,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${title.variable} ${bodyFallback.variable}`}>
+    <html lang="es">
       <body>{children}</body>
     </html>
   );
