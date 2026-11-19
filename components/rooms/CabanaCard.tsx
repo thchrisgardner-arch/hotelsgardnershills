@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import type { Cabana } from "@/data/cabanas";
 
 const PENDIENTE = "Por confirmar";
@@ -21,7 +21,7 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
   return (
     <article aria-labelledby={`${cabana.id}-t`} className="flex flex-col">
       {/* Galería en arco */}
-      <div className="group relative aspect-[5/4] overflow-hidden rounded-t-[999px] bg-rosa" data-reveal-media>
+      <div className="group relative aspect-[5/4] overflow-hidden bg-rosa" data-reveal-media>
         <div data-media-inner className="absolute inset-0">
           {cabana.fotos.map((src, k) => (
             <Image

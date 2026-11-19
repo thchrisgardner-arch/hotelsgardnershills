@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import { Lines } from "@/components/ui/Lines";
 
 /**
@@ -32,7 +32,7 @@ export function PageHero({
           />
         </div>
         {foto && (
-          <figure data-reveal-media className="relative mb-2 hidden aspect-[3/4] w-[clamp(14rem,22vw,22rem)] overflow-hidden rounded-t-[999px] lg:block">
+          <figure data-reveal-media className="relative mb-2 hidden aspect-[3/4] w-[clamp(14rem,22vw,22rem)] overflow-hidden bg-rosa lg:block">
             <div data-media-inner className="absolute inset-0">
               <Image src={foto} alt={alt} fill sizes="22vw" priority className="object-cover" />
             </div>

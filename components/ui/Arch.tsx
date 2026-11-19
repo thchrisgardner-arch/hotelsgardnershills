@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { tone, PLACEHOLDER_COLOR } from "@/lib/brand";
+import { Foto as Image } from "@/components/ui/Foto";
+import { tone, PLACEHOLDER_COLOR, MOSTRAR_FOTOS } from "@/lib/brand";
 
 /**
  * Marco en arco (lenguaje del XD y los wireframes, eco de las fachadas de las cabañas).
@@ -26,12 +26,13 @@ export function Arch({
   reveal = true,
   hoverZoom = false,
 }: Props) {
-  const radius = { arch: "rounded-t-[999px]", circle: "rounded-full", pill: "rounded-[999px]" }[shape];
+  // Todas las imágenes van con esquinas rectas (decisión del cliente 2026-11-19); `shape` se conserva por compatibilidad.
+  const radius = { arch: "", circle: "", pill: "" }[shape];
   const t = tone[PLACEHOLDER_COLOR ?? "rosa"];
   return (
     <figure
       data-reveal-media={reveal ? "" : undefined}
-      className={`relative overflow-hidden ${radius} ${src ? "bg-rosa/40" : t.bg} ${className}`}
+      className={`relative overflow-hidden ${radius} ${src && MOSTRAR_FOTOS ? "bg-rosa/40" : t.bg} ${className}`}
     >
       <div
         data-media-inner

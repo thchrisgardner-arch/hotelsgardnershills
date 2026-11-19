@@ -5,6 +5,7 @@ export function WhatsAppButton() {
   const msg = encodeURIComponent("Hola, Gardners Hills. Quisiera más información.");
   return (
     <a
+      data-chrome
       href={`https://wa.me/${site.contact.whatsappFlotante}?text=${msg}`}
       target="_blank"
       rel="noreferrer"

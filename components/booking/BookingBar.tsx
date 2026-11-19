@@ -77,7 +77,7 @@ export function BookingBar() {
     setPanel(null);
   }
 
-  const panelBox = "absolute bottom-full mb-3 rounded-md border border-granate/12 bg-crema shadow-[0_18px_50px_-18px_rgba(120,16,6,0.45)]";
+  const panelBox = "absolute bottom-full mb-3 rounded-md border border-granate/12 bg-crema shadow-[0_18px_50px_-18px_rgba(16,15,14,0.35)]";
   const cell = "flex items-center gap-3.5 px-6 py-3 text-left transition-colors hover:bg-granate/[0.04]";
   const small = "block text-[0.92rem] leading-tight text-granate/60";
   const value = "block whitespace-nowrap text-[1.16rem] leading-snug text-granate";
@@ -85,7 +85,7 @@ export function BookingBar() {
     "grid h-9 w-9 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
 
   return (
-    <div ref={root} className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 md:block" role="search" aria-label="Buscar disponibilidad">
+    <div ref={root} data-chrome className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 md:block" role="search" aria-label="Buscar disponibilidad">
       {/* ── Calendario ── */}
       {panel === "fechas" && (
         <div role="dialog" aria-label="Elige tus fechas" className={`${panelBox} left-1/2 w-[min(880px,calc(100vw-2rem))] -translate-x-1/2 px-8 pb-6 pt-7`}>

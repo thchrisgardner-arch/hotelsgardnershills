@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import { PLACEHOLDER_COLOR, tone, type BrandColor } from "@/lib/brand";
 import { Motif, type MotifName } from "./Motif";
 

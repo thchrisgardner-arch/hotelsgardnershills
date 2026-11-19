@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/ui/Logo";
@@ -72,6 +72,7 @@ export function Header() {
   return (
     <>
       <header
+        data-chrome
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-700 ease-[var(--ease-soft)] ${
           solid ? "border-b border-granate/15 bg-crema/95 backdrop-blur-sm" : "border-b border-transparent"
         }`}
@@ -90,8 +91,11 @@ export function Header() {
             <span className="h-px w-11 bg-current" />
           </button>
 
+          {/* data-logo-menu: destino final de la intro del hero */}
           <Link href="/" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
-            <Logo className="w-full" />
+            <span data-logo-menu className="block">
+              <Logo className="w-full" />
+            </span>
           </Link>
 
           <Link
@@ -142,8 +146,8 @@ export function Header() {
                       data-m-link
                       href={n.href}
                       aria-current={pathname === n.href ? "page" : undefined}
-                      className={`group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-display)] text-[clamp(2.2rem,4vw,4rem)] leading-[1.05] transition-colors hover:text-carmesi ${
-                        pathname === n.href ? "text-carmesi italic" : "text-granate"
+                      className={`group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-menu)] text-[clamp(2.4rem,4.2vw,4.2rem)] leading-[1.04] transition-colors hover:text-carmesi ${
+                        pathname === n.href ? "italic text-carmesi" : "text-granate"
                       }`}
                     >
                       <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{n.label}</span>
@@ -164,7 +168,7 @@ export function Header() {
 
           {/* Tarjeta propia: arco de la marca + frase del manual */}
           <div data-m-card className="mx-auto flex w-full max-w-[380px] flex-col items-center text-center">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-t-[999px] bg-rosa">
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-rosa">
               <Image src="/images/cabanas/cabana-arco.jpg" alt="Cabaña de Gardners Hills frente a la sierra" fill sizes="460px" className="object-cover" />
             </div>
             <p className="t-italic mt-8 text-[clamp(1.8rem,2.6vw,2.6rem)] leading-[1.05] text-granate">

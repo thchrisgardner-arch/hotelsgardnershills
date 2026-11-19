@@ -34,9 +34,9 @@ export const site = {
  */
 export const menuPrincipal = [
   { label: "Inicio", href: "/" },
-  { label: "La casa", href: "/la-casa" },
   { label: "Cabañas", href: "/cabanas" },
   { label: "Servicios", href: "/servicios" },
+  { label: "Gastronomía & Bar", href: "/gastronomia" },
   { label: "Actividades", href: "/actividades" },
   { label: "Galería", href: "/galeria" },
   { label: "Reservas", href: "/reservas" },

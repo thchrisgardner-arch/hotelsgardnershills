@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import { galeria } from "@/data/galeria";
 
 /**
@@ -42,7 +42,7 @@ export function Gallery() {
             <li
               key={p.id}
               aria-hidden={k !== i}
-              className={`relative shrink-0 overflow-hidden rounded-t-[999px] bg-rosa transition-opacity duration-700 ${k === i ? "opacity-100" : "opacity-60"}`}
+              className={`relative shrink-0 overflow-hidden bg-rosa transition-opacity duration-700 ${k === i ? "opacity-100" : "opacity-60"}`}
               style={{ width: `${W}vw`, height: `${W * 0.72}vw` }}
             >
               {p.src && <Image src={p.src} alt={p.alt} fill sizes="46vw" className="object-cover" />}

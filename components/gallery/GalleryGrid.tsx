@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import { galeria } from "@/data/galeria";
 import { motion } from "@/lib/motion";
 
@@ -35,7 +35,7 @@ export function GalleryGrid() {
               type="button"
               onClick={() => setOpen(i)}
               aria-label={`Ampliar: ${p.alt}`}
-              className="group relative block aspect-[4/5] w-full overflow-hidden rounded-t-[999px] bg-rosa"
+              className="group relative block aspect-[4/5] w-full overflow-hidden bg-rosa"
             >
               {p.src && (
                 <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 32vw, 50vw" className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-soft)] group-hover:scale-[1.05]" />

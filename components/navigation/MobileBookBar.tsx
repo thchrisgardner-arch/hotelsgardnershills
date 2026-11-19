@@ -29,6 +29,7 @@ export function MobileBookBar() {
 
   return (
     <div
+      data-chrome
       className={`fixed inset-x-0 bottom-0 z-30 p-3 transition-transform duration-700 ease-[var(--ease-soft)] md:hidden ${
         show ? "translate-y-0" : "translate-y-[120%]"
       }`}

@@ -1,11 +1,11 @@
-import Image from "next/image";
+import { Foto as Image } from "@/components/ui/Foto";
 import { Lines } from "@/components/ui/Lines";
 
 /** «Esencia — Un encuentro entre pasado y presente» (wireframe Home). Textos del manual. */
 export function Esencia() {
   return (
     <section id="esencia" aria-labelledby="esencia-title" className="grid lg:grid-cols-2">
-      <figure data-reveal-media className="relative min-h-[60vh] overflow-hidden lg:min-h-[90vh]">
+      <figure data-reveal-media className="relative min-h-[60vh] overflow-hidden bg-rosa lg:min-h-[90vh]">
         <div data-media-inner className="absolute inset-0">
           <Image src="/images/cabanas/cabanas-jardin.jpg" alt="Jardín y cabañas de Gardners Hills" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
         </div>

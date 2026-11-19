@@ -32,7 +32,7 @@ export default function ReservasPage() {
           </div>
           <ul className="mt-16 grid gap-6 md:grid-cols-3">
             {["Fechas", "Huéspedes", "Confirmación"].map((t, i) => (
-              <li key={t} data-reveal className="flex flex-col items-center rounded-t-[999px] border border-granate/25 px-8 pb-10 pt-24 text-center">
+              <li key={t} data-reveal className="flex flex-col items-center border border-granate/25 px-8 pb-10 pt-24 text-center">
                 <span className="text-[0.86rem] font-normal tracking-[0.2em] text-granate/50">{String(i + 1).padStart(2, "0")}</span>
                 <p className="mt-3 font-[family-name:var(--font-display)] text-[2.2rem] uppercase leading-none text-carmesi">{t}</p>
                 <p className="mt-5 text-granate/80">

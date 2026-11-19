@@ -1,0 +1,199 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { Pill } from "@/components/ui/Pill";
+import { finishIntro, motion, prefersReducedMotion } from "@/lib/motion";
+
+const KEY = "gh-intro-seen";
+// Proporciones de las dos piezas del logotipo (public/brand/logo-gardners.png y logo-hills.png)
+const RATIO_G = 1766 / 336;
+const RATIO_H = 1178 / 414;
+
+function Word({ src, ratio, className, label, part }: { src: string; ratio: number; className: string; label?: string; part: "a" | "b" }) {
+  return (
+    <span
+      data-word-a={part === "a" ? "" : undefined}
+      data-word-b={part === "b" ? "" : undefined}
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      className={`logo-mask absolute text-marfil will-change-transform ${className}`}
+      style={{ aspectRatio: String(ratio), WebkitMaskImage: `url(${src})`, maskImage: `url(${src})` }}
+    />
+  );
+}
+
+/**
+ * Hero con intro inspirada en Casa Momo:
+ * 1) fondo oscuro, las dos palabras del logo aparecen juntas en el centro
+ * 2) se separan  3) se abre una ventana redondeada con el video
+ * 4) la ventana se expande a pantalla completa y las palabras viajan a esquinas opuestas
+ * 5) aparecen el menú, el texto del hero y la barra de reservas.
+ */
+export function HeroIntro() {
+  const root = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = root.current;
+    const frame = el?.querySelector<HTMLElement>("[data-frame]");
+    const a = el?.querySelector<HTMLElement>("[data-word-a]");
+    const b = el?.querySelector<HTMLElement>("[data-word-b]");
+    if (!el || !frame || !a || !b) return;
+    const fades = el.querySelectorAll<HTMLElement>("[data-intro-fade]");
+    const html = document.documentElement;
+
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(KEY) === "1";
+    } catch {}
+
+    // La marca de "vista" se guarda al terminar (en desarrollo React ejecuta el efecto dos veces)
+    const end = () => {
+      try {
+        sessionStorage.setItem(KEY, "1");
+      } catch {}
+      html.classList.remove("intro-playing");
+      el.removeAttribute("data-intro-active");
+      motion.lenis?.start();
+      finishIntro();
+    };
+    const mostrarChrome = () => el.removeAttribute("data-intro-active");
+
+    if (prefersReducedMotion() || seen) {
+      mostrarChrome();
+      gsap.set(frame, { clipPath: "inset(0% 0% 0% 0% round 0px)" });
+      gsap.set([a, b], { autoAlpha: 0 });
+      gsap.fromTo(fades, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, onComplete: end });
+      return;
+    }
+
+    html.classList.add("intro-playing");
+    motion.lenis?.stop();
+
+    // Posición final (definida por CSS) → calculamos los estados intermedios centrados
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const ra = a.getBoundingClientRect();
+    const rb = b.getBoundingClientRect();
+    const centro = (r: DOMRect) => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+    const ca = centro(ra);
+    const cb = centro(rb);
+    const par = (s: number, gap: number) => {
+      const wA = ra.width * s;
+      const wB = rb.width * s;
+      const left = vw / 2 - (wA + gap + wB) / 2;
+      return {
+        a: { x: left + wA / 2 - ca.x, y: vh / 2 - ca.y, scale: s },
+        b: { x: left + wA + gap + wB / 2 - cb.x, y: vh / 2 - cb.y, scale: s },
+      };
+    };
+    const juntos = par(0.3, vw * 0.015);
+    const separados = par(0.36, vw * 0.12);
+    const ventana = par(0.46, vw * 0.24);
+
+    // Destino final: el logo pequeño del menú. Cada palabra vuelve a su lugar dentro del logo
+    // (posiciones medidas en public/brand/logo-wordmark.png) → el logotipo queda completo, no separado.
+    const logoMenu = document.querySelector<HTMLElement>("header [data-logo-menu]");
+    const L = logoMenu?.getBoundingClientRect() ?? new DOMRect(vw / 2 - 68, 12, 136, 57);
+    const destino = (r: DOMRect, c: { x: number; y: number }, f: { left: number; top: number; width: number }, ratio: number) => {
+      const w = L.width * f.width;
+      const h = w / ratio;
+      const cx = L.left + L.width * f.left + w / 2;
+      const cy = L.top + L.height * f.top + h / 2;
+      return { x: cx - c.x, y: cy - c.y, scale: w / r.width };
+    };
+    const finA = destino(ra, ca, { left: 0.00113, top: 0.00268, width: 0.9983 }, RATIO_G);
+    const finB = destino(rb, cb, { left: 0.16733, top: 0.4437, width: 0.66591 }, RATIO_H);
+
+    gsap.set(frame, { clipPath: "inset(50% 50% 50% 50% round 0px)" });
+    gsap.set(a, { ...juntos.a, autoAlpha: 0, transformOrigin: "50% 50%" });
+    gsap.set(b, { ...juntos.b, autoAlpha: 0, transformOrigin: "50% 50%" });
+    gsap.set(fades, { autoAlpha: 0, y: 18 });
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.inOut" }, onComplete: end });
+    tl.to(a, { autoAlpha: 1, duration: 0.9, ease: "power2.out" }, 0.25)
+      .to(b, { autoAlpha: 1, duration: 0.9, ease: "power2.out" }, 0.55)
+      // las palabras se separan
+      .to(a, { ...separados.a, duration: 0.9 }, 1.45)
+      .to(b, { ...separados.b, duration: 0.9 }, 1.45)
+      // ventana redondeada con el video
+      .to(frame, { clipPath: "inset(24% 30% 24% 30% round 260px)", duration: 1, ease: "expo.out" }, 2.05)
+      .to(a, { ...ventana.a, duration: 1 }, 2.05)
+      .to(b, { ...ventana.b, duration: 1 }, 2.05)
+      // expansión a pantalla completa; las palabras se reúnen y se reducen hasta el logo del menú
+      .to(frame, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.4, ease: "expo.inOut" }, 2.95)
+      .to(a, { ...finA, duration: 1.4, ease: "expo.inOut" }, 2.95)
+      .to(b, { ...finB, duration: 1.4, ease: "expo.inOut" }, 2.95)
+      .call(() => {
+        html.classList.remove("intro-playing");
+        mostrarChrome();
+      }, [], 4.15)
+      // relevo: aparece el logo real del menú y se retiran las piezas animadas
+      .to([a, b], { autoAlpha: 0, duration: 0.5, ease: "power1.out" }, 4.45)
+      .to(fades, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "power3.out" }, 4.0);
+
+    return () => {
+      tl.kill();
+      html.classList.remove("intro-playing");
+    };
+  }, []);
+
+  return (
+    <section
+      id="inicio"
+      ref={root}
+      data-header-light
+      data-intro-active=""
+      aria-label="Gardners Hills"
+      className="relative h-[100svh] min-h-[640px] overflow-hidden bg-granate text-marfil"
+    >
+      {/* Ventana con el video (se abre y se expande en la intro) */}
+      <div data-frame className="absolute inset-0" style={{ clipPath: "inset(0% 0% 0% 0% round 0px)" }}>
+        <video
+          className="absolute inset-0 h-full w-full scale-[1.3] object-cover"
+          src="/video/hero-banner.mp4"
+          poster="/images/cabanas/hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden
+        />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/55" />
+      </div>
+
+      {/* Logotipo en dos piezas: posición final en esquinas opuestas */}
+      {/* Piezas animadas del logotipo (solo durante la intro; al final las releva el logo del menú) */}
+      <Word
+        part="a"
+        src="/brand/logo-gardners.png"
+        ratio={RATIO_G}
+        className="left-[var(--gutter)] top-[calc(var(--header-h)+2vh)] w-[min(54vw,980px)]"
+      />
+      <Word
+        part="b"
+        src="/brand/logo-hills.png"
+        ratio={RATIO_H}
+        className="bottom-[150px] right-[var(--gutter)] w-[min(36vw,654px)]"
+      />
+
+      {/* Texto del hero (abajo a la izquierda, como en la referencia) */}
+      <div className="absolute bottom-[150px] left-[var(--gutter)] max-w-[34rem]">
+        <p data-intro-fade className="text-[0.86rem] uppercase tracking-[0.3em] text-marfil/85">
+          Tu sueño en Gardners Hills
+        </p>
+        <h1 data-intro-fade className="t-italic mt-3 text-[clamp(2.4rem,4.2vw,4.4rem)] leading-[0.95]">
+          Quédate con nosotros
+        </h1>
+        <p data-intro-fade className="mt-4 text-marfil/85">Cabañas boutique en Villanueva, La Guajira.</p>
+        <div data-intro-fade className="mt-7">
+          <Pill href="/reservas" tone="marfil">
+            Reservar
+          </Pill>
+        </div>
+      </div>
+    </section>
+  );
+}

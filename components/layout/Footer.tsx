@@ -9,9 +9,9 @@ const cols = [
     titulo: "Hotel",
     links: [
       { label: "Inicio", href: "/" },
-      { label: "La casa", href: "/la-casa" },
       { label: "Cabañas", href: "/cabanas" },
       { label: "Servicios", href: "/servicios" },
+      { label: "Gastronomía & Bar", href: "/gastronomia" },
     ],
   },
   {
@@ -29,7 +29,7 @@ const cols = [
 export function Footer() {
   const { contact, instagram, facebook } = site;
   return (
-    <footer id="contacto" className="border-t border-granate/15 px-[var(--gutter)] pb-28 pt-24 text-granate sm:pt-32">
+    <footer id="contacto" className="border-t border-granate/15 px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24">
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Lines
@@ -65,8 +65,9 @@ export function Footer() {
         </div>
       </div>
 
-      <div data-reveal className="mt-24 sm:mt-28">
-        <Logo className="w-full" />
+      {/* Logo limitado por alto de pantalla para que todo el footer quepa en una vista */}
+      <div data-reveal className="mt-14 sm:mt-16">
+        <Logo className="mx-auto w-[min(100%,62vh,820px)]" />
       </div>
 
       <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[0.84rem] font-normal uppercase tracking-[0.18em] text-granate/70">
