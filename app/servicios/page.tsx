@@ -47,14 +47,14 @@ export default function ServiciosPage() {
               <li key={s.id} id={s.id} className="flex flex-col">
                 <Arch src={s.foto} alt={s.titulo} className="aspect-[3/4] w-full" sizes="(min-width: 768px) 32vw, 100vw" />
                 <h3 data-reveal className="mt-7 flex items-baseline gap-4 border-b border-granate/20 pb-3 text-granate">
-                  <span className="text-[0.72rem] font-medium uppercase tracking-[0.24em]">Hills</span>
+                  <span className="text-[0.86rem] font-normal uppercase tracking-[0.24em]">Hills</span>
                   <span className="t-italic text-[2.6rem] leading-none">{s.titulo}</span>
                 </h3>
                 <p data-reveal className="mt-4 text-granate/80">{s.texto}</p>
               </li>
             ))}
           </ul>
-          <p data-reveal className="mt-12 text-sm text-granate/55">Tratamientos, horarios y equipamiento por confirmar.</p>
+          <p data-reveal className="mt-12 text-base text-granate/55">Tratamientos, horarios y equipamiento por confirmar.</p>
         </section>
 
         {/* Banda en píldora */}

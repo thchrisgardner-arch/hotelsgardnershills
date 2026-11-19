@@ -6,7 +6,7 @@ import { Arch } from "@/components/ui/Arch";
 export function Experiencias() {
   return (
     <section id="experiencias" aria-labelledby="exp-title" className="px-[var(--gutter)] py-28 text-center sm:py-36">
-      <p data-reveal className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-granate/70">
+      <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.24em] text-granate/70">
         Experiencias
       </p>
       <Lines
@@ -19,16 +19,16 @@ export function Experiencias() {
         {experiencias.map((e) => (
           <li key={e.id} className="flex flex-col items-center">
             <Arch shape="circle" className="aspect-square w-full max-w-[260px]" />
-            <h3 data-reveal className="mt-7 text-[0.78rem] font-medium uppercase tracking-[0.2em] text-granate">
+            <h3 data-reveal className="mt-7 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
               {e.titulo}
             </h3>
-            <p data-reveal className="mt-3 max-w-[18rem] text-[1.125rem] leading-[1.4] text-granate/75">
+            <p data-reveal className="mt-3 max-w-[18rem] text-[1.2rem] leading-[1.4] text-granate/75">
               {e.texto}
             </p>
           </li>
         ))}
       </ul>
-      <p data-reveal className="mt-14 text-sm text-granate/55">Experiencias sujetas a confirmación.</p>
+      <p data-reveal className="mt-14 text-base text-granate/55">Experiencias sujetas a confirmación.</p>
     </section>
   );
 }

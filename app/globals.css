@@ -47,8 +47,8 @@ body {
   font-family: var(--font-sans);
   /* 400: con peso 500 "Helvetica Neue" carga una variante condensada en Windows */
   font-weight: 400;
-  /* Descripciones a 18px / 1.4 (referencia: Grand Hotel Miramare) */
-  font-size: 1.125rem;
+  /* Texto base a ~19px / 1.4 (subido un paso sobre la referencia, a pedido del cliente) */
+  font-size: 1.2rem;
   line-height: 1.4;
   overflow-x: hidden;
 }
@@ -86,8 +86,8 @@ html.lenis body {
 }
 .t-label {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }

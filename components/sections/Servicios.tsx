@@ -40,7 +40,7 @@ export function Servicios() {
                 aria-selected={n === i}
                 aria-controls="servicio-panel"
                 onClick={() => select(n)}
-                className={`relative py-2 text-[0.75rem] font-medium uppercase tracking-[0.24em] transition-colors ${
+                className={`relative py-2 text-[0.88rem] font-normal uppercase tracking-[0.24em] transition-colors ${
                   n === i ? "text-granate" : "text-granate/45 hover:text-granate/80"
                 }`}
               >
@@ -56,7 +56,7 @@ export function Servicios() {
 
           <div id="servicio-panel" role="tabpanel" ref={panel} className="mt-auto pt-24">
             <h2 className="flex items-baseline gap-5 text-granate">
-              <span className="text-[0.78rem] font-medium uppercase tracking-[0.24em]">Hills</span>
+              <span className="text-[0.92rem] font-normal uppercase tracking-[0.24em]">Hills</span>
               <span className="t-italic text-[clamp(3.4rem,6vw,6rem)] leading-none">{s.titulo}</span>
             </h2>
             <p className="mt-8 max-w-md leading-[1.4] text-granate/85">{s.texto}</p>

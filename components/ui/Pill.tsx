@@ -10,7 +10,7 @@ export function Pill({ tone = "granate", className = "", children, href, ...rest
     marfil: "border-marfil/60 text-marfil hover:bg-marfil hover:text-granate",
     solid: "border-granate bg-granate text-crema hover:bg-carmesi hover:border-carmesi",
   }[tone];
-  const cls = `group inline-flex items-center gap-5 rounded-full border py-1.5 pl-6 pr-1.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] transition-colors duration-500 ease-[var(--ease-soft)] ${styles} ${className}`;
+  const cls = `group inline-flex items-center gap-5 rounded-full border py-1.5 pl-6 pr-1.5 text-[0.86rem] font-normal uppercase tracking-[0.16em] transition-colors duration-500 ease-[var(--ease-soft)] ${styles} ${className}`;
   const inner = (
     <>
       <span>{children}</span>

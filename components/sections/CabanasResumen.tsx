@@ -10,7 +10,7 @@ export function CabanasResumen() {
     <section id="cabanas" aria-labelledby="cabanas-res-title" className="border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
         <div>
-          <p data-reveal className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-carmesi/80">
+          <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.24em] text-carmesi/80">
             Cabañas
           </p>
           <Lines

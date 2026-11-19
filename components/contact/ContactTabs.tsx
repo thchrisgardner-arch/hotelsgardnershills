@@ -27,7 +27,7 @@ export function ContactTabs() {
             aria-selected={tab === t.id}
             aria-controls={`panel-${t.id}`}
             onClick={() => setTab(t.id)}
-            className={`relative pb-2 text-[0.75rem] font-medium uppercase tracking-[0.2em] transition-colors ${
+            className={`relative pb-2 text-[0.88rem] font-normal uppercase tracking-[0.2em] transition-colors ${
               tab === t.id ? "text-carmesi" : "text-granate/45 hover:text-granate/80"
             }`}
           >

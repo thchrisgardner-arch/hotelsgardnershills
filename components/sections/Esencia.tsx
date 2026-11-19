@@ -12,7 +12,7 @@ export function Esencia() {
       </figure>
       <div className="flex flex-col justify-between gap-16 bg-granate px-[var(--gutter)] py-20 text-marfil sm:px-16 lg:py-24">
         <div>
-          <p data-reveal className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-rosa">
+          <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.24em] text-rosa">
             Esencia
           </p>
           <Lines
@@ -21,7 +21,7 @@ export function Esencia() {
             lines={["Un encuentro entre", <span key="p" className="t-italic text-rosa">pasado y presente.</span>]}
           />
         </div>
-        <div className="max-w-lg space-y-6 text-[1.125rem] leading-[1.4] text-marfil/90">
+        <div className="max-w-lg space-y-6 text-[1.2rem] leading-[1.4] text-marfil/90">
           <p data-reveal>
             Antes de convertirse en un espacio de alojamiento exclusivo, el terreno donde hoy se encuentran las cabañas
             era la casa de los abuelos: un lugar lleno de recuerdos y tradición familiar. Esta transformación le otorgó

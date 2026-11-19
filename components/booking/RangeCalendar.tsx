@@ -53,7 +53,7 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
         </p>
         <div className="grid grid-cols-7 text-center">
           {DIAS.map((d) => (
-            <span key={d} className="pb-3 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-granate/55">
+            <span key={d} className="pb-3 text-[0.82rem] font-normal uppercase tracking-[0.14em] text-granate/55">
               {d}
             </span>
           ))}
@@ -79,10 +79,10 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
                   esInicio ? "rounded-l-full" : ""
                 } ${esFin ? "rounded-r-full" : ""} ${esInicio && !finRango ? "rounded-full" : ""}`}
               >
-                <span className={`text-[1.05rem] leading-none ${d === hoy ? "font-semibold underline underline-offset-4" : ""}`}>
+                <span className={`text-[1.16rem] leading-none ${d === hoy ? "font-semibold underline underline-offset-4" : ""}`}>
                   {Number(d.slice(8))}
                 </span>
-                {tarifa && !pasado && <span className="mt-1 text-[0.62rem] opacity-70">{precio(tarifa)}</span>}
+                {tarifa && !pasado && <span className="mt-1 text-[0.75rem] opacity-70">{precio(tarifa)}</span>}
               </button>
             );
           })}

@@ -20,7 +20,7 @@ export function ContactForm() {
     setSent(true);
   }
 
-  const label = "text-[0.68rem] font-medium uppercase tracking-[0.18em] text-granate/75";
+  const label = "text-[0.82rem] font-normal uppercase tracking-[0.18em] text-granate/75";
   const field =
     "mt-2 w-full rounded-none border-0 border-b border-granate/35 bg-transparent pb-2.5 pt-1 text-granate outline-none transition-colors focus:border-granate";
 
@@ -32,13 +32,13 @@ export function ContactForm() {
       <label className="block"><span className={label}>Teléfono</span><input type="tel" value={f.telefono} onChange={set("telefono")} autoComplete="tel" className={field} /></label>
       <label className="block sm:col-span-2"><span className={label}>Mensaje*</span><textarea rows={4} value={f.mensaje} onChange={set("mensaje")} className={`${field} resize-none`} /></label>
       <div className="flex flex-wrap items-center gap-6 sm:col-span-2">
-        <button type="submit" className="group inline-flex items-center gap-5 rounded-full border border-granate bg-granate py-1.5 pl-6 pr-1.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-crema transition-colors duration-500 hover:border-carmesi hover:bg-carmesi">
+        <button type="submit" className="group inline-flex items-center gap-5 rounded-full border border-granate bg-granate py-1.5 pl-6 pr-1.5 text-[0.86rem] font-normal uppercase tracking-[0.16em] text-crema transition-colors duration-500 hover:border-carmesi hover:bg-carmesi">
           Enviar mensaje
           <span aria-hidden className="grid h-8 w-8 place-items-center rounded-full border border-current">
             <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
           </span>
         </button>
-        <p className="text-sm text-granate/60">Se abrirá tu correo con el mensaje listo.</p>
+        <p className="text-base text-granate/60">Se abrirá tu correo con el mensaje listo.</p>
       </div>
       <div aria-live="polite" className="sm:col-span-2">
         {error && <p className="text-carmesi">{error}</p>}

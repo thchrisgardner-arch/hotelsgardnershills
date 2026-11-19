@@ -46,14 +46,14 @@ export default function ActividadesPage() {
                 <Arch className="aspect-[4/5] w-full" />
                 <div data-reveal className="mt-7 flex items-baseline justify-between border-b border-granate/20 pb-3">
                   <h3 className="font-[family-name:var(--font-display)] text-[2rem] leading-none text-granate">{a.titulo}</h3>
-                  <span className="text-[0.72rem] font-medium tracking-[0.18em] text-granate/50">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[0.86rem] font-normal tracking-[0.18em] text-granate/50">{String(i + 1).padStart(2, "0")}</span>
                 </div>
                 <p data-reveal className="mt-4 text-granate/80">{a.texto}</p>
-                {a.distancia && <p className="mt-2 text-[0.85rem] uppercase tracking-[0.16em] text-carmesi">{a.distancia}</p>}
+                {a.distancia && <p className="mt-2 text-[0.98rem] uppercase tracking-[0.16em] text-carmesi">{a.distancia}</p>}
               </li>
             ))}
           </ul>
-          <p data-reveal className="mt-12 text-sm text-granate/55">Distancias, recorridos y recomendaciones por confirmar.</p>
+          <p data-reveal className="mt-12 text-base text-granate/55">Distancias, recorridos y recomendaciones por confirmar.</p>
         </section>
 
         <Refugio />

@@ -14,7 +14,7 @@ export function Destino() {
           <span key="b" className="t-italic">se encuentran.</span>,
         ]}
       />
-      <p data-reveal className="mx-auto mt-10 max-w-2xl text-[1.125rem] leading-[1.4] text-granate/85">
+      <p data-reveal className="mx-auto mt-10 max-w-2xl text-[1.2rem] leading-[1.4] text-granate/85">
         Gardners Hills nació con la idea de ofrecer un refugio íntimo en la naturaleza, donde la serenidad del entorno
         se combina con un diseño moderno y funcional. Nuestras cabañas brindan vistas panorámicas a la sierra en
         Villanueva, La Guajira.

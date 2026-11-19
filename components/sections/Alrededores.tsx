@@ -29,16 +29,16 @@ export function Alrededores() {
         {items.map((a) => (
           <li key={a.id} className="flex flex-col">
             <Arch className="aspect-[3/4] w-full" />
-            <h3 data-reveal className="mt-7 border-b border-granate/20 pb-3 text-[0.78rem] font-medium uppercase tracking-[0.2em] text-granate">
+            <h3 data-reveal className="mt-7 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
               {a.titulo}
             </h3>
-            <p data-reveal className="mt-4 text-[1.125rem] leading-[1.4] text-granate/80">
+            <p data-reveal className="mt-4 text-[1.2rem] leading-[1.4] text-granate/80">
               {a.texto}
             </p>
           </li>
         ))}
       </ul>
-      <p data-reveal className="mt-12 text-sm text-granate/55">Distancias y recomendaciones por confirmar.</p>
+      <p data-reveal className="mt-12 text-base text-granate/55">Distancias y recomendaciones por confirmar.</p>
     </section>
   );
 }

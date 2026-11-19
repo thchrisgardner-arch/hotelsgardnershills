@@ -13,7 +13,7 @@ export function Cabanas() {
     <section id="cabanas" aria-labelledby="cabanas-title" className="border-t border-granate/15 py-28 sm:py-36">
       {/* Introducción */}
       <div className="px-[var(--gutter)] text-center">
-        <p data-reveal className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-carmesi/80">
+        <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.24em] text-carmesi/80">
           Cabañas
         </p>
         <Lines
@@ -21,7 +21,7 @@ export function Cabanas() {
           className="t-italic mx-auto mt-6 max-w-4xl text-[clamp(3rem,6vw,6.2rem)] leading-[0.98] text-carmesi"
           lines={["Cada cabaña,", "un refugio propio"]}
         />
-        <p data-reveal className="mx-auto mt-10 max-w-md text-[0.9rem] font-medium uppercase leading-[1.5] tracking-[0.12em] text-granate">
+        <p data-reveal className="mx-auto mt-10 max-w-md text-[1.02rem] font-normal uppercase leading-[1.5] tracking-[0.12em] text-granate">
           Abre el ventanal y deja que la luz y el viento de la sierra entren contigo.
         </p>
         <p data-reveal className="mx-auto mt-6 max-w-xl text-granate/85">
@@ -43,7 +43,7 @@ export function Cabanas() {
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] uppercase leading-none text-carmesi">
             Encuentra tu cabaña
           </h2>
-          <span className="text-[0.75rem] font-medium uppercase tracking-[0.18em] text-granate/60">
+          <span className="text-[0.88rem] font-normal uppercase tracking-[0.18em] text-granate/60">
             Villanueva · La Guajira
           </span>
         </div>

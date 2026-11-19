@@ -96,7 +96,7 @@ export function Header() {
 
           <Link
             href="/reservas"
-            className="group relative justify-self-end text-[0.78rem] font-medium uppercase tracking-[0.16em]"
+            className="group relative justify-self-end text-[0.92rem] font-normal uppercase tracking-[0.16em]"
           >
             Reservar
             <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-soft)] group-hover:origin-left group-hover:scale-x-100" />
@@ -152,10 +152,10 @@ export function Header() {
                 ))}
               </ul>
             </nav>
-            <div data-m-fade className="flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-granate/15 pt-6 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-granate">
+            <div data-m-fade className="flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-granate/15 pt-6 text-[0.92rem] font-normal uppercase tracking-[0.16em] text-granate">
               <span>Villanueva · La Guajira</span>
               {menuSecundario.map((n) => (
-                <a key={n.href} href={n.href} target={n.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="normal-case tracking-normal text-[1.125rem] hover:text-carmesi">
+                <a key={n.href} href={n.href} target={n.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="normal-case tracking-normal text-[1.2rem] hover:text-carmesi">
                   {n.label}
                 </a>
               ))}

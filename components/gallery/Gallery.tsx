@@ -68,7 +68,7 @@ export function Gallery() {
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
       </button>
 
-      <p className="mt-8 text-center text-[0.72rem] font-medium uppercase tracking-[0.24em] text-granate/70" aria-live="polite">
+      <p className="mt-8 text-center text-[0.86rem] font-normal uppercase tracking-[0.24em] text-granate/70" aria-live="polite">
         {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")} · {galeria[i].alt}
       </p>
     </div>

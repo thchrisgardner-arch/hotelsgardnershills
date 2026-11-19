@@ -76,11 +76,11 @@ export default function ContactoPage() {
             </div>
             <div data-reveal className="flex min-h-[280px] items-center justify-center overflow-hidden rounded-full border border-granate/30 bg-marfil/40 px-10 text-center">
               {location.mapsUrl ? (
-                <a href={location.mapsUrl} target="_blank" rel="noreferrer" className="text-[0.78rem] font-medium uppercase tracking-[0.2em] text-granate hover:text-carmesi">
+                <a href={location.mapsUrl} target="_blank" rel="noreferrer" className="text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate hover:text-carmesi">
                   Ver ubicación en el mapa →
                 </a>
               ) : (
-                <p className="text-[0.78rem] font-medium uppercase tracking-[0.2em] text-granate/60">Mapa · ubicación por confirmar</p>
+                <p className="text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate/60">Mapa · ubicación por confirmar</p>
               )}
             </div>
           </div>
@@ -94,19 +94,19 @@ export default function ContactoPage() {
             </h2>
             <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:grid-cols-3">
               <li>
-                <p className="text-[0.85rem] text-granate/60">Reservas y consultas</p>
+                <p className="text-[0.98rem] text-granate/60">Reservas y consultas</p>
                 <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="mt-1 block text-carmesi underline decoration-carmesi/40 underline-offset-4 hover:text-granate">
                   WhatsApp {contact.whatsappLabel}
                 </a>
               </li>
               <li>
-                <p className="text-[0.85rem] text-granate/60">Teléfono</p>
+                <p className="text-[0.98rem] text-granate/60">Teléfono</p>
                 <a href={`tel:${contact.phone?.replace(/\s/g, "")}`} className="mt-1 block text-carmesi underline decoration-carmesi/40 underline-offset-4 hover:text-granate">
                   {contact.phone}
                 </a>
               </li>
               <li>
-                <p className="text-[0.85rem] text-granate/60">Correo</p>
+                <p className="text-[0.98rem] text-granate/60">Correo</p>
                 <a href={`mailto:${contact.email}`} className="mt-1 block text-carmesi underline decoration-carmesi/40 underline-offset-4 hover:text-granate">
                   {contact.email}
                 </a>

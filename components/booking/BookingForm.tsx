@@ -43,9 +43,9 @@ export function BookingForm() {
     setSent(true);
   }
 
-  const label = "text-[0.68rem] font-medium uppercase tracking-[0.18em] text-granate/75";
+  const label = "text-[0.82rem] font-normal uppercase tracking-[0.18em] text-granate/75";
   const field =
-    "mt-2 w-full appearance-none rounded-none border-0 border-b border-granate/35 bg-transparent pb-2.5 pt-1 text-[1.125rem] text-granate outline-none transition-colors placeholder:text-granate/35 focus:border-granate";
+    "mt-2 w-full appearance-none rounded-none border-0 border-b border-granate/35 bg-transparent pb-2.5 pt-1 text-[1.2rem] text-granate outline-none transition-colors placeholder:text-granate/35 focus:border-granate";
 
   return (
     <form onSubmit={submit} noValidate className="grid gap-x-8 gap-y-9 sm:grid-cols-2">
@@ -81,14 +81,14 @@ export function BookingForm() {
       <div className="flex flex-wrap items-center gap-6 sm:col-span-2">
         <button
           type="submit"
-          className="group inline-flex items-center gap-5 rounded-full border border-granate bg-granate py-1.5 pl-6 pr-1.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-crema transition-colors duration-500 hover:border-carmesi hover:bg-carmesi"
+          className="group inline-flex items-center gap-5 rounded-full border border-granate bg-granate py-1.5 pl-6 pr-1.5 text-[0.86rem] font-normal uppercase tracking-[0.16em] text-crema transition-colors duration-500 hover:border-carmesi hover:bg-carmesi"
         >
           Consultar disponibilidad
           <span aria-hidden className="grid h-8 w-8 place-items-center rounded-full border border-current transition-transform duration-500 group-hover:translate-x-0.5">
             <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
           </span>
         </button>
-        <p className="text-sm text-granate/60">Se abrirá WhatsApp con tu solicitud.</p>
+        <p className="text-base text-granate/60">Se abrirá WhatsApp con tu solicitud.</p>
       </div>
 
       <div aria-live="polite" className="sm:col-span-2">

@@ -56,7 +56,7 @@ export function PhotoBlock({
         )}
       </div>
       {!src && caption && (
-        <figcaption className={`absolute ${captionClassName} text-[0.68rem] uppercase tracking-[0.2em] opacity-80`}>
+        <figcaption className={`absolute ${captionClassName} text-[0.82rem] uppercase tracking-[0.2em] opacity-80`}>
           {caption}
         </figcaption>
       )}

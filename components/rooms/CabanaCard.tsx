@@ -74,12 +74,12 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
           <p className="max-w-md text-granate/85">{cabana.descripcion}</p>
           <a
             href="/reservas"
-            className="mt-5 inline-block border-b border-carmesi/60 pb-1 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
+            className="mt-5 inline-block border-b border-carmesi/60 pb-1 text-[0.88rem] font-normal uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
           >
             Reservar esta cabaña
           </a>
         </div>
-        <ul className="space-y-3 text-[1rem] text-granate/80 sm:min-w-[190px]">
+        <ul className="space-y-3 text-[1.12rem] text-granate/80 sm:min-w-[190px]">
           <li className="flex items-center gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
             <span><span className="sr-only">Tamaño: </span>{cabana.tamano ?? `Tamaño ${PENDIENTE.toLowerCase()}`}</span>

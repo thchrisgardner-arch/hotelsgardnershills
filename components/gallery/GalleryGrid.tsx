@@ -41,7 +41,7 @@ export function GalleryGrid() {
                 <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 32vw, 50vw" className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-soft)] group-hover:scale-[1.05]" />
               )}
             </button>
-            <p className="mt-4 text-[0.95rem] text-granate/75">{p.alt}</p>
+            <p className="mt-4 text-[1.08rem] text-granate/75">{p.alt}</p>
           </li>
         ))}
       </ul>
@@ -49,10 +49,10 @@ export function GalleryGrid() {
       {open !== null && (
         <div role="dialog" aria-modal="true" aria-label={galeria[open].alt} className="fixed inset-0 z-[80] flex flex-col bg-granate text-marfil" onClick={(e) => e.target === e.currentTarget && setOpen(null)}>
           <div className="flex items-center justify-between px-[var(--gutter)] py-5">
-            <span className="text-[0.72rem] font-medium uppercase tracking-[0.2em] text-rosa">
+            <span className="text-[0.86rem] font-normal uppercase tracking-[0.2em] text-rosa">
               {String(open + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
             </span>
-            <button type="button" autoFocus onClick={() => setOpen(null)} className="text-[0.72rem] font-medium uppercase tracking-[0.2em]">
+            <button type="button" autoFocus onClick={() => setOpen(null)} className="text-[0.86rem] font-normal uppercase tracking-[0.2em]">
               Cerrar ✕
             </button>
           </div>
@@ -60,9 +60,9 @@ export function GalleryGrid() {
             {galeria[open].src && <Image src={galeria[open].src!} alt={galeria[open].alt} fill sizes="100vw" className="object-contain" />}
           </div>
           <div className="flex items-center justify-between px-[var(--gutter)] py-6">
-            <button type="button" onClick={() => go(-1)} className="text-[0.72rem] font-medium uppercase tracking-[0.2em]">← Anterior</button>
+            <button type="button" onClick={() => go(-1)} className="text-[0.86rem] font-normal uppercase tracking-[0.2em]">← Anterior</button>
             <p className="t-italic text-xl">{galeria[open].alt}</p>
-            <button type="button" onClick={() => go(1)} className="text-[0.72rem] font-medium uppercase tracking-[0.2em]">Siguiente →</button>
+            <button type="button" onClick={() => go(1)} className="text-[0.86rem] font-normal uppercase tracking-[0.2em]">Siguiente →</button>
           </div>
         </div>
       )}

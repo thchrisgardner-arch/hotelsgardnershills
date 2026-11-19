@@ -11,12 +11,12 @@ export function Refugio() {
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/40" />
       <div className="relative flex h-full flex-col items-center justify-between px-[var(--gutter)] py-20 text-center">
         <div>
-          <p data-reveal className="text-[0.72rem] font-medium uppercase tracking-[0.3em]">
+          <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.3em]">
             Un refugio privado
           </p>
           <Lines id="entorno-title" className="t-italic mt-3 text-[clamp(3rem,6.4vw,6.4rem)] leading-none" lines={["Inmerso en la naturaleza"]} />
         </div>
-        <p data-reveal className="max-w-2xl text-[1.125rem] leading-[1.4] text-marfil/90">
+        <p data-reveal className="max-w-2xl text-[1.2rem] leading-[1.4] text-marfil/90">
           Cierra los ojos, escucha el viento, siente la brisa. Aquí, la vida se experimenta a otro ritmo.
         </p>
       </div>

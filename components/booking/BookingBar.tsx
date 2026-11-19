@@ -79,8 +79,8 @@ export function BookingBar() {
 
   const panelBox = "absolute bottom-full mb-3 rounded-md border border-granate/12 bg-crema shadow-[0_18px_50px_-18px_rgba(120,16,6,0.45)]";
   const cell = "flex items-center gap-3.5 px-6 py-3 text-left transition-colors hover:bg-granate/[0.04]";
-  const small = "block text-[0.78rem] leading-tight text-granate/60";
-  const value = "block whitespace-nowrap text-[1.05rem] leading-snug text-granate";
+  const small = "block text-[0.92rem] leading-tight text-granate/60";
+  const value = "block whitespace-nowrap text-[1.16rem] leading-snug text-granate";
   const step =
     "grid h-9 w-9 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
 
@@ -99,7 +99,7 @@ export function BookingBar() {
             }}
             onComplete={() => setTimeout(() => setPanel("quien"), 250)}
           />
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-granate/12 pt-5 text-[0.9rem] text-granate/70">
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-granate/12 pt-5 text-[1.02rem] text-granate/70">
             <p className="flex items-center gap-2">
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8v.5" /></svg>
               {reservas.nota}
@@ -122,7 +122,7 @@ export function BookingBar() {
                     Cabaña <span className="t-italic">{i + 1}</span>
                   </p>
                   {cabanas.length > 1 && (
-                    <button type="button" onClick={() => setCabanas((cs) => cs.filter((_, j) => j !== i))} className="text-[0.7rem] font-medium uppercase tracking-[0.14em] text-granate/60 underline underline-offset-4 hover:text-carmesi">
+                    <button type="button" onClick={() => setCabanas((cs) => cs.filter((_, j) => j !== i))} className="text-[0.84rem] font-normal uppercase tracking-[0.14em] text-granate/60 underline underline-offset-4 hover:text-carmesi">
                       Quitar
                     </button>
                   )}
@@ -134,13 +134,13 @@ export function BookingBar() {
                   <div key={r.k} className="flex items-center justify-between py-2.5">
                     <div>
                       <p className="text-granate">{r.label}</p>
-                      {r.sub && <p className="text-[0.85rem] text-granate/60">{r.sub}</p>}
+                      {r.sub && <p className="text-[0.98rem] text-granate/60">{r.sub}</p>}
                     </div>
                     <div className="flex items-center gap-4">
                       <button type="button" className={step} disabled={c[r.k] <= r.min} onClick={() => setCab(i, r.k, c[r.k] - 1)} aria-label={`Quitar ${r.label.toLowerCase()} en cabaña ${i + 1}`}>
                         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10" /></svg>
                       </button>
-                      <span className="w-5 text-center text-[1.1rem] text-granate" aria-live="polite">{c[r.k]}</span>
+                      <span className="w-5 text-center text-[1.2rem] text-granate" aria-live="polite">{c[r.k]}</span>
                       <button type="button" className={step} disabled={c[r.k] >= r.max} onClick={() => setCab(i, r.k, c[r.k] + 1)} aria-label={`Añadir ${r.label.toLowerCase()} en cabaña ${i + 1}`}>
                         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10M8 3v10" /></svg>
                       </button>
@@ -155,11 +155,11 @@ export function BookingBar() {
               type="button"
               disabled={cabanas.length >= reservas.maxCabanas}
               onClick={() => setCabanas((cs) => [...cs, { adultos: 2, ninos: 0 }])}
-              className="w-full rounded-[4px] border border-granate/60 py-3 text-[0.95rem] text-granate transition-colors hover:bg-granate hover:text-crema disabled:opacity-40"
+              className="w-full rounded-[4px] border border-granate/60 py-3 text-[1.08rem] text-granate transition-colors hover:bg-granate hover:text-crema disabled:opacity-40"
             >
               Añadir cabaña
             </button>
-            <button type="button" onClick={() => setPanel(null)} className="w-full py-1 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-granate/70 hover:text-carmesi">
+            <button type="button" onClick={() => setPanel(null)} className="w-full py-1 text-[0.86rem] font-normal uppercase tracking-[0.16em] text-granate/70 hover:text-carmesi">
               Listo
             </button>
           </div>
@@ -194,11 +194,11 @@ export function BookingBar() {
               onFocus={() => setPanel(null)}
               placeholder="Código"
               aria-label="Código de promoción"
-              className="block w-28 bg-transparent text-[1.05rem] leading-snug text-granate outline-none placeholder:text-granate/45"
+              className="block w-28 bg-transparent text-[1.16rem] leading-snug text-granate outline-none placeholder:text-granate/45"
             />
           </span>
         </label>
-        <button type="button" onClick={buscar} className="ml-2 rounded-[4px] bg-granate px-8 text-[1rem] font-medium text-crema transition-colors duration-500 hover:bg-carmesi active:bg-carmesi/90">
+        <button type="button" onClick={buscar} className="ml-2 rounded-[4px] bg-granate px-8 text-[1.12rem] font-normal text-crema transition-colors duration-500 hover:bg-carmesi active:bg-carmesi/90">
           Buscar
         </button>
       </div>

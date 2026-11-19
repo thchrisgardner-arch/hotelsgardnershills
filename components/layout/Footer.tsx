@@ -44,8 +44,8 @@ export function Footer() {
 
         {cols.map((c) => (
           <nav key={c.titulo} aria-label={c.titulo} className="lg:col-span-2">
-            <h2 className="mb-5 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-granate/60">{c.titulo}</h2>
-            <ul className="space-y-2.5 text-[1.125rem]">
+            <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{c.titulo}</h2>
+            <ul className="space-y-2.5 text-[1.2rem]">
               {c.links.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="transition-colors hover:text-carmesi">{l.label}</Link>
@@ -56,8 +56,8 @@ export function Footer() {
         ))}
 
         <div className="lg:col-span-3">
-          <h2 className="mb-5 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-granate/60">Contacto</h2>
-          <ul className="space-y-2.5 text-[1.125rem]">
+          <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">Contacto</h2>
+          <ul className="space-y-2.5 text-[1.2rem]">
             <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-carmesi">WhatsApp {contact.whatsappLabel}</a></li>
             <li><a href={`mailto:${contact.email}`} className="hover:text-carmesi">{contact.email}</a></li>
             <li className="text-granate/75">Villanueva, La Guajira · Colombia</li>
@@ -69,7 +69,7 @@ export function Footer() {
         <Logo className="w-full" />
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-granate/70">
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[0.84rem] font-normal uppercase tracking-[0.18em] text-granate/70">
         <div className="flex gap-8">
           <span>Términos y condiciones</span>
           <span>Política de privacidad</span>

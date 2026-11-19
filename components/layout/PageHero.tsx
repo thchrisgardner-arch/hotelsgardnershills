@@ -21,7 +21,7 @@ export function PageHero({
       <div className="grid min-h-[78vh] items-end gap-10 px-[var(--gutter)] pb-14 pt-[calc(var(--header-h)+3rem)] lg:grid-cols-[1fr_auto]">
         <div>
           {kicker && (
-            <p data-reveal className="mb-6 text-[0.72rem] font-medium uppercase tracking-[0.28em] text-rosa">
+            <p data-reveal className="mb-6 text-[0.86rem] font-normal uppercase tracking-[0.28em] text-rosa">
               {kicker}
             </p>
           )}

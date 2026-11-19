@@ -28,7 +28,7 @@ export function Hero() {
       <div aria-hidden className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/30 to-transparent" />
 
       <div className="relative flex h-full flex-col items-center justify-end px-[var(--gutter)] pb-10 text-center md:pb-32">
-        <p data-hero-fade className="text-[0.72rem] font-medium uppercase tracking-[0.3em] text-marfil/90">
+        <p data-hero-fade className="text-[0.86rem] font-normal uppercase tracking-[0.3em] text-marfil/90">
           Tu sueño en Gardners Hills
         </p>
         <h1
@@ -41,7 +41,7 @@ export function Hero() {
           </span>
         </h1>
 
-        <nav aria-label="Accesos" data-hero-fade className="mt-16 grid w-full grid-cols-3 text-[0.72rem] font-medium uppercase tracking-[0.24em]">
+        <nav aria-label="Accesos" data-hero-fade className="mt-16 grid w-full grid-cols-3 text-[0.86rem] font-normal uppercase tracking-[0.24em]">
           <Link href="/la-casa" className="justify-self-start hover:text-rosa transition-colors">Acerca de.</Link>
           <Link href="/cabanas" className="justify-self-center hover:text-rosa transition-colors">Cabañas.</Link>
           <Link href="/reservas" className="justify-self-end hover:text-rosa transition-colors">Reserva.</Link>
