@@ -24,6 +24,12 @@ export function CookieBanner() {
     }
   }, []);
 
+  // Mientras el aviso está pendiente, en móvil (< 768 px) se ocultan la barra de reserva y WhatsApp (ver globals.css)
+  useEffect(() => {
+    if (estado === null) return;
+    document.documentElement.toggleAttribute("data-cookies-pendiente", estado === "pendiente");
+  }, [estado]);
+
   const elegir = (v: "aceptadas" | "necesarias") => {
     setEstado(v);
     try {
@@ -41,12 +47,43 @@ export function CookieBanner() {
           </Script>
         </>
       )}
+      {/* Móvil (< 768 px): barra compacta fija abajo, máx. 120 px, dos líneas y botones iguales lado a lado */}
       {estado === "pendiente" && (
         <div
           data-chrome
           role="region"
           aria-label="Cookies"
-          className="fixed bottom-[112px] left-4 max-lg:bottom-[92px] z-[45] w-[min(380px,calc(100vw-2rem))] border border-granate/15 bg-crema p-6 text-granate shadow-[0_18px_50px_-18px_rgba(16,15,14,0.35)]"
+          className="fixed inset-x-0 bottom-0 z-[45] max-h-[120px] border-t border-granate/15 bg-crema px-4 pb-3 pt-2.5 text-granate md:hidden"
+        >
+          <p className="text-[0.875rem] leading-[1.35] text-granate">
+            {t("cookiesCorto")}{" "}
+            <L href="/cookies" className="underline underline-offset-4 hover:text-carmesi">{t("cookiesMas")}</L>
+          </p>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => elegir("aceptadas")}
+              className="h-11 border border-granate text-[0.8rem] uppercase tracking-[0.14em] text-granate transition-colors hover:bg-granate hover:text-crema"
+            >
+              {t("cookiesAceptar")}
+            </button>
+            <button
+              type="button"
+              onClick={() => elegir("necesarias")}
+              className="h-11 border border-granate text-[0.8rem] uppercase tracking-[0.14em] text-granate transition-colors hover:bg-granate hover:text-crema"
+            >
+              {t("cookiesRechazar")}
+            </button>
+          </div>
+        </div>
+      )}
+      {/* Tablet y escritorio: aviso flotante sin cambios */}
+      {estado === "pendiente" && (
+        <div
+          data-chrome
+          role="region"
+          aria-label="Cookies"
+          className="max-md:hidden fixed bottom-[112px] left-4 max-lg:bottom-[92px] z-[45] w-[min(380px,calc(100vw-2rem))] border border-granate/15 bg-crema p-6 text-granate shadow-[0_18px_50px_-18px_rgba(16,15,14,0.35)]"
         >
           <p className="text-[1rem] leading-[1.45] text-granate/85">
             {t("cookiesTexto")}{" "}

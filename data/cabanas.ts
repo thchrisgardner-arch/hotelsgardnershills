@@ -32,7 +32,7 @@ export type Cabana = {
   capacidad: string;
   /** Huéspedes máximos (para el buscador de reservas) */
   maxHuespedes: number;
-  /** Nivel de tarifa (data/tarifas.ts). ⚠ Asignación de ejemplo: confirmar con el cliente */
+  /** Tarifa que le corresponde (data/tarifas.ts): basica = Refugio, media = Refugio con jacuzzi, premium = Premium. Confirmado por el cliente 2026-11-20 */
   tarifa: TarifaId;
   camas: string;
   instalaciones: string[];

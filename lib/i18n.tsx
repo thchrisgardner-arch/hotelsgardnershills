@@ -38,6 +38,7 @@ const dict = {
     es: "Usamos cookies propias para que el sitio funcione y, si lo aceptas, cookies de analítica para entender cómo lo usas.",
     en: "We use our own cookies to make the site work and, if you accept, analytics cookies to understand how you use it.",
   },
+  cookiesCorto: { es: "Usamos cookies para mejorar tu visita.", en: "We use cookies to improve your visit." },
   cookiesAceptar: { es: "Aceptar", en: "Accept" },
   cookiesRechazar: { es: "Solo necesarias", en: "Necessary only" },
   cookiesMas: { es: "Más información", en: "Learn more" },

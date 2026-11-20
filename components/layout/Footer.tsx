@@ -2,7 +2,6 @@
 
 import { L } from "@/components/ui/L";
 import { Logo } from "@/components/ui/Logo";
-import { Pill } from "@/components/ui/Pill";
 import { site, menuPrincipal, legales } from "@/data/site";
 import { useLang, type Clave } from "@/lib/i18n";
 
@@ -31,9 +30,7 @@ export function Footer() {
             <br />
             {t("villanueva4")}
           </p>
-          <div className="mt-14 lg:mt-10">
-            <Pill href="/reservas">{t("reservarAhora")}</Pill>
-          </div>
+          {/* Sin botón de reserva aquí (2026-11-20): la reserva sigue en el enlace «Reservas» de Explorar */}
         </div>
 
         {cols.map((c) => (

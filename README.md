@@ -1,6 +1,6 @@
 # hotelsgardnershills
 
-Sitio web de **Gardners Hills**, hotel boutique de cabañas en Villanueva, La Guajira (Colombia).
+Sitio web de **Gardners Hills**, hotel de cabañas en Villanueva, La Guajira (Colombia).
 
 ## Stack
 

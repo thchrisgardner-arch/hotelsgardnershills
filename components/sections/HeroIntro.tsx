@@ -155,8 +155,8 @@ export function HeroIntro() {
     }
   };
   const T = {
-    es: { kicker: "Tu sueño en Gardners Hills", sub: "Cabañas boutique en Villanueva, La Guajira.", cta: "Reservar", pausa: "Pausar el video", play: "Reproducir el video", resto: "az, Historia y Silencio" },
-    en: { kicker: "Your dream at Gardners Hills", sub: "Boutique cabins in Villanueva, La Guajira.", cta: "Book", pausa: "Pause the video", play: "Play the video", resto: "eace, History and Silence" },
+    es: { kicker: "A los pies de la Serranía del Perijá", sub: "Ocho cabañas en Villanueva, La Guajira, para dos.", cta: "Conoce las cabañas", pausa: "Pausar el video", play: "Reproducir el video", inicial: "A", resto: "quí, el lujo es el silencio." },
+    en: { kicker: "At the foot of the Serranía del Perijá", sub: "Eight cabins in Villanueva, La Guajira, made for two.", cta: "Discover the cabins", pausa: "Pause the video", play: "Play the video", inicial: "H", resto: "ere, silence is the luxury." },
   }[lang];
 
   return (
@@ -206,16 +206,16 @@ export function HeroIntro() {
         <p data-intro-fade className="text-[0.92rem] uppercase tracking-[0.3em] text-marfil">
           {T.kicker}
         </p>
-        {/* Título recto en una línea: «P» en recta de palo y el resto en cursiva serif */}
+        {/* Título en una línea en escritorio: inicial en sans light y el resto en cursiva serif; escala con clamp */}
         <div data-intro-fade className="mt-6">
-          <h1 className="text-[clamp(2.6rem,6.6vw,7.2rem)] leading-[1.02] sm:whitespace-nowrap">
-            <span className="font-[family-name:var(--font-sans)] font-light not-italic">P</span>
+          <h1 className="text-[clamp(2.4rem,6vw,6.6rem)] leading-[1.02] lg:whitespace-nowrap">
+            <span className="font-[family-name:var(--font-sans)] font-light not-italic">{T.inicial}</span>
             <span className="t-italic">{T.resto}</span>
           </h1>
         </div>
         <p data-intro-fade className="mt-10 text-marfil">{T.sub}</p>
         <div data-intro-fade className="mt-7">
-          <Pill href="/reservas" tone="blanco">
+          <Pill href="/cabanas" tone="blanco">
             {T.cta}
           </Pill>
         </div>

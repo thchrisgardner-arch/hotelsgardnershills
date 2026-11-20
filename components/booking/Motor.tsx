@@ -46,7 +46,7 @@ const TXT = {
     eligeFechasVer: "Elige tus fechas para continuar", capacidadMax: "Capacidad máxima",
     elegirFechas: "Elegir fechas", seleccionar: "Seleccionar", elegida: "Cabaña elegida", cambiar: "Ver otras",
     continuarCon: "Continuar con",
-    tarifasTitulo: ["Tarifas en", "Gardners Hills"], capacidad: "Capacidad", cabanas: "Cabañas", reservar: "Reservar",
+    tarifasTitulo: ["Tarifas en", "Gardners Hills"], capacidad: "Capacidad", cabanas: "Cabañas", aplica: "Aplica a", reservar: "Reservar",
     datos: "Tus datos", volver: "← Cambiar cabaña o fechas", datosNota: "Los usamos solo para gestionar tu solicitud, según nuestra política de privacidad.",
     campos: { nombre: "Nombre y apellido", correo: "Correo electrónico", telefono: "Teléfono", pais: "País", notas: "Solicitudes especiales (opcional)" },
     acepto: ["Acepto los", "términos y condiciones", "y la", "política de privacidad"],
@@ -77,7 +77,7 @@ const TXT = {
     eligeFechasVer: "Choose your dates to continue", capacidadMax: "Maximum capacity",
     elegirFechas: "Choose dates", seleccionar: "Select", elegida: "Selected cabin", cambiar: "See others",
     continuarCon: "Continue with",
-    tarifasTitulo: ["Rates at", "Gardners Hills"], capacidad: "Capacity", cabanas: "Cabins", reservar: "Book",
+    tarifasTitulo: ["Rates at", "Gardners Hills"], capacidad: "Capacity", cabanas: "Cabins", aplica: "Applies to", reservar: "Book",
     datos: "Your details", volver: "← Change cabin or dates", datosNota: "We only use them to handle your request, as set out in our privacy policy.",
     campos: { nombre: "Full name", correo: "Email", telefono: "Phone", pais: "Country", notas: "Special requests (optional)" },
     acepto: ["I accept the", "terms and conditions", "and the", "privacy policy"],
@@ -537,7 +537,19 @@ export function Motor() {
             <ul className="mx-auto mt-16 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
               {tarifasConCabanas(lang).map((t) => (
                 <li key={t.id} className="flex flex-col border border-granate/25 p-6 sm:p-8">
-                  <h3 className="border-b border-granate/15 pb-5 text-center text-[1rem] uppercase tracking-[0.24em] text-granate">{t.nombre[lang]}</h3>
+                  <div className="border-b border-granate/15 pb-5 text-center">
+                    <h3 className="text-[1rem] uppercase tracking-[0.24em] text-granate">{t.nombre[lang]}</h3>
+                    {/* Cabañas a las que aplica, enlazadas a su ficha (sale del campo tarifa de cada cabaña) */}
+                    <p className="mt-3 text-[0.95rem] leading-[1.5] text-granate">
+                      {T.aplica}:{" "}
+                      {t.cabanas.map((c, i) => (
+                        <span key={c.slug}>
+                          {i > 0 && ", "}
+                          <L href={`/cabanas/${c.slug}`} className="underline underline-offset-4 hover:text-carmesi">{nombreCorto(c)}</L>
+                        </span>
+                      ))}
+                    </p>
+                  </div>
                   <div className="grid grid-cols-2 border-b border-granate/15">
                     <div className="flex flex-col justify-center gap-3 border-r border-granate/15 py-5 pr-4 text-center">
                       <div>
@@ -557,10 +569,6 @@ export function Motor() {
                       ))}
                     </div>
                   </div>
-                  <p className="mt-5 text-granate">
-                    <span className="text-[0.875rem] uppercase tracking-[0.18em]">{T.cabanas}: </span>
-                    {t.nombresCabanas.join(", ")}
-                  </p>
                   <ul className="mt-5 flex-1 space-y-2 text-granate">
                     {t.incluye.map((x) => (
                       <li key={x.es} className="flex items-center gap-3">

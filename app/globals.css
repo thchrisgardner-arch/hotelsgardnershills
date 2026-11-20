@@ -243,3 +243,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0.7;
   cursor: pointer;
 }
+
+/* Aviso de cookies en móvil: mientras está pendiente se ocultan la barra fija de reserva y WhatsApp */
+@media (max-width: 767px) {
+  html[data-cookies-pendiente] [data-oculto-con-cookies] {
+    display: none !important;
+  }
+}

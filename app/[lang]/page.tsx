@@ -9,6 +9,7 @@ import { Experiencias } from "@/components/sections/Experiencias";
 import { Alrededores } from "@/components/sections/Alrededores";
 import { Galeria } from "@/components/sections/Galeria";
 import { Resenas } from "@/components/sections/Resenas";
+import { ReservaBanda } from "@/components/sections/ReservaBanda";
 import { getLang, type LangParams } from "@/lib/lang";
 import { alternativos } from "@/lib/routes";
 
@@ -18,8 +19,8 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 }
 
 /**
- * Portada. CTA de reserva: el del hero, la barra flotante y el del footer
- * (se quitó la banda «Reserva tu estancia» porque repetía el del footer justo después).
+ * Portada. Solo cuatro botones de reserva visibles (2026-11-20): cabecera, barra de reserva del hero,
+ * cierre «Tu próxima escapada comienza aquí» y barra fija de móvil. El botón del hero lleva a las cabañas.
  */
 export default async function Home({ params }: LangParams) {
   const lang = await getLang(params);
@@ -36,6 +37,7 @@ export default async function Home({ params }: LangParams) {
         <Refugio lang={lang} />
         <Galeria lang={lang} />
         <Resenas />
+        <ReservaBanda lang={lang} />
       </main>
     </>
   );

@@ -12,7 +12,8 @@ export type Actividad = {
 
 export const actividades: Actividad[] = [
   {
-    id: "perija",
+    // El id es también el ancla en Servicios (/servicios#… y /en/services#…), enlazada desde la portada
+    id: "serrania-del-perija",
     titulo: { es: "Serranía del Perijá", en: "Serranía del Perijá" },
     texto: {
       es: "La montaña que enmarca Villanueva. Paisaje, aire fresco y caminos para recorrer sin prisa.",
@@ -21,7 +22,7 @@ export const actividades: Actividad[] = [
     icono: "mountain",
   },
   {
-    id: "vallenato",
+    id: "cultura-vallenata",
     titulo: { es: "Cultura vallenata", en: "Vallenato culture" },
     texto: {
       es: "Villanueva es tierra de acordeoneros. Su música se vive en la calle y en el Festival Cuna de Acordeones.",

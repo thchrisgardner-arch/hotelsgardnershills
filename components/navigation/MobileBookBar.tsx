@@ -15,7 +15,7 @@ export function MobileBookBar() {
   if (canonica(pathname ?? "/").path.startsWith("/reservas")) return null;
 
   return (
-    <div data-chrome className="fixed inset-x-0 bottom-0 z-30 border-t border-granate/15 bg-crema/95 p-3 backdrop-blur lg:hidden">
+    <div data-chrome data-oculto-con-cookies className="fixed inset-x-0 bottom-0 z-30 border-t border-granate/15 bg-crema/95 p-3 backdrop-blur lg:hidden">
       <L href="/reservas" className="flex min-h-12 w-full items-center justify-between bg-granate px-5 text-[0.95rem] uppercase tracking-[0.16em] text-crema">
         <span>{t("reservarEstancia")}</span>
         <span aria-hidden>→</span>

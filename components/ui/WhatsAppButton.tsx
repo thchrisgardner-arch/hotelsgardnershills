@@ -10,6 +10,7 @@ export function WhatsAppButton() {
   return (
     <a
       data-chrome
+      data-oculto-con-cookies
       href={`https://wa.me/${site.contact.whatsappFlotante}?text=${msg}`}
       target="_blank"
       rel="noreferrer"

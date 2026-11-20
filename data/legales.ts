@@ -12,7 +12,7 @@ import type { Seccion } from "@/components/layout/LegalPage";
 
 export const ACTUALIZADO = "19 de noviembre de 2026";
 
-const responsable = `Gardners Hills (razón social y NIT por confirmar), hotel boutique de cabañas ubicado en Villanueva, La Guajira, Colombia. Correo: ${site.contact.email}. Teléfono y WhatsApp: ${site.contact.whatsappLabel}.`;
+const responsable = `Gardners Hills (razón social y NIT por confirmar), hotel de cabañas ubicado en Villanueva, La Guajira, Colombia. Correo: ${site.contact.email}. Teléfono y WhatsApp: ${site.contact.whatsappLabel}.`;
 
 export const terminos: { intro: string; secciones: Seccion[] } = {
   intro:

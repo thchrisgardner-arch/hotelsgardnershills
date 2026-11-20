@@ -14,8 +14,8 @@ export function JsonLd({ lang }: { lang: Lang }) {
     name: site.name,
     inLanguage: es ? "es-CO" : "en",
     description: es
-      ? "Hotel boutique de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene."
-      : "Boutique cabin hotel in Villanueva, La Guajira, Colombia. A refuge in nature where time stands still.",
+      ? "Hotel de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene."
+      : "Cabin hotel in Villanueva, La Guajira, Colombia. A refuge in nature where time stands still.",
     url: `${site.url}${localizar("/", lang)}`,
     image: `${site.url}/opengraph-image`,
     email: site.contact.email ?? undefined,

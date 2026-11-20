@@ -1,6 +1,6 @@
 /**
  * Tarifas de Gardners Hills, tomadas del diseño enviado por el cliente (2026-11-20):
- * Tarifa Básica, Media y Premium. Valores por noche, en pesos colombianos (COP) e impuestos incluidos.
+ * Refugio, Refugio con jacuzzi y Premium (nombres confirmados por el cliente 2026-11-20). Valores por noche, en pesos colombianos (COP) e impuestos incluidos.
  *
  * Las tarjetas ya no muestran un «2 personas» fijo: la categoría y la capacidad salen de las cabañas
  * que tienen asignado cada nivel (campo `tarifa` en data/cabanas.ts).
@@ -33,19 +33,19 @@ export const tarifasNota: Texto = {
 export const tarifas: Tarifa[] = [
   {
     id: "basica",
-    nombre: X("Tarifa Básica", "Basic Rate"),
+    nombre: X("Refugio", "Refuge"),
     temporadas: [{ nombre: ENE_AGO, valor: 90000 }, { nombre: SEP_DIC, valor: 110000 }],
     incluye: [X("Baño privado", "Private bathroom"), X("Tocador", "Vanity"), X("Wi-Fi", "Wi-Fi"), X("Aire acondicionado", "Air conditioning"), X("Room service", "Room service"), X("Ventanas con excelente luz", "Windows with great light")],
   },
   {
     id: "media",
-    nombre: X("Tarifa Media", "Standard Rate"),
+    nombre: X("Refugio con jacuzzi", "Refuge with jacuzzi"),
     temporadas: [{ nombre: ENE_AGO, valor: 100000 }, { nombre: SEP_DIC, valor: 120000 }],
     incluye: [X("Baño privado", "Private bathroom"), X("Desayuno para dos", "Breakfast for two"), X("Bata de baño", "Bathrobe"), X("Tocador", "Vanity"), X("Wi-Fi", "Wi-Fi"), X("Aire acondicionado", "Air conditioning"), X("Room service", "Room service"), X("Ventanas con excelente luz", "Windows with great light")],
   },
   {
     id: "premium",
-    nombre: X("Tarifa Premium", "Premium Rate"),
+    nombre: X("Premium", "Premium"),
     temporadas: [{ nombre: ENE_AGO, valor: 130000 }, { nombre: SEP_DIC, valor: 150000 }],
     incluye: [X("Suite con baño privado", "Suite with private bathroom"), X("Brunch para dos", "Brunch for two"), X("Bata de baño", "Bathrobe"), X("Tocador", "Vanity"), X("Wi-Fi", "Wi-Fi"), X("Aire acondicionado", "Air conditioning"), X("Room service", "Room service"), X("Ventanas con excelente luz", "Windows with great light"), X("Piscina", "Pool")],
   },

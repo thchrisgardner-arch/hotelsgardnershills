@@ -2,6 +2,7 @@ import { actividades } from "@/data/actividades";
 import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { Pill } from "@/components/ui/Pill";
+import { L } from "@/components/ui/L";
 import type { Lang } from "@/lib/routes";
 
 /** Actividades cercanas con imágenes alineadas */
@@ -32,14 +33,18 @@ export function Alrededores({ lang }: { lang: Lang }) {
       {/* En escritorio toda la sección cabe en una pantalla: fotos con alto según la ventana */}
       <ul className="mt-20 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
         {items.map((a) => (
-          <li key={a.id} className="flex flex-col" data-cursor>
-            <Arch alt={a.titulo[lang]} className="aspect-[3/4] w-full lg:aspect-auto lg:h-[clamp(200px,30svh,340px)]" />
-            <h3 data-reveal className="mt-7 lg:mt-5 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
-              {a.titulo[lang]}
-            </h3>
-            <p data-reveal className="mt-4 text-[1.2rem] leading-[1.4] text-granate lg:mt-3 lg:text-[1.05rem]">
-              {a.texto[lang]}
-            </p>
+          <li key={a.id}>
+            {/* Toda la tarjeta enlaza a su actividad en Servicios */}
+            <L href={`/servicios#${a.id}`} className="group flex h-full flex-col" data-cursor>
+              <Arch alt={a.titulo[lang]} className="aspect-[3/4] w-full lg:aspect-auto lg:h-[clamp(200px,30svh,340px)]" hoverZoom />
+              <h3 data-reveal className="mt-7 flex items-center justify-between gap-4 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate transition-colors group-hover:border-granate group-focus-visible:border-granate lg:mt-5">
+                {a.titulo[lang]}
+                <span aria-hidden className="text-[1.1rem] transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-1 group-focus-visible:translate-x-1">→</span>
+              </h3>
+              <p data-reveal className="mt-4 text-[1.2rem] leading-[1.4] text-granate lg:mt-3 lg:text-[1.05rem]">
+                {a.texto[lang]}
+              </p>
+            </L>
           </li>
         ))}
       </ul>

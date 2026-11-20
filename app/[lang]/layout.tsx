@@ -30,16 +30,16 @@ export const dynamicParams = false;
 
 const TXT = {
   es: {
-    title: "Gardners Hills · Hotel boutique en Villanueva, La Guajira",
-    description: "Hotel boutique de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene.",
+    title: "Gardners Hills · Hotel de cabañas en Villanueva, La Guajira",
+    description: "Hotel de cabañas en Villanueva, La Guajira. Un refugio en la naturaleza donde el tiempo se detiene.",
     og: "Gardners Hills · Un refugio en la naturaleza",
-    keywords: ["hotel boutique en La Guajira", "cabañas en Villanueva La Guajira", "hospedaje en Villanueva", "escapadas en La Guajira"],
+    keywords: ["hotel de cabañas en La Guajira", "cabañas en Villanueva La Guajira", "hospedaje en Villanueva", "escapadas en La Guajira"],
   },
   en: {
-    title: "Gardners Hills · Boutique hotel in Villanueva, La Guajira",
-    description: "Boutique cabin hotel in Villanueva, La Guajira, Colombia. A refuge in nature where time stands still.",
+    title: "Gardners Hills · Cabin hotel in Villanueva, La Guajira",
+    description: "Cabin hotel in Villanueva, La Guajira, Colombia. A refuge in nature where time stands still.",
     og: "Gardners Hills · A refuge in nature",
-    keywords: ["boutique hotel La Guajira", "cabins Villanueva Colombia", "where to stay in La Guajira", "nature getaway Colombia"],
+    keywords: ["cabin hotel La Guajira", "cabins Villanueva Colombia", "where to stay in La Guajira", "nature getaway Colombia"],
   },
 };
 

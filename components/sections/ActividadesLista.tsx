@@ -30,7 +30,8 @@ export function ActividadesLista({ lang }: { lang: Lang }) {
 
       <ul className="mt-20 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
         {actividades.map((a, i) => (
-          <li key={a.id} className="flex flex-col">
+          // id = ancla enlazada desde la portada; scroll-mt compensa la cabecera fija
+          <li key={a.id} id={a.id} className="flex scroll-mt-[calc(var(--header-h)+1.5rem)] flex-col">
             <Arch alt={a.titulo[lang]} className="aspect-[4/5] w-full" />
             <div data-reveal className="mt-7 flex items-baseline justify-between border-b border-granate/20 pb-3">
               <h3 className="font-[family-name:var(--font-display)] text-[2rem] leading-none text-granate">{a.titulo[lang]}</h3>
