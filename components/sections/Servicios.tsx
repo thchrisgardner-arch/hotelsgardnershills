@@ -55,7 +55,7 @@ export function Servicios() {
           </div>
 
           <div id="servicio-panel" role="tabpanel" ref={panel} className="mt-auto pt-24">
-            <h2 className="flex items-baseline gap-5 text-granate">
+            <h2 className="flex flex-col items-start gap-3 text-granate">
               <span className="text-[0.92rem] font-normal uppercase tracking-[0.24em]">Hills</span>
               <span className="t-italic text-[clamp(3.4rem,6vw,6rem)] leading-none">{s.titulo}</span>
             </h2>

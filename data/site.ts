@@ -33,11 +33,9 @@ export const site = {
  * el contenido es el de Gardners Hills (secciones del wireframe V2).
  */
 export const menuPrincipal = [
-  { label: "Inicio", en: "Home", href: "/" },
   { label: "Cabañas", en: "Cabins", href: "/cabanas" },
   { label: "Servicios", en: "Services", href: "/servicios" },
   { label: "Gastronomía & Bar", en: "Food & Bar", href: "/gastronomia" },
-  { label: "Actividades", en: "Activities", href: "/actividades" },
   { label: "Galería", en: "Gallery", href: "/galeria" },
   { label: "Reservas", en: "Bookings", href: "/reservas" },
   { label: "Contacto", en: "Contact", href: "/contacto" },

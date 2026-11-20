@@ -15,7 +15,7 @@ export default function CabanasPage() {
     <>
       <MotionController />
       <main>
-        <PageHero titulo="Cabañas" kicker="Alojamiento" foto="/images/cabanas/cabana-arco.jpg" alt="Cabaña con ventanal en arco" />
+        <PageHero titulo="Gardners Hills" kicker="Bienvenidos" foto="/images/cabanas/cabana-arco.jpg" alt="Cabaña con ventanal en arco" />
         <Cabanas />
         <ReservaBanda texto="Elige tus fechas y te confirmamos disponibilidad por WhatsApp." />
       </main>

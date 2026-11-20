@@ -17,7 +17,7 @@ export const metadata: Metadata = {
  */
 export default function ContactoPage() {
   const { contact, location } = site;
-  const h2 = "font-[family-name:var(--font-display)] text-[clamp(2.6rem,4vw,4.2rem)] uppercase leading-[0.95] text-carmesi";
+  const h2 = "t-recto font-[family-name:var(--font-display)] text-[clamp(2.6rem,4vw,4.2rem)] leading-[1] text-carmesi";
 
   return (
     <>
@@ -25,13 +25,16 @@ export default function ContactoPage() {
       <main>
         {/* Apertura tipográfica */}
         <section className="flex min-h-[86vh] flex-col items-center justify-center px-[var(--gutter)] pb-20 pt-[calc(var(--header-h)+5rem)] text-center">
+          <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-granate/80">
+            Villanueva · La Guajira
+          </p>
           <Lines
             as="h1"
-            className="t-italic text-[clamp(4.2rem,10vw,10rem)] leading-[0.92] text-carmesi"
+            className="t-italic mt-8 text-[clamp(4.2rem,10vw,10rem)] leading-[0.92] text-carmesi"
             lines={["Contacto", "y llegada"]}
           />
           <address data-reveal className="mt-12 space-y-1 not-italic text-carmesi">
-            <p>{location.address ?? "Dirección por confirmar"}</p>
+            {location.address && <p>{location.address}</p>}
             <p>
               {location.town}, {location.region} · {location.country}
             </p>
@@ -80,7 +83,7 @@ export default function ContactoPage() {
                   Ver ubicación en el mapa →
                 </a>
               ) : (
-                <p className="text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate/60">Mapa · ubicación por confirmar</p>
+                <p className="text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate/60">Villanueva · La Guajira</p>
               )}
             </div>
           </div>
@@ -89,7 +92,7 @@ export default function ContactoPage() {
         {/* Contacto directo (como la lista de correos de la referencia) */}
         <section className="border-t border-granate/15 px-[var(--gutter)] py-24 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-12">
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] uppercase leading-none text-carmesi lg:col-span-4">
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] leading-none text-carmesi lg:col-span-4">
               Contacto directo
             </h2>
             <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:grid-cols-3">

@@ -24,8 +24,6 @@ export const espacios: Espacio[] = [
     texto:
       "La cocina como encuentro: platos sencillos, ingredientes de la región y el tiempo justo para disfrutarlos, con la luz y el viento de la sierra como compañía.",
     detalles: [
-      { icono: "plato", texto: "Carta por confirmar." },
-      { icono: "reloj", texto: "Horarios por confirmar." },
       { icono: "sierra", texto: "Con la sierra a la vista." },
     ],
     foto: null,
@@ -36,9 +34,6 @@ export const espacios: Espacio[] = [
     texto:
       "Cuando el día se apaga, el bar abre la conversación. Una bebida fría, una copa tranquila y la calma de la noche en Villanueva.",
     detalles: [
-      { icono: "copa", texto: "Bebidas y coctelería por confirmar." },
-      { icono: "reloj", texto: "Horarios por confirmar." },
-      { icono: "sierra", texto: "Ubicación y ambiente por confirmar." },
     ],
     foto: null,
   },

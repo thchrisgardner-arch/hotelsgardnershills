@@ -114,6 +114,25 @@ html.lenis body {
   display: block;
 }
 
+/*
+ * Títulos: rectos en las secciones (decisión del cliente, 2026-11-19).
+ * Solo los heros llevan el título inclinado (.t-hero), con el rótulo pequeño recto encima.
+ * (.t-recto y .t-tilt quedan en el marcado sin efecto; se pueden limpiar más adelante.)
+ *
+ * Por qué rotate + skewX: Miramare gira -10° una letra script (Gracia) que ya se inclina hacia
+ * adelante. Girar una serif recta deja los fustes echados hacia atrás (efecto forzado);
+ * el skewX los devuelve hacia adelante mientras la línea base sube.
+ */
+@layer components {
+.t-hero {
+  display: inline-block;
+  max-width: 100%;
+  text-align: center;
+  transform: rotate(-8deg) skewX(-10deg);
+  transform-origin: center;
+}
+}
+
 /* ── Logo como máscara (respeta la forma original, color de paleta) ── */
 .logo-mask {
   display: block;

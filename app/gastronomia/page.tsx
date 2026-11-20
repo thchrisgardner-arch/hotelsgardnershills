@@ -23,7 +23,7 @@ const iconos: Record<Espacio["detalles"][number]["icono"], React.ReactNode> = {
 
 const masAlla = [
   { titulo: "Cabañas", texto: "Arquitectura blanca y madera frente a la sierra.", href: "/cabanas" },
-  { titulo: "Actividades", texto: "Ríos, pueblo y cocina de la región a pocos pasos.", href: "/actividades" },
+  { titulo: "Actividades", texto: "Ríos, pueblo y cocina de la región a pocos pasos.", href: "/servicios#actividades" },
   { titulo: "Servicios", texto: "Spa y gimnasio para que la calma continúe.", href: "/servicios" },
 ];
 
@@ -39,13 +39,13 @@ export default function GastronomiaPage() {
         {/* Portada: rótulo + título en cursiva centrado, como la referencia */}
         <section data-header-light className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-granate px-[var(--gutter)] text-center text-marfil">
           <div>
-            <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.28em] text-marfil/70">
+            <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil/90">
               Gastronomía &amp; Bar
             </p>
             <Lines
               as="h1"
-              className="mt-8 font-[family-name:var(--font-display)] text-[clamp(4rem,10vw,10.5rem)] leading-[0.9]"
-              lines={[<span key="a" className="t-italic">El sabor</span>, <span key="b" className="t-italic">de la sierra</span>]}
+              className="t-hero t-italic mt-8 text-[clamp(4.6rem,10vw,10.5rem)] leading-[0.92]"
+              lines={["El sabor", "de la sierra"]}
             />
           </div>
         </section>
@@ -55,7 +55,7 @@ export default function GastronomiaPage() {
           <Arch className="aspect-[4/5] w-full lg:col-span-5" sizes="(min-width: 1024px) 40vw, 100vw" />
           <p
             data-reveal
-            className="font-[family-name:var(--font-display)] text-[clamp(2rem,3.3vw,3.4rem)] uppercase leading-[1.08] text-granate lg:col-span-6 lg:col-start-7"
+            className="font-[family-name:var(--font-display)] text-[clamp(2rem,3.3vw,3.4rem)] leading-[1.15] text-granate lg:col-span-6 lg:col-start-7"
           >
             {gastronomiaIntro}
           </p>
@@ -64,7 +64,7 @@ export default function GastronomiaPage() {
         <section className="px-[var(--gutter)] pb-28 text-center sm:pb-36">
           <Lines
             as="p"
-            className="mx-auto max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2rem,3.6vw,3.6rem)] uppercase leading-[1.08] text-granate"
+            className="t-recto mx-auto max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.2vw,4.4rem)] leading-[1.05] text-granate"
             lines={[gastronomiaFrase]}
           />
         </section>
@@ -82,11 +82,11 @@ export default function GastronomiaPage() {
               <div className="lg:col-span-6 lg:col-start-7">
                 <Lines
                   as="h2"
-                  className="font-[family-name:var(--font-display)] text-[clamp(3rem,5vw,5.2rem)] uppercase leading-[0.95] text-granate"
+                  className="t-recto font-[family-name:var(--font-display)] text-[clamp(3rem,5vw,5.2rem)] leading-[1] text-granate"
                   lines={[e.titulo]}
                 />
                 <p data-reveal className="mt-8 max-w-md text-granate/85">{e.texto}</p>
-                <ul data-reveal className="mt-8 space-y-3 text-granate/85">
+                {e.detalles.length > 0 && <ul data-reveal className="mt-8 space-y-3 text-granate/85">
                   {e.detalles.map((d) => (
                     <li key={d.texto} className="flex items-center gap-4">
                       <svg viewBox="0 0 24 24" aria-hidden className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
@@ -95,7 +95,7 @@ export default function GastronomiaPage() {
                       {d.texto}
                     </li>
                   ))}
-                </ul>
+                </ul>}
                 <div data-reveal className="mt-10 flex flex-wrap gap-4">
                   <Pill href={wa(e.titulo.toLowerCase())} target="_blank" rel="noreferrer" tone="solid">
                     Reservar mesa
@@ -111,7 +111,7 @@ export default function GastronomiaPage() {
         <section className="border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
           <Lines
             as="h2"
-            className="font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.8vw,4.8rem)] leading-[1.02] text-granate"
+            className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.8vw,4.8rem)] leading-[1.02] text-granate"
             lines={[<>Más allá <span key="i" className="t-italic">de la mesa</span></>]}
           />
           <ul className="mt-16 grid gap-x-6 gap-y-14 md:grid-cols-3">
@@ -119,7 +119,7 @@ export default function GastronomiaPage() {
               <li key={m.href}>
                 <Link href={m.href} className="group block">
                   <Arch shape="pill" className="aspect-[4/5] w-full" sizes="(min-width: 768px) 32vw, 100vw" hoverZoom />
-                  <h3 data-reveal className="mt-7 border-b border-granate/20 pb-3 t-italic text-[2.6rem] leading-none text-granate transition-colors group-hover:text-carmesi">
+                  <h3 className="mt-7 border-b border-granate/20 pb-3 t-italic text-[2.6rem] leading-none text-granate transition-colors group-hover:text-carmesi">
                     {m.titulo}
                   </h3>
                   <p data-reveal className="mt-4 text-granate/80">{m.texto}</p>

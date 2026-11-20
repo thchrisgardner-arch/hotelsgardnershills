@@ -22,7 +22,7 @@ export default function GaleriaPage() {
         <section id="galeria" className="py-28 sm:py-36">
           <Lines
             as="h2"
-            className="text-center font-[family-name:var(--font-display)] text-[clamp(2.8rem,5.4vw,5.4rem)] leading-none text-granate"
+            className="t-recto text-center font-[family-name:var(--font-display)] text-[clamp(2.8rem,5.4vw,5.4rem)] leading-none text-granate"
             lines={[<>Nuestra <span key="i" className="t-italic">galería</span></>]}
           />
           <div className="mt-16">

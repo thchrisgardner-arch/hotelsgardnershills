@@ -51,22 +51,19 @@ export default async function CabanaPage({ params }: Props) {
       <main>
         {/* Portada */}
         <section data-header-light className="bg-granate text-marfil">
-          <div className="grid min-h-[86vh] items-end gap-12 px-[var(--gutter)] pb-14 pt-[calc(var(--header-h)+3rem)] lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.28em] text-marfil/60">
-                <Link href="/cabanas" className="hover:text-marfil">Cabañas</Link> · {c.unidades} unidades
-              </p>
-              <Lines
-                as="h1"
-                className="mt-6 font-[family-name:var(--font-display)] text-[clamp(4rem,9vw,9.5rem)] uppercase leading-[0.88]"
-                lines={[c.nombre]}
-              />
-              <p data-reveal className="t-italic mt-6 text-[clamp(1.8rem,2.6vw,2.6rem)] leading-tight text-marfil/85">{c.frase}</p>
-              <div data-reveal className="mt-10">
-                <Pill href={wa} target="_blank" rel="noreferrer" tone="marfil">Quiero reservar</Pill>
-              </div>
+          <div className="flex min-h-[86vh] flex-col items-center justify-center px-[var(--gutter)] pb-24 pt-[calc(var(--header-h)+4rem)] text-center">
+            <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil/90">
+              <Link href="/cabanas" className="hover:text-marfil">Cabañas</Link> · {c.unidades} unidades
+            </p>
+            <Lines
+              as="h1"
+              className="t-hero t-italic mt-8 text-[clamp(4.6rem,10vw,10.5rem)] leading-[0.92]"
+              lines={[c.nombre]}
+            />
+            <p data-reveal className="mt-10 text-marfil/90">{c.frase}</p>
+            <div data-reveal className="mt-7">
+              <Pill href={wa} target="_blank" rel="noreferrer" tone="marfil">Quiero reservar</Pill>
             </div>
-            <Arch src={c.fotos[0]} alt={c.nombre} className="hidden aspect-[4/5] w-full lg:col-span-4 lg:col-start-9 lg:block" sizes="30vw" priority />
           </div>
         </section>
 
@@ -158,7 +155,7 @@ export default async function CabanaPage({ params }: Props) {
                 <Link href={`/cabanas/${o.slug}`} className="group block">
                   <Arch src={o.fotos[0]} alt={o.nombre} className="aspect-[4/3] w-full" sizes="48vw" hoverZoom />
                   <div className="mt-6 flex items-baseline justify-between border-b border-granate/20 pb-3">
-                    <span className="font-[family-name:var(--font-display)] text-[2.2rem] uppercase leading-none text-granate">{o.nombre}</span>
+                    <span className="font-[family-name:var(--font-display)] text-[2.2rem] leading-none text-granate">{o.nombre}</span>
                     <span className="text-[0.86rem] uppercase tracking-[0.18em] text-granate/60">{o.area} <span aria-hidden className="ml-2 inline-block transition-transform duration-500 group-hover:translate-x-1">→</span></span>
                   </div>
                 </Link>

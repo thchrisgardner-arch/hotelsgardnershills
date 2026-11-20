@@ -5,6 +5,7 @@ import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { Pill } from "@/components/ui/Pill";
 import { Experiencias } from "@/components/sections/Experiencias";
+import { ActividadesLista } from "@/components/sections/ActividadesLista";
 import { ReservaBanda } from "@/components/sections/ReservaBanda";
 import { servicios } from "@/data/servicios";
 import { site } from "@/data/site";
@@ -46,7 +47,7 @@ export default function ServiciosPage() {
             {servicios.map((s) => (
               <li key={s.id} id={s.id} className="flex flex-col">
                 <Arch src={s.foto} alt={s.titulo} className="aspect-[3/4] w-full" sizes="(min-width: 768px) 32vw, 100vw" />
-                <h3 data-reveal className="mt-7 flex items-baseline gap-4 border-b border-granate/20 pb-3 text-granate">
+                <h3 className="mt-7 flex flex-col items-start gap-2 text-granate">
                   <span className="text-[0.86rem] font-normal uppercase tracking-[0.24em]">Hills</span>
                   <span className="t-italic text-[2.6rem] leading-none">{s.titulo}</span>
                 </h3>
@@ -54,8 +55,9 @@ export default function ServiciosPage() {
               </li>
             ))}
           </ul>
-          <p data-reveal className="mt-12 text-base text-granate/55">Tratamientos, horarios y equipamiento por confirmar.</p>
         </section>
+
+        <ActividadesLista />
 
         {/* Banda en píldora */}
         <section className="px-[var(--gutter)] pb-28 sm:pb-36">

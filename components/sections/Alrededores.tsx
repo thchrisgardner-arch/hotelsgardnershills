@@ -11,7 +11,7 @@ export function Alrededores() {
       <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
         <Lines
           id="act-title"
-          className="font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.6vw,4.6rem)] leading-[1.02] text-granate"
+          className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.6vw,4.6rem)] leading-[1.02] text-granate"
           lines={[<>Explora las actividades</>, <span key="i">que te esperan <span className="t-italic">cerca.</span></span>]}
         />
         <div className="lg:justify-self-end lg:text-right">
@@ -20,7 +20,7 @@ export function Alrededores() {
             prisa.
           </p>
           <div data-reveal className="mt-8">
-            <Pill href="/actividades">Ver actividades</Pill>
+            <Pill href="/servicios#actividades">Ver actividades</Pill>
           </div>
         </div>
       </div>
@@ -38,7 +38,6 @@ export function Alrededores() {
           </li>
         ))}
       </ul>
-      <p data-reveal className="mt-12 text-base text-granate/55">Distancias y recomendaciones por confirmar.</p>
     </section>
   );
 }

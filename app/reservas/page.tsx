@@ -16,7 +16,7 @@ export default function ReservasPage() {
     <>
       <MotionController />
       <main>
-        <PageHero titulo="Reservas" kicker="Tu próxima escapada" foto="/images/cabanas/cabana-terraza.jpg" alt="Terrazas de las cabañas" />
+        <PageHero titulo={["Tu próxima", "escapada"]} kicker="Reservas" foto="/images/cabanas/cabana-terraza.jpg" alt="Terrazas de las cabañas" />
 
         <section className="px-[var(--gutter)] py-28 sm:py-36">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
@@ -34,7 +34,7 @@ export default function ReservasPage() {
             {["Fechas", "Huéspedes", "Confirmación"].map((t, i) => (
               <li key={t} data-reveal className="flex flex-col items-center border border-granate/25 px-8 pb-10 pt-24 text-center">
                 <span className="text-[0.86rem] font-normal tracking-[0.2em] text-granate/50">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mt-3 font-[family-name:var(--font-display)] text-[2.2rem] uppercase leading-none text-carmesi">{t}</p>
+                <p className="mt-3 font-[family-name:var(--font-display)] text-[2.2rem] leading-none text-carmesi">{t}</p>
                 <p className="mt-5 text-granate/80">
                   {i === 0 && "Elige tu entrada y salida en el buscador o en el formulario."}
                   {i === 1 && "Indica cuántas personas y cuántas cabañas necesitas."}

@@ -7,10 +7,11 @@ import { Pill } from "@/components/ui/Pill";
 import { site, menuPrincipal, legales } from "@/data/site";
 import { useLang, type Clave } from "@/lib/i18n";
 
-const porRuta = (hrefs: string[]) => menuPrincipal.filter((m) => hrefs.includes(m.href));
+const conInicio = [{ label: "Inicio", en: "Home", href: "/" }, ...menuPrincipal];
+const porRuta = (hrefs: string[]) => conInicio.filter((m) => hrefs.includes(m.href));
 const cols: { titulo: Clave; links: typeof menuPrincipal }[] = [
   { titulo: "hotel", links: porRuta(["/", "/cabanas", "/servicios", "/gastronomia"]) },
-  { titulo: "explorar", links: porRuta(["/actividades", "/galeria", "/reservas", "/contacto"]) },
+  { titulo: "explorar", links: porRuta(["/galeria", "/reservas", "/contacto"]) },
 ];
 
 /** Footer del wireframe / XD: «Una experiencia que nunca olvidarás» + logo a todo el ancho */
@@ -23,8 +24,8 @@ export function Footer() {
         <div className="lg:col-span-5">
           <Lines
             as="p"
-            className="font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.6vw,4.6rem)] leading-[1]"
-            lines={[t("experiencia1"), <span key="i" className="pl-[1.2em]">{t("experiencia2a")} <span className="t-italic">{t("experiencia2b")}</span></span>]}
+            className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.6vw,4.6rem)] leading-[1]"
+            lines={[t("experiencia1"), <span key="i">{t("experiencia2a")} <span className="t-italic">{t("experiencia2b")}</span></span>]}
           />
           <div data-reveal className="mt-10">
             <Pill href="/reservas">{t("reservarAhora")}</Pill>
@@ -59,20 +60,21 @@ export function Footer() {
         <Logo className="mx-auto w-[min(100%,62vh,820px)]" />
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[0.84rem] font-normal uppercase tracking-[0.18em] text-granate/70">
-        <div className="flex gap-8">
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate">
+        <div className="flex gap-10">
           {legales.map((l) => (
             <Link key={l.href} href={l.href} className="transition-colors hover:text-carmesi">{t(l.clave)}</Link>
           ))}
         </div>
-        <div className="flex items-center gap-5">
-          <a href={instagram ?? undefined} aria-label="Instagram (por confirmar)" className={instagram ? "hover:text-carmesi" : "pointer-events-none opacity-50"}>
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.3"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" /></svg>
+        <div className="flex items-center gap-6">
+          {/* Íconos en línea negra; se activan al confirmar las redes en data/site.ts */}
+          <a href={instagram ?? undefined} aria-label="Instagram" className={`text-granate transition-colors hover:text-carmesi ${instagram ? "" : "pointer-events-none"}`}>
+            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" /></svg>
           </a>
-          <a href={facebook ?? undefined} aria-label="Facebook (por confirmar)" className={facebook ? "hover:text-carmesi" : "pointer-events-none opacity-50"}>
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z" /></svg>
+          <a href={facebook ?? undefined} aria-label="Facebook" className={`text-granate transition-colors hover:text-carmesi ${facebook ? "" : "pointer-events-none"}`}>
+            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z" /></svg>
           </a>
-          <span className="normal-case tracking-normal">© {new Date().getFullYear()} Gardners Hills</span>
+          <span className="normal-case tracking-normal text-[1.1rem]">© 2027 Gardners Hills</span>
         </div>
       </div>
     </footer>

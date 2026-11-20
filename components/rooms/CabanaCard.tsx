@@ -63,8 +63,7 @@ export function CabanaCard({ cabana }: { cabana: CabanaTipo }) {
 
       <h3
         id={`${id}-t`}
-        data-reveal
-        className="mt-8 font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.4vw,3.4rem)] uppercase leading-none text-carmesi"
+        className="mt-8 font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.4vw,3.4rem)] leading-none text-carmesi"
       >
         {nombre}
       </h3>

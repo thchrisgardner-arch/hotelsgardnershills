@@ -38,7 +38,7 @@ export const actividades: Actividad[] = [
   {
     id: "senderos",
     titulo: "Senderos y caminatas",
-    texto: "Rutas de naturaleza en los alrededores. Recomendaciones de recorridos por confirmar.",
+    texto: "Rutas de naturaleza en los alrededores.",
     icono: "footprints",
     tono: "dorado",
     distancia: null,
@@ -47,7 +47,7 @@ export const actividades: Actividad[] = [
   {
     id: "rios",
     titulo: "Ríos y balnearios",
-    texto: "Agua fría que baja de la sierra. Lugares sugeridos por confirmar.",
+    texto: "Agua fría que baja de la sierra.",
     icono: "droplets",
     tono: "rosa",
     distancia: null,
@@ -56,7 +56,7 @@ export const actividades: Actividad[] = [
   {
     id: "gastronomia-local",
     titulo: "Cocina de la región",
-    texto: "Sabores guajiros y del Cesar a pocos pasos. Lugares recomendados por confirmar.",
+    texto: "Sabores guajiros y del Cesar a pocos pasos.",
     icono: "utensils",
     tono: "coral",
     distancia: null,

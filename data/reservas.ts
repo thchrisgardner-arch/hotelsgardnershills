@@ -16,5 +16,5 @@ export const reservas = {
   maxNinosPorCabana: 6,
   /** Límite de la interfaz, no la cantidad real de cabañas */
   maxCabanas: 6,
-  nota: "Tarifas por confirmar. Te enviaremos la cotización por WhatsApp.",
+  nota: "Te enviaremos la cotización por WhatsApp.",
 };

@@ -17,7 +17,7 @@ export function Esencia() {
           </p>
           <Lines
             id="esencia-title"
-            className="mt-5 font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.4vw,4.6rem)] leading-[1]"
+            className="t-recto mt-5 font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.4vw,4.6rem)] leading-[1]"
             lines={["Un encuentro entre", <span key="p" className="t-italic text-rosa">pasado y presente.</span>]}
           />
         </div>

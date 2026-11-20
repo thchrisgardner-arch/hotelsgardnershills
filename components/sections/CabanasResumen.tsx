@@ -15,8 +15,8 @@ export function CabanasResumen() {
           </p>
           <Lines
             id="cabanas-res-title"
-            className="t-italic mt-5 text-[clamp(2.8rem,5vw,5rem)] leading-[1] text-carmesi"
-            lines={["Cada cabaña,", "un refugio propio"]}
+            className="t-recto t-italic mt-5 text-[clamp(2.8rem,5vw,5rem)] leading-[1] text-carmesi"
+            lines={["Un refugio propio", "frente a la sierra"]}
           />
         </div>
         <div className="lg:justify-self-end lg:text-right">
@@ -35,7 +35,7 @@ export function CabanasResumen() {
             <Link href={`/cabanas/${c.slug}`} className="group block">
               <Arch src={c.fotos[0]} alt={c.nombre} className="aspect-[4/3] w-full" sizes="(min-width: 640px) 48vw, 100vw" hoverZoom />
               <div className="mt-6 flex items-baseline justify-between border-b border-granate/20 pb-3">
-                <span className="font-[family-name:var(--font-display)] text-[1.9rem] uppercase leading-none text-carmesi">
+                <span className="font-[family-name:var(--font-display)] text-[1.9rem] leading-none text-carmesi">
                   {c.nombre}
                 </span>
                 <span className="text-[0.86rem] uppercase tracking-[0.18em] text-granate/60">{c.unidades} cabañas · {c.area} <span aria-hidden className="ml-2 inline-block text-granate transition-transform duration-500 group-hover:translate-x-1">→</span></span>

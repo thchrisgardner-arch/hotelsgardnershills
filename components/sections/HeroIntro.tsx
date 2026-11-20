@@ -179,15 +179,23 @@ export function HeroIntro() {
         className="bottom-[150px] right-[var(--gutter)] w-[min(36vw,654px)]"
       />
 
-      {/* Texto del hero (abajo a la izquierda, como en la referencia) */}
-      <div className="absolute bottom-[150px] left-[var(--gutter)] max-w-[34rem]">
-        <p data-intro-fade className="text-[0.86rem] uppercase tracking-[0.3em] text-marfil/85">
+      {/* Texto del hero centrado; título inclinado como la portada de Gastronomía de la referencia */}
+      <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center px-[var(--gutter)] text-center">
+        <p data-intro-fade className="text-[0.92rem] uppercase tracking-[0.3em] text-marfil/90">
           Tu sueño en Gardners Hills
         </p>
-        <h1 data-intro-fade className="t-italic mt-3 text-[clamp(2.4rem,4.2vw,4.4rem)] leading-[0.95]">
-          Quédate con nosotros
-        </h1>
-        <p data-intro-fade className="mt-4 text-marfil/85">Cabañas boutique en Villanueva, La Guajira.</p>
+        {/* El giro va en el h1 y el fundido en su contenedor, para que la animación no lo enderece */}
+        <div data-intro-fade className="mt-8">
+          <h1
+            className="t-italic text-[clamp(4.2rem,9vw,9.5rem)] leading-[0.92]"
+            style={{ transform: "rotate(-8deg) skewX(-10deg)" }}
+          >
+            Quédate
+            <br />
+            con nosotros
+          </h1>
+        </div>
+        <p data-intro-fade className="mt-10 text-marfil/90">Cabañas boutique en Villanueva, La Guajira.</p>
         <div data-intro-fade className="mt-7">
           <Pill href="/reservas" tone="marfil">
             Reservar

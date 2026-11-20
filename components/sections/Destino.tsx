@@ -7,7 +7,7 @@ export function Destino() {
     <section id="casa" aria-labelledby="casa-title" className="px-[var(--gutter)] py-28 text-center sm:py-36">
       <Lines
         id="casa-title"
-        className="mx-auto max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.6vw,4.6rem)] leading-[1.02] text-granate"
+        className="t-recto mx-auto max-w-5xl font-[family-name:var(--font-display)] text-[clamp(2.4rem,4.6vw,4.6rem)] leading-[1.02] text-granate"
         lines={[
           <>Descubre <span key="a" className="text-carmesi">un destino exclusivo</span></>,
           "donde la sofisticación y la naturaleza",

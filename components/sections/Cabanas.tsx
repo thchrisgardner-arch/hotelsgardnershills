@@ -18,8 +18,8 @@ export function Cabanas() {
         </p>
         <Lines
           id="cabanas-title"
-          className="t-italic mx-auto mt-6 max-w-4xl text-[clamp(3rem,6vw,6.2rem)] leading-[0.98] text-carmesi"
-          lines={["Cada cabaña,", "un refugio propio"]}
+          className="t-recto t-italic mx-auto mt-6 max-w-4xl text-[clamp(3rem,6vw,6.2rem)] leading-[0.98] text-carmesi"
+          lines={["Un refugio propio", "frente a la sierra"]}
         />
         <p data-reveal className="mx-auto mt-10 max-w-md text-[1.02rem] font-normal uppercase leading-[1.5] tracking-[0.12em] text-granate">
           Abre el ventanal y deja que la luz y el viento de la sierra entren contigo.
@@ -40,7 +40,7 @@ export function Cabanas() {
       {/* Fichas */}
       <div className="mt-28 px-[var(--gutter)] sm:mt-36">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6 border-b border-granate/15 pb-6">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] uppercase leading-none text-carmesi">
+          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] leading-none text-carmesi">
             Encuentra tu cabaña
           </h2>
           <span className="text-[0.88rem] font-normal uppercase tracking-[0.18em] text-granate/60">
