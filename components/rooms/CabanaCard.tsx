@@ -74,7 +74,7 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
 
       <div data-reveal className="mt-5 grid gap-6 sm:grid-cols-[1fr_auto] sm:gap-10">
         <div>
-          <p className="max-w-md text-[1.05rem] leading-[1.45] text-granate/85">{cabana.descripcion}</p>
+          <p className="max-w-md text-[1.05rem] leading-[1.45] text-granate/85">{cabana.resumen}</p>
           <div className="mt-6 flex flex-wrap gap-6">
             <Link
               href={`/cabanas/${cabana.slug}`}

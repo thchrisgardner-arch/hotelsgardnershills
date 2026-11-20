@@ -23,6 +23,8 @@ export type Cabana = {
   categoria: CategoriaSlug;
   frase: string;
   descripcion: string;
+  /** Versión corta (unas 3 líneas) para las tarjetas del listado */
+  resumen: string;
   area: string;
   capacidad: string;
   /** Huéspedes máximos (para el buscador de reservas) */
@@ -78,6 +80,7 @@ export const cabanas: Cabana[] = [
     frase: "Comodidad y practicidad.",
     descripcion:
       "Perfecta para quienes buscan comodidad y practicidad. Con un diseño moderno y funcional, tiene cama Queen, ducha tipo lluvia, espejo de piso a techo y un armario práctico. Con 18-20 m², es el espacio ideal para viajeros que buscan el descanso perfecto.",
+    resumen: "Moderna y funcional: cama Queen, ducha tipo lluvia y espejo de piso a techo. 18–20 m² para el descanso perfecto.",
     area: "18–20 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
@@ -94,6 +97,7 @@ export const cabanas: Cabana[] = [
     frase: "Lo esencial, en su justa medida.",
     descripcion:
       "Lo esencial, en su justa medida. Una cama Queen para descansar sin prisa, una ducha tipo lluvia para empezar el día, un espejo de piso a techo y un armario para dejarlo todo en su lugar. Con 18-20 m², es un refugio sencillo y acogedor para dos.",
+    resumen: "Un refugio sencillo y acogedor para dos: cama Queen, ducha tipo lluvia y todo en su lugar. 18–20 m² de calma.",
     area: "18–20 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
@@ -110,6 +114,7 @@ export const cabanas: Cabana[] = [
     frase: "Más espacio para tomártelo con calma.",
     descripcion:
       "Más espacio para instalarte y tomártelo con calma. Una cama Queen, una ducha tipo lluvia y una terraza tranquila para disfrutar de un café o respirar profundo. El jacuzzi de la terraza está ahí para lo que surja, y las amenidades exclusivas de Gardners Hills se encargan del resto. Con 22-24 m². Simple, fácil, justo lo que necesitas.",
+    resumen: "Más espacio para tomártelo con calma: cama Queen y una terraza con jacuzzi para el café de la mañana o el atardecer.",
     area: "22–24 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
@@ -126,6 +131,7 @@ export const cabanas: Cabana[] = [
     frase: "Más espacio, más experiencias.",
     descripcion:
       "Más espacio, más experiencias, más de todo lo que te encanta. Con 22-24 m², la cabaña Serranía del Perijá tiene cama Queen, un baño amplio con una ducha increíble, jacuzzi en la terraza, mucha luz natural gracias a sus ventanas y las amenidades exclusivas de Gardners Hills.",
+    resumen: "Baño amplio, mucha luz natural y jacuzzi en la terraza. 22–24 m² con las amenidades exclusivas de Gardners Hills.",
     area: "22–24 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
@@ -143,6 +149,7 @@ export const cabanas: Cabana[] = [
     frase: "La mansión del rey.",
     descripcion:
       "La mansión del rey, ese lugar donde todos quieren estar. Más espacio, más aire fresco, más formas de relajarse. Golden Dunes, con su patio privado, tiene todo lo que te encanta.",
+    resumen: "La mansión del rey, ese lugar donde todos quieren estar: más espacio, más aire fresco y un patio privado para relajarte a tu manera.",
     area: "36 m² + patio",
     capacidad: "2 adultos + 1 niño",
     maxHuespedes: 3,
@@ -159,6 +166,7 @@ export const cabanas: Cabana[] = [
     frase: "Para dejarse llevar por el viento.",
     descripcion:
       "Para dejarse llevar por el viento. Un espacio amplio y abierto, con patio privado para tomar el sol, sentir la brisa y dejar que las horas pasen sin prisa. Wind of Jepira es ideal para quienes quieren desconectarse sin renunciar a nada.",
+    resumen: "Amplia y abierta, con patio privado para tomar el sol y sentir la brisa mientras las horas pasan sin prisa.",
     area: "36 m² + patio",
     capacidad: "2 adultos + 1 niño",
     maxHuespedes: 3,
@@ -175,6 +183,7 @@ export const cabanas: Cabana[] = [
     frase: "Un dúplex diseñado para sorprender.",
     descripcion:
       "Para los viajeros que buscan el máximo espacio y comodidad, Sunset Ridge es un impresionante dúplex de dos niveles diseñado para sorprender.",
+    resumen: "Un impresionante dúplex de dos niveles para quienes buscan el máximo espacio y comodidad.",
     area: "48 m² en dos niveles + patio",
     capacidad: "4 personas",
     maxHuespedes: 4,
@@ -191,6 +200,7 @@ export const cabanas: Cabana[] = [
     frase: "La más grande y exclusiva.",
     descripcion:
       "La cabaña más grande y exclusiva de Gardners Hills, diseñada para quienes buscan privacidad y un descanso sin interrupciones.",
+    resumen: "La cabaña más grande y exclusiva de Gardners Hills, pensada para la privacidad y el descanso sin interrupciones.",
     area: "60 m² + patio",
     capacidad: "4 personas",
     maxHuespedes: 4,
