@@ -31,7 +31,7 @@ export function Alrededores({ lang }: { lang: Lang }) {
 
       <ul className="mt-20 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((a) => (
-          <li key={a.id} className="flex flex-col">
+          <li key={a.id} className="flex flex-col" data-cursor>
             <Arch alt={a.titulo[lang]} className="aspect-[3/4] w-full" />
             <h3 data-reveal className="mt-7 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
               {a.titulo[lang]}

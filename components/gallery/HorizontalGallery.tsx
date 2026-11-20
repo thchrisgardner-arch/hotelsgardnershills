@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Visor } from "@/components/gallery/Visor";
 import { Foto as Image } from "@/components/ui/Foto";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,6 +19,7 @@ export function HorizontalGallery({ titulo }: { titulo: React.ReactNode }) {
   const { lang } = useLang();
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLUListElement>(null);
+  const [abierta, setAbierta] = useState<number | null>(null);
 
   useEffect(() => {
     const s = section.current!;
@@ -70,14 +72,28 @@ export function HorizontalGallery({ titulo }: { titulo: React.ReactNode }) {
         className="flex w-max gap-2 px-[var(--gutter)] will-change-transform"
       >
         {galeria.map((p, i) => (
-          <li
-            key={p.id}
-            className={`relative h-[min(68vh,720px)] shrink-0 overflow-hidden bg-rosa ${i % 3 === 1 ? "aspect-[4/3]" : "aspect-[4/5]"}`}
-          >
-            {p.src && <Image src={p.src} alt={lang === "es" ? p.alt : p.altEn ?? p.alt} fill sizes="(min-width: 1024px) 50vw, 90vw" className="object-cover" />}
+          <li key={p.id} className={`relative h-[min(68vh,720px)] shrink-0 ${i % 3 === 1 ? "aspect-[4/3]" : "aspect-[4/5]"}`}>
+            <button
+              type="button"
+              onClick={() => setAbierta(i)}
+              data-cursor={lang === "es" ? "Ver foto · Gardners Hills · " : "View photo · Gardners Hills · "}
+              aria-label={`${lang === "es" ? "Ampliar" : "Enlarge"}: ${lang === "es" ? p.alt : p.altEn ?? p.alt}`}
+              className="group relative block h-full w-full overflow-hidden bg-rosa"
+            >
+              {p.src && (
+                <Image
+                  src={p.src}
+                  alt={lang === "es" ? p.alt : p.altEn ?? p.alt}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 90vw"
+                  className="object-cover transition-transform duration-[1.4s] ease-[var(--ease-soft)] group-hover:scale-[1.04]"
+                />
+              )}
+            </button>
           </li>
         ))}
       </ul>
+      <Visor abierta={abierta} setAbierta={setAbierta} />
     </section>
   );
 }

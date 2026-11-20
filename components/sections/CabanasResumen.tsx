@@ -35,7 +35,7 @@ export function CabanasResumen({ lang }: { lang: Lang }) {
           const lista = cabanasDe(cat.slug, lang);
           return (
             <li key={cat.slug}>
-              <L href={`/cabanas?categoria=${cat.slug}#listado`} className="group block">
+              <L href={`/cabanas?categoria=${cat.slug}#listado`} className="group block" data-cursor>
                 <Arch src={lista[0]?.fotos[0]} alt={`${t.alt} ${cat.nombre}`} className="aspect-[16/10] w-full" sizes="(min-width: 640px) 48vw, 100vw" hoverZoom />
                 <div className="mt-7 flex items-baseline justify-between gap-6 border-b border-granate/20 pb-4">
                   <span className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,3vw,3rem)] leading-none text-carmesi">{cat.nombre}</span>

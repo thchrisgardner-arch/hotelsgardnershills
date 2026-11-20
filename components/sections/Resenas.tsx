@@ -2,25 +2,37 @@
 
 import { useRef } from "react";
 import { Foto as Image } from "@/components/ui/Foto";
-import { resenas, resenasPlaceholder } from "@/data/resenas";
+import { resenas, type Resena } from "@/data/resenas";
 import { useLang } from "@/lib/i18n";
 
-function Estrellas({ nota, vacia = false }: { nota: number; vacia?: boolean }) {
+function Estrellas({ nota }: { nota: number }) {
   const { lang } = useLang();
-  const label = lang === "es" ? (vacia ? "Sin calificación todavía" : `${nota} de 5 estrellas`) : vacia ? "Not rated yet" : `${nota} out of 5 stars`;
   return (
-    <span className="flex gap-1" role="img" aria-label={label}>
+    <span className="flex gap-1" role="img" aria-label={lang === "es" ? `${nota} de 5 estrellas` : `${nota} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} viewBox="0 0 20 20" className="h-4 w-4" aria-hidden>
-          <path
-            d="M10 1.8l2.5 5.3 5.7.7-4.2 3.9 1.1 5.7L10 14.6l-5.1 2.8 1.1-5.7L1.8 7.8l5.7-.7z"
-            fill={!vacia && i < Math.round(nota) ? "currentColor" : "none"}
-            stroke="currentColor"
-            strokeWidth="1.1"
-          />
+          <path d="M10 1.8l2.5 5.3 5.7.7-4.2 3.9 1.1 5.7L10 14.6l-5.1 2.8 1.1-5.7L1.8 7.8l5.7-.7z" fill={i < Math.round(nota) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.1" />
         </svg>
       ))}
     </span>
+  );
+}
+
+/** Avatar genérico (silueta gris en círculo); con reseñas reales se usa la foto del huésped (campo `foto`) */
+function Avatar({ r }: { r: Resena }) {
+  if (r.foto) {
+    return (
+      <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-full">
+        <Image src={r.foto} alt="" fill sizes="40px" className="object-cover" />
+      </span>
+    );
+  }
+  return (
+    <svg viewBox="0 0 40 40" className="h-10 w-10 shrink-0" aria-hidden>
+      <circle cx="20" cy="20" r="20" fill="#cfcfcd" />
+      <circle cx="20" cy="15.5" r="6.2" fill="#9a9a98" />
+      <path d="M8.6 33.5c1.6-6 6.1-9.3 11.4-9.3s9.8 3.3 11.4 9.3A19.9 19.9 0 0 1 20 40a19.9 19.9 0 0 1-11.4-6.5z" fill="#9a9a98" />
+    </svg>
   );
 }
 
@@ -31,9 +43,7 @@ function Estrellas({ nota, vacia = false }: { nota: number; vacia?: boolean }) {
 export function Resenas() {
   const { lang } = useLang();
   const track = useRef<HTMLUListElement>(null);
-  const hay = resenas.length > 0;
-  const promedio = hay ? resenas.reduce((s, r) => s + r.nota, 0) / resenas.length : 0;
-  const tarjetas = hay ? resenas : Array.from({ length: resenasPlaceholder }, (_, i) => ({ id: `p${i}` }));
+  const promedio = resenas.reduce((s, r) => s + r.nota, 0) / resenas.length;
 
   // Arrastre con el ratón (en táctil el desplazamiento nativo ya funciona)
   const drag = useRef<{ x: number; left: number } | null>(null);
@@ -51,12 +61,10 @@ export function Resenas() {
 
   const titulo = (
     <span className="flex shrink-0 items-start gap-4 pr-16">
-      <span className="font-[family-name:var(--font-display)] text-[clamp(4rem,9vw,9rem)] leading-none text-granate">
+      <span className="font-[family-name:var(--font-display)] text-[clamp(3.4rem,9vw,9rem)] leading-none text-granate">
         {lang === "es" ? <>Reseñas <span className="t-italic">recientes</span></> : <>Recent <span className="t-italic">reviews</span></>}
       </span>
-      {hay && (
-        <span className="mt-3 grid h-9 min-w-9 place-items-center bg-marfil px-2 text-[0.92rem] text-granate/70">{resenas.length}</span>
-      )}
+      <span className="mt-3 grid h-9 min-w-9 place-items-center bg-marfil px-2 text-[0.92rem] text-granate">{resenas.length}</span>
     </span>
   );
 
@@ -76,14 +84,8 @@ export function Resenas() {
 
       {/* Controles */}
       <div className="mt-14 flex items-center justify-between px-[var(--gutter)]">
-        <p className="text-granate/70">
-          {hay ? (
-            <>
-              <span className="text-granate">{promedio.toFixed(2)}</span> / 5 · {resenas.length} {lang === "es" ? "reseñas" : "reviews"}
-            </>
-          ) : (
-            (lang === "es" ? "Las primeras reseñas de nuestros huéspedes aparecerán aquí." : "Our guests’ first reviews will appear here.")
-          )}
+        <p className="text-granate">
+          <span>{promedio.toFixed(2)}</span> / 5 · {resenas.length} {lang === "es" ? "reseñas" : "reviews"}
         </p>
         <div className="flex gap-3">
           <button type="button" onClick={() => mover(-1)} aria-label={lang === "es" ? "Reseñas anteriores" : "Previous reviews"} className="grid h-11 w-11 place-items-center rounded-full border border-granate/40 text-granate transition-colors hover:bg-granate hover:text-crema">
@@ -104,37 +106,21 @@ export function Resenas() {
         onPointerCancel={onUp}
         className="mt-8 flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-[var(--gutter)] pb-4 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {tarjetas.map((t) => {
-          const r = hay ? (t as (typeof resenas)[number]) : null;
-          return (
-            <li key={t.id} className="flex min-h-[420px] w-[min(86vw,460px)] shrink-0 snap-start select-none flex-col bg-marfil p-9">
-              <div className="flex items-center justify-between text-granate">
-                <span className={r ? "text-granate" : "text-granate/30"}>
-                  <Estrellas nota={r?.nota ?? 0} vacia={!r} />
-                </span>
-                <span className="text-[0.98rem] text-granate/70">{r ? `${r.nota.toFixed(2)} / 5` : "— / 5"}</span>
-              </div>
-
-              {r ? (
-                <blockquote className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate">“{lang === "es" ? r.texto : r.textoEn ?? r.texto}”</blockquote>
-              ) : (
-                <p className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate/40">
-                  {lang === "es" ? "Espacio reservado para la reseña de un huésped de Gardners Hills." : "Space reserved for a Gardners Hills guest review."}
-                </p>
-              )}
-
-              <div className="mt-10 flex items-center gap-3">
-                <span className="relative grid h-10 w-10 place-items-center overflow-hidden bg-rosa font-[family-name:var(--font-display)] text-[1.2rem] text-granate">
-                  {r?.foto ? <Image src={r.foto} alt="" fill sizes="40px" className="object-cover" /> : r?.autor.charAt(0)}
-                </span>
-                <span className={r ? "text-granate" : "text-granate/40"}>
-                  {r ? r.autor : lang === "es" ? "Por publicar" : "Coming soon"}
-                  {r?.fuente && <span className="ml-2 text-[0.92rem] text-granate/55">· {r.fuente}</span>}
-                </span>
-              </div>
-            </li>
-          );
-        })}
+        {resenas.map((r) => (
+          <li key={r.id} className="flex min-h-[420px] w-[min(86vw,460px)] shrink-0 snap-start select-none flex-col bg-marfil p-9">
+            <div className="flex items-center justify-between text-granate">
+              <Estrellas nota={r.nota} />
+              <span className="text-[0.98rem] text-granate">{r.nota.toFixed(2)} / 5</span>
+            </div>
+            <blockquote className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate">“{r.texto[lang]}”</blockquote>
+            <div className="mt-10 flex items-center gap-3">
+              <Avatar r={r} />
+              <span className="text-granate">
+                {r.autor} · {r.detalle[lang]}
+              </span>
+            </div>
+          </li>
+        ))}
       </ul>
     </section>
   );

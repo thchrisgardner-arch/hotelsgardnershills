@@ -16,6 +16,7 @@ import { Footer } from "@/components/layout/Footer";
 import { BookingBar } from "@/components/booking/BookingBar";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { CookieBanner } from "@/components/ui/CookieBanner";
+import { CursorSello } from "@/components/ui/CursorSello";
 import { LangProvider } from "@/lib/i18n";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { getLang, type LangParams } from "@/lib/lang";
@@ -75,6 +76,7 @@ export default async function RootLayout({ children, params }: LangParams & { ch
           <BookingBar />
           <WhatsAppButton />
           <CookieBanner />
+          <CursorSello />
           <JsonLd lang={lang} />
         </LangProvider>
       </body>

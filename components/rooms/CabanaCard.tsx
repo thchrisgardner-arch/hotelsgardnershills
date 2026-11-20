@@ -28,7 +28,7 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
   return (
     <article aria-labelledby={`${id}-t`} className="flex flex-col">
       {/* Galería en arco */}
-      <div className="group relative aspect-[16/9] overflow-hidden bg-rosa" data-reveal-media>
+      <div className="group relative aspect-[16/9] overflow-hidden bg-rosa" data-reveal-media data-cursor>
         <div data-media-inner className="absolute inset-0">
           {cabana.fotos.map((src, k) => (
             <Image

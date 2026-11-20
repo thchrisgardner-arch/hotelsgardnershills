@@ -118,7 +118,7 @@ export default async function GastronomiaPage({ params }: LangParams) {
           <ul className="mt-16 grid gap-x-6 gap-y-14 md:grid-cols-3">
             {t.tarjetas.map((m) => (
               <li key={m.href}>
-                <L href={m.href} className="group block">
+                <L href={m.href} className="group block" data-cursor>
                   <Arch shape="pill" alt={m.titulo} className="aspect-[4/5] w-full" sizes="(min-width: 768px) 32vw, 100vw" hoverZoom />
                   <h3 className="mt-7 border-b border-granate/20 pb-3 t-italic text-[2.6rem] leading-none text-granate transition-colors group-hover:text-carmesi">{m.titulo}</h3>
                   <p data-reveal className="mt-4 text-granate">{m.texto}</p>

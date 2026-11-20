@@ -24,7 +24,7 @@ export function Experiencias({ lang }: { lang: Lang }) {
       <ul className="mt-20 grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
         {experiencias.map((e) => (
           <li key={e.id}>
-            <L href={e.href} className="group flex flex-col items-center">
+            <L href={e.href} className="group flex flex-col items-center" data-cursor>
               <Arch shape="circle" alt={`${t.alt}: ${e.titulo[lang]}`} className="aspect-square w-full max-w-[260px]" hoverZoom />
               <h3 data-reveal className="mt-7 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
                 {e.titulo[lang]}

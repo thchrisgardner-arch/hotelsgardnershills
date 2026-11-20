@@ -184,6 +184,9 @@ body:has([data-intro-active]) [data-chrome] {
   pointer-events: none;
 }
 
+@keyframes sello {
+  to { transform: rotate(360deg); }
+}
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
