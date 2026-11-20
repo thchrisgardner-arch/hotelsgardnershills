@@ -9,6 +9,8 @@ export type Espacio = {
   texto: Texto;
   detalles: { icono: "plato" | "reloj" | "sierra" | "copa"; texto: Texto }[];
   foto: string | null;
+  /** Carta (URL completa o PDF). Mientras no llegue, «Ver carta menú» la pide por WhatsApp. */
+  carta?: string | null;
 };
 
 export const gastronomiaIntro: Texto = {

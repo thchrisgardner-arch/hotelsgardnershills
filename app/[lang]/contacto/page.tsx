@@ -41,24 +41,24 @@ export default async function ContactoPage({ params }: LangParams) {
     <>
       <MotionController />
       <main>
-        {/* Apertura tipográfica */}
-        <section className="flex min-h-[80vh] flex-col items-center justify-center px-[var(--gutter)] pb-20 pt-[calc(var(--header-h)+5rem)] text-center">
-          <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-granate">
+        {/* Portada en fondo negro, como las demás páginas: lista para recibir una imagen de fondo */}
+        <section data-header-light className="relative mb-28 flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-granate px-[var(--gutter)] pb-20 pt-[calc(var(--header-h)+3rem)] text-center text-marfil sm:mb-36">
+          <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil">
             Villanueva · La Guajira
           </p>
-          <Lines as="h1" className="t-italic mt-8 text-[clamp(3.2rem,10vw,10rem)] leading-[0.92] text-carmesi" lines={t.titulo} />
-          <address data-reveal className="mt-12 space-y-1 not-italic text-carmesi">
+          <Lines as="h1" className="t-hero t-italic mt-8 text-[clamp(3.2rem,10vw,10rem)] leading-[0.92]" lines={t.titulo} />
+          <address data-reveal className="mt-12 space-y-1 not-italic text-marfil">
             {location.address && <p>{location.address}</p>}
             <p>
               {location.town}, {location.region} · {location.country}
             </p>
             <p>
-              <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-granate">
+              <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:opacity-70">
                 {contact.whatsappLabel}
               </a>
             </p>
             <p>
-              <a href={`mailto:${contact.email}`} className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-granate">
+              <a href={`mailto:${contact.email}`} className="inline-flex min-h-11 items-center underline underline-offset-4 hover:opacity-70">
                 {contact.email}
               </a>
             </p>

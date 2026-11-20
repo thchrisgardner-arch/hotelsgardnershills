@@ -31,7 +31,8 @@ export default async function GastronomiaPage({ params }: LangParams) {
     es: {
       kicker: "Gastronomía & Bar", titulo: ["El sabor", "de la sierra"], espacios: "Espacios",
       altIntro: "Mesa servida con vista a la sierra en Gardners Hills",
-      reservar: "Reservar estancia", consultar: "Consultar por WhatsApp", msg: (e: string) => `Hola, quiero información sobre el ${e} de Gardners Hills.`,
+      carta: "Ver carta menú", consultar: "Consultar por WhatsApp", msg: (e: string) => `Hola, quiero información sobre el ${e} de Gardners Hills.`,
+      msgCarta: (e: string) => `Hola, ¿me pueden compartir la carta del ${e} de Gardners Hills?`,
       mas: ["Más allá", "de la mesa"],
       tarjetas: [
         { titulo: "Cabañas", texto: "Arquitectura blanca y madera frente a la sierra.", href: "/cabanas" },
@@ -43,7 +44,8 @@ export default async function GastronomiaPage({ params }: LangParams) {
     en: {
       kicker: "Food & Bar", titulo: ["The taste", "of the mountains"], espacios: "Spaces",
       altIntro: "Table set with a mountain view at Gardners Hills",
-      reservar: "Book your stay", consultar: "Ask on WhatsApp", msg: (e: string) => `Hello, I would like information about the Gardners Hills ${e}.`,
+      carta: "View menu", consultar: "Ask on WhatsApp", msg: (e: string) => `Hello, I would like information about the Gardners Hills ${e}.`,
+      msgCarta: (e: string) => `Hello, could you share the menu of the Gardners Hills ${e}?`,
       mas: ["Beyond", "the table"],
       tarjetas: [
         { titulo: "Cabins", texto: "White architecture and wood facing the mountains.", href: "/cabanas" },
@@ -54,6 +56,8 @@ export default async function GastronomiaPage({ params }: LangParams) {
     },
   }[lang];
   const wa = (e: string) => `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(t.msg(e))}`;
+  // Carta: PDF/URL si existe; mientras tanto se pide por WhatsApp (pendiente en PENDIENTES.md)
+  const carta = (e: Espacio) => e.carta ?? `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(t.msgCarta(e.titulo[lang].toLowerCase()))}`;
 
   return (
     <>
@@ -102,7 +106,7 @@ export default async function GastronomiaPage({ params }: LangParams) {
                   </ul>
                 )}
                 <div data-reveal className="mt-10 flex flex-wrap gap-4">
-                  <Pill href="/reservas" tone="solid">{t.reservar}</Pill>
+                  <Pill href={carta(e)} tone="solid" target="_blank" rel="noreferrer">{t.carta}</Pill>
                   <Pill href={wa(e.titulo[lang].toLowerCase())} target="_blank" rel="noreferrer">
                     {t.consultar}
                   </Pill>

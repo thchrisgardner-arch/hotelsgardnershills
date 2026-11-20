@@ -61,3 +61,4 @@ Cabecera, footer, barra de reservas y WhatsApp son comunes (en `app/layout.tsx`)
 - [ ] Comprimir `public/video/hero-banner.mp4` (11 MB) a unos 3–4 MB; requiere ffmpeg
 - [ ] Diario/blog con SEO local
 - [x] Datos estructurados (Hotel) e imagen Open Graph
+- [ ] Carta del Restaurante y del Bar (PDF o enlace): mientras no llegue, «Ver carta menú» abre WhatsApp pidiéndola. Poner la URL en `carta` de cada espacio en data/gastronomia.ts
