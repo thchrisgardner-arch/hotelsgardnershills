@@ -25,6 +25,7 @@
   --color-dorado: #7f7f7f;
   --color-blanco: #ffffff;
   --color-crema: #ffffff;
+  --color-amarillo: #fdc214; /* fondo de «Explora las actividades» (pedido del cliente 2026-11-20) */
 
   /* Tipografía: Palo Compressed Medium → provisional Instrument Serif.
      Al recibir Palo, reemplazar --font-display en app/layout.tsx. */

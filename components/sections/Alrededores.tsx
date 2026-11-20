@@ -12,7 +12,7 @@ export function Alrededores({ lang }: { lang: Lang }) {
     en: { l1: "Explore the activities", l2a: "waiting for you", l2b: "nearby.", p: "Villanueva, at the foot of the Serranía del Perijá: mountains, vallenato music and local life to discover unhurried.", cta: "See activities" },
   }[lang];
   return (
-    <section id="actividades" aria-labelledby="act-title" className="border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
+    <section id="actividades" aria-labelledby="act-title" className="bg-amarillo px-[var(--gutter)] py-28 sm:py-36">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
         <Lines
           id="act-title"
