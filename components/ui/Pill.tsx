@@ -7,12 +7,13 @@ import { L } from "@/components/ui/L";
  * Botón en píldora con flecha en círculo. Rutas internas con el idioma activo (componente L).
  * Altura mínima 44 px para que sea un objetivo táctil cómodo.
  */
-type Props = ComponentProps<"a"> & { href: string; tone?: "granate" | "marfil" | "solid" };
+type Props = ComponentProps<"a"> & { href: string; tone?: "granate" | "marfil" | "blanco" | "solid" };
 
 export function Pill({ tone = "granate", className = "", children, href, ...rest }: Props) {
   const styles = {
     granate: "border-granate/50 text-granate hover:bg-granate hover:text-crema",
     marfil: "border-marfil/60 text-marfil hover:bg-marfil hover:text-granate",
+    blanco: "border-blanco bg-blanco text-granate hover:bg-marfil hover:border-marfil",
     solid: "border-granate bg-granate text-crema hover:bg-carmesi hover:border-carmesi",
   }[tone];
   const cls = `group inline-flex min-h-11 items-center gap-5 rounded-full border py-1.5 pl-6 pr-1.5 text-[0.875rem] font-normal uppercase tracking-[0.16em] transition-colors duration-500 ease-[var(--ease-soft)] ${styles} ${className}`;

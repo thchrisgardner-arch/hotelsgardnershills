@@ -46,6 +46,12 @@
   /* Rótulos pequeños (eyebrows): Manderley Gothic */
   --font-rotulo: "Manderley Gothic", var(--font-sans);
 }
+/* Escritorio: cabecera más alta para el logo y los enlaces más grandes (pedido 2026-11-20) */
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 104px;
+  }
+}
 
 /*
  * Manderley Gothic para los rótulos pequeños en mayúsculas (decisión del cliente, 2026-11-20).

@@ -215,7 +215,7 @@ export function HeroIntro() {
         </div>
         <p data-intro-fade className="mt-10 text-marfil">{T.sub}</p>
         <div data-intro-fade className="mt-7">
-          <Pill href="/reservas" tone="marfil">
+          <Pill href="/reservas" tone="blanco">
             {T.cta}
           </Pill>
         </div>

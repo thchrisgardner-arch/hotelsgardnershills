@@ -18,7 +18,7 @@ export function Footer() {
   const { contact, instagram, facebook } = site;
   const { lang, t } = useLang();
   return (
-    <footer id="contacto" className="border-t border-granate/15 px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24">
+    <footer id="contacto" className="border-t border-granate/15 bg-crema px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24 lg:sticky lg:bottom-0 lg:z-0 lg:pb-20 lg:pt-14">
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}

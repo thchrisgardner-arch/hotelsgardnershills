@@ -82,10 +82,10 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   const color = solid ? "text-granate" : "text-marfil";
-  const enlace = "relative inline-flex min-h-11 items-center text-[0.95rem] font-normal tracking-[0.04em] transition-opacity hover:opacity-70";
+  const enlace = "relative inline-flex min-h-11 items-center text-[0.95rem] font-normal tracking-[0.04em] lg:text-[1.1rem] transition-opacity hover:opacity-70";
 
   const Idiomas = ({ className = "" }: { className?: string }) => (
-    <div role="group" aria-label={t("idioma")} className={`flex items-center gap-1 text-[0.95rem] uppercase tracking-[0.16em] ${className}`}>
+    <div role="group" aria-label={t("idioma")} className={`flex items-center gap-1 text-[0.95rem] uppercase tracking-[0.16em] lg:text-[1.05rem] ${className}`}>
       {LANGS.map((l, k) => (
         <span key={l} className="flex items-center gap-1">
           {k > 0 && <span aria-hidden className="opacity-50">/</span>}
@@ -142,7 +142,7 @@ export function Header() {
           </div>
 
           {/* data-logo-menu: destino final de la intro del hero */}
-          <L href="/" aria-label={t("inicio")} className="block w-[96px] sm:w-[120px] lg:w-[136px]">
+          <L href="/" aria-label={t("inicio")} className="block w-[96px] sm:w-[120px] lg:w-[172px]">
             <span data-logo-menu className="block">
               <Logo className="w-full" />
             </span>
@@ -162,8 +162,8 @@ export function Header() {
             <Idiomas className="hidden sm:flex" />
             <L
               href="/reservas"
-              className={`inline-flex min-h-11 items-center border px-4 text-[0.875rem] font-normal uppercase tracking-[0.16em] transition-colors sm:px-5 ${
-                solid ? "border-granate bg-granate text-crema hover:bg-carmesi" : "border-marfil/70 hover:bg-marfil hover:text-granate"
+              className={`inline-flex min-h-11 items-center border px-4 text-[0.875rem] font-normal uppercase tracking-[0.16em] transition-colors sm:px-5 lg:min-h-12 lg:px-6 lg:text-[0.95rem] ${
+                solid ? "border-granate bg-granate text-crema hover:bg-carmesi" : "border-blanco bg-blanco text-granate hover:bg-marfil hover:border-marfil"
               }`}
             >
               {t("reservar")}
