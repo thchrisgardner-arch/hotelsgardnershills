@@ -42,6 +42,35 @@
   --font-menu: "Instrument Serif", "Times New Roman", serif;
   --gutter: clamp(1rem, 4vw, 3.5rem);
   --header-h: 84px;
+  /* Rótulos pequeños (eyebrows): Manderley Gothic */
+  --font-rotulo: "Manderley Gothic", var(--font-sans);
+}
+
+/*
+ * Manderley Gothic para los rótulos pequeños en mayúsculas (decisión del cliente, 2026-11-20).
+ * ⚠ El archivo disponible es «FREE FOR PERSONAL USE ONLY» (Fonts2u): hace falta la licencia
+ * comercial/web antes de publicar el sitio.
+ */
+@font-face {
+  font-family: "Manderley Gothic";
+  src: url("/fonts/manderley-gothic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  /* La versión gratuita no trae Ñ, tildes ni «·» (los dibuja en blanco): se limita al ASCII básico
+     para que esos caracteres caigan en la Helvetica y se vean. La licencia completa debería traerlos. */
+  unicode-range: U+0020-007E;
+}
+
+/*
+ * Se aplica a los rótulos: textos en mayúsculas con espaciado amplio (tracking ≥ 0.2em), que es
+ * como están marcados en todo el sitio (kickers de los heros, eyebrows de sección, títulos de las
+ * columnas del footer…). Botones y menús usan tracking menor y conservan la Helvetica.
+ */
+[class*="uppercase"][class*="tracking-[0.2"],
+[class*="uppercase"][class*="tracking-[0.3"],
+.t-rotulo {
+  font-family: var(--font-rotulo);
 }
 
 html {

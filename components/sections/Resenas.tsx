@@ -120,8 +120,8 @@ export function Resenas() {
               )}
 
               <div className="mt-10 flex items-center gap-3">
-                <span className="relative block h-10 w-10 overflow-hidden bg-rosa">
-                  {r?.foto && <Image src={r.foto} alt="" fill sizes="40px" className="object-cover" />}
+                <span className="relative grid h-10 w-10 place-items-center overflow-hidden bg-rosa font-[family-name:var(--font-display)] text-[1.2rem] text-granate">
+                  {r?.foto ? <Image src={r.foto} alt="" fill sizes="40px" className="object-cover" /> : r?.autor.charAt(0)}
                 </span>
                 <span className={r ? "text-granate" : "text-granate/40"}>
                   {r ? r.autor : "Por publicar"}

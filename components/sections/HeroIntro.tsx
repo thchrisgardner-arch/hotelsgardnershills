@@ -184,15 +184,11 @@ export function HeroIntro() {
         <p data-intro-fade className="text-[0.92rem] uppercase tracking-[0.3em] text-marfil/90">
           Tu sueño en Gardners Hills
         </p>
-        {/* El giro va en el h1 y el fundido en su contenedor, para que la animación no lo enderece */}
-        <div data-intro-fade className="mt-8">
-          <h1
-            className="t-italic text-[clamp(4.2rem,9vw,9.5rem)] leading-[0.92]"
-            style={{ transform: "rotate(-8deg) skewX(-10deg)" }}
-          >
-            Quédate
-            <br />
-            con nosotros
+        {/* Título recto en una línea: «P» en recta de palo y el resto en cursiva serif */}
+        <div data-intro-fade className="mt-6">
+          <h1 className="whitespace-nowrap text-[clamp(3.4rem,6.6vw,7.2rem)] leading-none">
+            <span className="font-[family-name:var(--font-sans)] font-light not-italic">P</span>
+            <span className="t-italic">az, Historia y Silencio</span>
           </h1>
         </div>
         <p data-intro-fade className="mt-10 text-marfil/90">Cabañas boutique en Villanueva, La Guajira.</p>

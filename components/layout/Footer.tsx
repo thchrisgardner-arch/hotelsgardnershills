@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-import { Lines } from "@/components/ui/Lines";
 import { Pill } from "@/components/ui/Pill";
 import { site, menuPrincipal, legales } from "@/data/site";
 import { useLang, type Clave } from "@/lib/i18n";
@@ -22,12 +21,16 @@ export function Footer() {
     <footer id="contacto" className="border-t border-granate/15 px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24">
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <Lines
-            as="p"
-            className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.6vw,4.6rem)] leading-[1]"
-            lines={[t("experiencia1"), <span key="i">{t("experiencia2a")} <span className="t-italic">{t("experiencia2b")}</span></span>]}
-          />
-          <div data-reveal className="mt-10">
+          {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}
+          <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate/70">{t("villanueva1")}</p>
+          <p className="t-hero t-italic mt-6 text-[clamp(3rem,5vw,5.2rem)] leading-[1]">
+            {t("villanueva2")}
+            <br />
+            {t("villanueva3")}
+            <br />
+            {t("villanueva4")}
+          </p>
+          <div className="mt-14">
             <Pill href="/reservas">{t("reservarAhora")}</Pill>
           </div>
         </div>
@@ -67,13 +70,42 @@ export function Footer() {
           ))}
         </div>
         <div className="flex items-center gap-6">
-          {/* Íconos en línea negra; se activan al confirmar las redes en data/site.ts */}
-          <a href={instagram ?? undefined} aria-label="Instagram" className={`text-granate transition-colors hover:text-carmesi ${instagram ? "" : "pointer-events-none"}`}>
-            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" /></svg>
-          </a>
-          <a href={facebook ?? undefined} aria-label="Facebook" className={`text-granate transition-colors hover:text-carmesi ${facebook ? "" : "pointer-events-none"}`}>
-            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z" /></svg>
-          </a>
+          {/* Redes en línea negra (Facebook, Instagram, YouTube, LinkedIn); se activan al poner la URL en data/site.ts */}
+          {[
+            {
+              label: "Facebook",
+              href: facebook,
+              icon: <><circle cx="12" cy="12" r="9.5" /><path d="M13.2 19.5v-6.3h2.1l.3-2.4h-2.4V9.3c0-.7.2-1.2 1.2-1.2h1.3V6c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.1-3.2 3.3v1.6H8.5v2.4h2.1v6.3" /></>,
+            },
+            {
+              label: "Instagram",
+              href: instagram,
+              icon: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" /></>,
+            },
+            {
+              label: "YouTube",
+              href: site.youtube,
+              icon: <><rect x="2.5" y="5" width="19" height="14" rx="4" /><path d="M10 9.2v5.6l4.8-2.8z" /></>,
+            },
+            {
+              label: "LinkedIn",
+              href: site.linkedin,
+              icon: <><rect x="3" y="3" width="18" height="18" rx="2.5" /><path d="M7.5 10v6.5M7.5 7.3v.1M11 16.5V10m0 3c0-1.8 1-3 2.6-3S16 11.1 16 13v3.5" /></>,
+            },
+          ].map((r) => (
+            <a
+              key={r.label}
+              href={r.href ?? undefined}
+              target={r.href ? "_blank" : undefined}
+              rel="noreferrer"
+              aria-label={r.label}
+              className={`text-granate transition-colors hover:text-carmesi ${r.href ? "" : "pointer-events-none"}`}
+            >
+              <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                {r.icon}
+              </svg>
+            </a>
+          ))}
           <span className="normal-case tracking-normal text-[1.1rem]">© 2027 Gardners Hills</span>
         </div>
       </div>

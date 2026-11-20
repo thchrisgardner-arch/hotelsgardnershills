@@ -130,11 +130,39 @@ export function MotionController({ intro = false }: { intro?: boolean }) {
         .to("[data-hero-media] [data-media-inner]", { scale: 1, duration: 2, ease: "expo.out" }, "<");
     });
 
-    const refresh = () => ScrollTrigger.refresh();
+    /*
+     * Recalcular posiciones de los disparadores. Antes solo se hacía en «load», que espera a que
+     * baje el video del hero (11 MB): hasta entonces los títulos de abajo quedaban con posiciones
+     * viejas (la galería fijada añade alto después) y no aparecían. Ahora se recalcula pronto,
+     * cuando cargan las fuentes y cada vez que cambia el alto de la página.
+     */
+    let lastH = 0;
+    let raf = 0;
+    const refresh = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        lastH = document.body.scrollHeight;
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      });
+    };
+    const timers = [setTimeout(refresh, 150), setTimeout(refresh, 800), setTimeout(refresh, 2000)];
+    document.fonts?.ready.then(refresh).catch(() => {});
+    let debounce: ReturnType<typeof setTimeout> | undefined;
+    const ro = new ResizeObserver(() => {
+      if (Math.abs(document.body.scrollHeight - lastH) < 2) return;
+      clearTimeout(debounce);
+      debounce = setTimeout(refresh, 200);
+    });
+    ro.observe(document.body);
     window.addEventListener("load", refresh);
 
     return () => {
       off();
+      timers.forEach(clearTimeout);
+      clearTimeout(debounce);
+      cancelAnimationFrame(raf);
+      ro.disconnect();
       document.removeEventListener("click", onClick);
       window.removeEventListener("load", refresh);
       ctx.revert();

@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { Foto as Image } from "@/components/ui/Foto";
 import Link from "next/link";
-import type { CabanaTipo } from "@/data/cabanas";
+import { getCategoria, type Cabana } from "@/data/cabanas";
 
 /**
  * Ficha de cabaña (estructura de la referencia de alojamiento):
  * galería en arco con flechas, nombre grande y, debajo, descripción + datos con íconos.
  */
-export function CabanaCard({ cabana }: { cabana: CabanaTipo }) {
+export function CabanaCard({ cabana }: { cabana: Cabana }) {
   const [i, setI] = useState(0);
   const n = cabana.fotos.length;
   const go = (d: number) => setI((v) => (v + d + n) % n);
@@ -21,7 +21,7 @@ export function CabanaCard({ cabana }: { cabana: CabanaTipo }) {
   return (
     <article aria-labelledby={`${id}-t`} className="flex flex-col">
       {/* Galería en arco */}
-      <div className="group relative aspect-[5/4] overflow-hidden bg-rosa" data-reveal-media>
+      <div className="group relative aspect-[16/9] overflow-hidden bg-rosa" data-reveal-media>
         <div data-media-inner className="absolute inset-0">
           {cabana.fotos.map((src, k) => (
             <Image
@@ -63,34 +63,34 @@ export function CabanaCard({ cabana }: { cabana: CabanaTipo }) {
 
       <h3
         id={`${id}-t`}
-        className="mt-8 font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.4vw,3.4rem)] leading-none text-carmesi"
+        className="mt-6 font-[family-name:var(--font-display)] text-[clamp(2rem,2.6vw,2.7rem)] leading-none text-carmesi"
       >
         {nombre}
       </h3>
 
       <p data-reveal className="mt-3 text-[0.86rem] font-normal uppercase tracking-[0.2em] text-granate/60">
-        {cabana.unidades} cabañas · {cabana.frase}
+        {getCategoria(cabana.categoria).nombre.replace("Cabañas ", "")} · {cabana.frase}
       </p>
 
-      <div data-reveal className="mt-6 grid gap-8 sm:grid-cols-[1fr_auto] sm:gap-12">
+      <div data-reveal className="mt-5 grid gap-6 sm:grid-cols-[1fr_auto] sm:gap-10">
         <div>
-          <p className="max-w-md text-granate/85">{cabana.descripcion}</p>
+          <p className="max-w-md text-[1.05rem] leading-[1.45] text-granate/85">{cabana.descripcion}</p>
           <div className="mt-6 flex flex-wrap gap-6">
             <Link
               href={`/cabanas/${cabana.slug}`}
               className="inline-block border-b border-carmesi/60 pb-1 text-[0.88rem] font-normal uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
             >
-              Ver la cabaña
+              Descubre más
             </Link>
             <Link
-              href="/reservas"
+              href={`/reservas?cabana=${cabana.slug}`}
               className="inline-block border-b border-granate/25 pb-1 text-[0.88rem] font-normal uppercase tracking-[0.16em] text-granate/70 transition-colors hover:border-granate hover:text-granate"
             >
               Reservar
             </Link>
           </div>
         </div>
-        <ul className="space-y-3 text-[1.12rem] text-granate/80 sm:min-w-[210px]">
+        <ul className="space-y-2.5 text-[1.02rem] text-granate/80 sm:min-w-[210px]">
           <li className="flex items-center gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
             <span><span className="sr-only">Tamaño: </span>{cabana.area}</span>

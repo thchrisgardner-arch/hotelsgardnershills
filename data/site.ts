@@ -24,6 +24,8 @@ export const site = {
   },
   instagram: null as string | null,
   facebook: null as string | null,
+  youtube: null as string | null,
+  linkedin: null as string | null,
   bookingEngine: null as string | null,
   url: "https://gardnerhills.co", // dominio inferido del correo; confirmar
 };

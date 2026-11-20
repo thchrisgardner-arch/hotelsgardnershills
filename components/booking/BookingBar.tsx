@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { site } from "@/data/site";
 import { reservas } from "@/data/reservas";
 import { RangeCalendar } from "./RangeCalendar";
@@ -15,6 +16,8 @@ type Cabana = { adultos: number; ninos: number };
  * No simula disponibilidad: «Buscar» envía la solicitud por WhatsApp.
  */
 export function BookingBar() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [llegada, setLlegada] = useState("");
   const [salida, setSalida] = useState("");
   const [cabanas, setCabanas] = useState<Cabana[]>([{ adultos: 2, ninos: 0 }]);
@@ -64,16 +67,15 @@ export function BookingBar() {
       setPanel("fechas");
       return setError("Elige tus fechas de entrada y salida.");
     }
-    const msg = [
-      "Hola, Gardners Hills. Quisiera consultar disponibilidad:",
-      `• Entrada: ${largo(llegada)}`,
-      `• Salida: ${largo(salida)} (${plural(noches, "noche", "noches")})`,
-      ...cabanas.map((c, i) => `• Cabaña ${i + 1}: ${plural(c.adultos, "adulto", "adultos")}${c.ninos ? `, ${plural(c.ninos, "niño", "niños")}` : ""}`),
-      codigo ? `• Código de promoción: ${codigo}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.open(`https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    // Lleva a la página de reserva con la búsqueda ya cargada
+    const q = new URLSearchParams({
+      llegada,
+      salida,
+      adultos: String(totalAdultos),
+      ninos: String(totalNinos),
+      ...(codigo ? { codigo } : {}),
+    });
+    router.push(`/reservas?${q.toString()}#resultados`);
     setPanel(null);
   }
 
@@ -83,6 +85,9 @@ export function BookingBar() {
   const value = "block whitespace-nowrap text-[1.16rem] leading-snug text-granate";
   const step =
     "grid h-9 w-9 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
+
+  // En la página de reserva el buscador ya está en la propia página
+  if (pathname?.startsWith("/reservas")) return null;
 
   return (
     <div ref={root} data-chrome className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 md:block" role="search" aria-label="Buscar disponibilidad">

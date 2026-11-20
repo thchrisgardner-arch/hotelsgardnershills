@@ -1,4 +1,4 @@
-import { cabanas, totalCabanas } from "@/data/cabanas";
+import { categorias, cabanasDe, totalCabanas } from "@/data/cabanas";
 import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { CabanaCard } from "@/components/rooms/CabanaCard";
@@ -25,7 +25,7 @@ export function Cabanas() {
           Abre el ventanal y deja que la luz y el viento de la sierra entren contigo.
         </p>
         <p data-reveal className="mx-auto mt-6 max-w-xl text-granate/85">
-          {totalCabanas} cabañas en dos categorías, Medium y Premium, de arquitectura blanca y madera. Un diseño
+          {totalCabanas} cabañas en dos categorías, Refugio y Premium, de arquitectura blanca y madera. Un diseño
           minimalista y funcional que dialoga con el entorno.
         </p>
       </div>
@@ -37,24 +37,24 @@ export function Cabanas() {
         <Arch src="/images/cabanas/cabana-terraza.jpg" alt="Terrazas de las cabañas" className="h-[clamp(16rem,34vw,36rem)] w-full" sizes="25vw" />
       </div>
 
-      {/* Fichas */}
-      <div className="mt-28 px-[var(--gutter)] sm:mt-36">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6 border-b border-granate/15 pb-6">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,3vw,3rem)] leading-none text-carmesi">
-            Encuentra tu cabaña
-          </h2>
-          <span className="text-[0.88rem] font-normal uppercase tracking-[0.18em] text-granate/60">
-            Villanueva · La Guajira
-          </span>
+      {/* Fichas por categoría */}
+      {categorias.map((cat) => (
+        <div key={cat.slug} id={cat.slug} className="mt-28 scroll-mt-28 px-[var(--gutter)] sm:mt-36">
+          <div className="mb-14 grid gap-6 border-b border-granate/15 pb-6 lg:grid-cols-2 lg:items-end">
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.6vw,3.6rem)] leading-none text-carmesi">
+              {cat.nombre}
+            </h2>
+            <p className="max-w-md text-granate/80 lg:justify-self-end lg:text-right">{cat.intro}</p>
+          </div>
+          <ul className="grid gap-x-8 gap-y-20 lg:grid-cols-2">
+            {cabanasDe(cat.slug).map((c) => (
+              <li key={c.slug}>
+                <CabanaCard cabana={c} />
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="grid gap-x-8 gap-y-24 lg:grid-cols-2">
-          {cabanas.map((c) => (
-            <li key={c.slug}>
-              <CabanaCard cabana={c} />
-            </li>
-          ))}
-        </ul>
-      </div>
+      ))}
     </section>
   );
 }

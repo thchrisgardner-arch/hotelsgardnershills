@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cabanas } from "@/data/cabanas";
+import { categorias, cabanasDe } from "@/data/cabanas";
 import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { Pill } from "@/components/ui/Pill";
@@ -29,20 +29,26 @@ export function CabanasResumen() {
         </div>
       </div>
 
-      <ul className="mt-20 grid gap-x-6 gap-y-14 sm:grid-cols-2">
-        {cabanas.map((c) => (
-          <li key={c.slug}>
-            <Link href={`/cabanas/${c.slug}`} className="group block">
-              <Arch src={c.fotos[0]} alt={c.nombre} className="aspect-[4/3] w-full" sizes="(min-width: 640px) 48vw, 100vw" hoverZoom />
-              <div className="mt-6 flex items-baseline justify-between border-b border-granate/20 pb-3">
-                <span className="font-[family-name:var(--font-display)] text-[1.9rem] leading-none text-carmesi">
-                  {c.nombre}
-                </span>
-                <span className="text-[0.86rem] uppercase tracking-[0.18em] text-granate/60">{c.unidades} cabañas · {c.area} <span aria-hidden className="ml-2 inline-block text-granate transition-transform duration-500 group-hover:translate-x-1">→</span></span>
-              </div>
-            </Link>
-          </li>
-        ))}
+      {/* Solo las dos categorías; el detalle de cada cabaña vive en /cabanas */}
+      <ul className="mt-20 grid gap-x-8 gap-y-14 sm:grid-cols-2">
+        {categorias.map((cat) => {
+          const lista = cabanasDe(cat.slug);
+          return (
+            <li key={cat.slug}>
+              <Link href={`/cabanas#${cat.slug}`} className="group block">
+                <Arch src={lista[0]?.fotos[0]} alt={cat.nombre} className="aspect-[16/10] w-full" sizes="(min-width: 640px) 48vw, 100vw" hoverZoom />
+                <div className="mt-7 flex items-baseline justify-between gap-6 border-b border-granate/20 pb-4">
+                  <span className="font-[family-name:var(--font-display)] text-[clamp(2.2rem,3vw,3rem)] leading-none text-carmesi">{cat.nombre}</span>
+                  <span className="whitespace-nowrap text-[0.86rem] uppercase tracking-[0.18em] text-granate/60">
+                    {lista.length} cabañas
+                    <span aria-hidden className="ml-3 inline-block text-granate transition-transform duration-500 group-hover:translate-x-1">→</span>
+                  </span>
+                </div>
+                <p className="mt-4 max-w-lg text-granate/80">{cat.intro}</p>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

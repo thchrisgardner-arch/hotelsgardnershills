@@ -29,20 +29,22 @@ Para arrancarlo: `npm run dev` → http://localhost:5206 (preview "gardners-hill
 ## Falta del cliente
 
 - [ ] Dirección real. La del wireframe («162F Whitipirorua Road») es de Nueva Zelanda, de una plantilla
-- [ ] Instagram y Facebook
+- [ ] Instagram, Facebook, YouTube y LinkedIn (URLs en `data/site.ts`; los íconos ya están en el footer)
+- [ ] Reseñas: las 10 de `data/resenas.ts` son textos de ejemplo. Reemplazarlas por reseñas reales antes de lanzar
 - [ ] Dominio definitivo (se usa `gardnerhills.co`, deducido del correo)
 - [ ] Fotos de spa, gym, interiores y actividades
 - [ ] Spa y gym: tratamientos, horarios y equipamiento
-- [ ] Cabañas: validar los datos provisionales de `data/cabanas.ts` (4 Medium de 28 m² y 6 Premium de 36 m² + patio de 14 m² con tina; camas, capacidad y dotación inventadas con autorización, tomando como referencia las habitaciones de OSH)
+- [ ] Cabañas: 8 con nombre (4 Medium, 4 Premium; antes se habló de 4 + 6). Confirmar los nombres marcados [propuesta] (Dunas de Taroa, Wind of Jepira) y los datos provisionales en `data/cabanas.ts`: medidas, camas y capacidad de las Premium, capacidad de las Medium y lista de servicios
 - [ ] Experiencias y actividades confirmadas
 - [ ] Logo en SVG; archivo de Palo Compressed Medium y licencias web de las fuentes
+- [ ] Manderley Gothic (rótulos pequeños): el archivo usado es «FREE FOR PERSONAL USE ONLY» y no trae Ñ, tildes ni «·» (esos caracteres salen en Helvetica). Comprar la licencia comercial/web con el set completo y reemplazar `public/fonts/manderley-gothic.ttf`
 - [ ] Motor de reservas. Por ahora el formulario abre WhatsApp con la solicitud ya escrita
 - [ ] Textos legales: borrador en `data/legales.ts`. Faltan razón social, NIT, RNT, dirección, horarios de check-in/out y política de cancelación. Que lo revise un abogado
 - [ ] ID de Google Analytics (`NEXT_PUBLIC_GA_ID` en Vercel). Solo se carga si el visitante acepta cookies
 
 ## Páginas (2026-11-19)
 
-Sitio multipágina: `/`, `/cabanas`, `/cabanas/medium`, `/cabanas/premium`, `/servicios`, `/gastronomia`, `/actividades`, `/galeria`, `/reservas`, `/contacto`, `/terminos`, `/privacidad`, `/cookies`.
+Sitio multipágina: `/`, `/cabanas`, `/cabanas/[cabaña]` (8 fichas; /cabanas/medium y /premium redirigen al listado), `/servicios`, `/gastronomia`, `/actividades`, `/galeria`, `/reservas`, `/contacto`, `/terminos`, `/privacidad`, `/cookies`.
 Cabecera (con selector ES / EN), footer, barra de reservas, WhatsApp y aviso de cookies son comunes (en `app/layout.tsx`).
 
 Sitio multipágina: `/`, `/la-casa`, `/cabanas`, `/servicios`, `/actividades`, `/galeria`, `/reservas`, `/contacto`.

@@ -33,6 +33,7 @@ export function JsonLd() {
       name: c.nombre,
       url: `${site.url}/cabanas/${c.slug}`,
       floorSize: { "@type": "QuantitativeValue", value: parseInt(c.area), unitCode: "MTK" },
+      occupancy: { "@type": "QuantitativeValue", description: c.capacidad },
     })),
     sameAs: [site.instagram, site.facebook].filter(Boolean),
   };
