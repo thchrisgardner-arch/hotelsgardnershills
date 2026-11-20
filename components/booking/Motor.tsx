@@ -7,6 +7,7 @@ import { RangeCalendar } from "./RangeCalendar";
 import { Arch } from "@/components/ui/Arch";
 import { cabanas, categorias, getCabana, getCategoria, type Cabana, type CategoriaSlug } from "@/data/cabanas";
 import { site } from "@/data/site";
+import { tarifas, tarifasIntro, tarifasNota, cop } from "@/data/tarifas";
 
 /**
  * Motor de reservas propio (estructura del motor D-Edge de Grand Hotel Miramare):
@@ -257,76 +258,147 @@ export function Motor() {
             </ul>
           </div>
 
-          {/* Resultados */}
+          {/* Todas las cabañas (estructura de la página de reserva de Casa Momo) */}
           <section ref={resultados} id="resultados" className="scroll-mt-28 px-[var(--gutter)] pb-28 pt-24">
-            {!buscado ? (
-              <p className="mx-auto max-w-xl text-center text-granate/70">
-                Elige tus fechas y el número de huéspedes para ver las cabañas disponibles para tu estancia.
-              </p>
-            ) : (
-              <>
-                <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-6 border-b border-granate/15 pb-6">
-                  <div>
-                    <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.6vw,3.6rem)] leading-none text-granate">Elige tu cabaña</h2>
-                    <p className="mt-3 text-granate/70">
-                      {plural(noches, "noche", "noches")} · {plural(huespedes, "huésped", "huéspedes")} · {largo(llegada)}
-                    </p>
-                  </div>
-                  <div className="flex gap-2" role="tablist" aria-label="Categoría">
-                    {[{ slug: "todas" as const, nombre: "Todas" }, ...categorias.map((c) => ({ slug: c.slug, nombre: c.nombre.replace("Cabañas ", "") }))].map((f) => (
-                      <button
-                        key={f.slug}
-                        type="button"
-                        role="tab"
-                        aria-selected={filtro === f.slug}
-                        onClick={() => setFiltro(f.slug)}
-                        className={`border px-5 py-2 text-[0.86rem] uppercase tracking-[0.16em] transition-colors ${filtro === f.slug ? "border-granate bg-granate text-crema" : "border-granate/30 text-granate hover:border-granate"}`}
-                      >
-                        {f.nombre}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+            <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-6 border-b border-granate/15 pb-6">
+              <div>
+                <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.4rem,3.6vw,3.6rem)] leading-none text-granate">Nuestras cabañas</h2>
+                <p className="mt-3 text-granate/70">
+                  {buscado && noches
+                    ? `${plural(noches, "noche", "noches")} · ${plural(huespedes, "huésped", "huéspedes")} · ${largo(llegada)}`
+                    : "Elige tus fechas para reservar la cabaña que prefieras."}
+                </p>
+              </div>
+              <div className="flex gap-2" role="tablist" aria-label="Categoría">
+                {[{ slug: "todas" as const, nombre: "Todas" }, ...categorias.map((c) => ({ slug: c.slug, nombre: c.nombre.replace("Cabañas ", "") }))].map((f) => (
+                  <button
+                    key={f.slug}
+                    type="button"
+                    role="tab"
+                    aria-selected={filtro === f.slug}
+                    onClick={() => setFiltro(f.slug)}
+                    className={`border px-5 py-2 text-[0.86rem] uppercase tracking-[0.16em] transition-colors ${filtro === f.slug ? "border-granate bg-granate text-crema" : "border-granate/30 text-granate hover:border-granate"}`}
+                  >
+                    {f.nombre}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                <ul className="mx-auto max-w-6xl divide-y divide-granate/15">
-                  {lista.map((c) => {
-                    const cabe = huespedes <= c.maxHuespedes;
-                    return (
-                      <li key={c.slug} className={`grid gap-10 py-10 lg:grid-cols-[0.9fr_1.4fr_0.8fr] lg:items-center ${cabe ? "" : "opacity-50"}`}>
-                        <Arch src={c.fotos[0]} alt={c.nombre} className="aspect-[4/3] w-full" sizes="28vw" reveal={false} />
-                        <div>
-                          <p className="text-[0.78rem] uppercase tracking-[0.18em] text-granate/60">{getCategoria(c.categoria).nombre}</p>
-                          <h3 className="mt-2 font-[family-name:var(--font-display)] text-[2.2rem] leading-none text-granate">{c.nombre.replace("Cabaña ", "")}</h3>
-                          <p className="mt-3 text-granate/80">{c.frase}</p>
-                          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[0.98rem] text-granate/75">
-                            <li>{c.area}</li>
-                            <li>{c.capacidad}</li>
-                            <li>{c.camas}</li>
-                            {c.instalaciones.map((x) => <li key={x}>{x}</li>)}
-                          </ul>
-                          <Link href={`/cabanas/${c.slug}`} className="mt-5 inline-block border-b border-granate/40 pb-0.5 text-[0.86rem] uppercase tracking-[0.16em] text-granate hover:border-granate">
-                            Descubre más
-                          </Link>
+            <ul className="mx-auto max-w-6xl divide-y divide-granate/15">
+              {lista.map((c) => {
+                const cabe = huespedes <= c.maxHuespedes;
+                const listo = buscado && Boolean(noches);
+                return (
+                  <li key={c.slug} className={`grid gap-10 py-10 lg:grid-cols-[0.95fr_1.25fr_0.8fr] lg:items-start ${listo && !cabe ? "opacity-50" : ""}`}>
+                    {/* Imagen + nombre + datos con íconos */}
+                    <div>
+                      <Arch src={c.fotos[0]} alt={c.nombre} className="aspect-[4/3] w-full" sizes="30vw" reveal={false} />
+                      <div className="mt-5 flex flex-wrap items-baseline justify-between gap-3">
+                        <h3 className="font-[family-name:var(--font-display)] text-[2rem] leading-none text-granate">{c.nombre.replace("Cabaña ", "")}</h3>
+                        <span className="flex gap-4 text-[0.95rem] text-granate/70">
+                          <span>{c.area.split(" ")[0]} m²</span>
+                          <span>{c.maxHuespedes} huésp.</span>
+                        </span>
+                      </div>
+                    </div>
+                    {/* Descripción */}
+                    <div className="lg:pt-2">
+                      <p className="text-[0.78rem] uppercase tracking-[0.2em] text-granate/60">{getCategoria(c.categoria).nombre}</p>
+                      <p className="mt-3 text-granate/85">{c.resumen}</p>
+                      <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[0.98rem] text-granate/70">
+                        <li>{c.camas}</li>
+                        {c.instalaciones.map((x) => <li key={x}>{x}</li>)}
+                      </ul>
+                      <Link href={`/cabanas/${c.slug}`} className="mt-5 inline-block border-b border-granate/40 pb-0.5 text-[0.86rem] uppercase tracking-[0.16em] text-granate hover:border-granate">
+                        Descubre más
+                      </Link>
+                    </div>
+                    {/* Acción */}
+                    <div className="lg:pt-2 lg:text-right">
+                      <p className="text-[0.95rem] text-granate/70">
+                        {!listo ? "Elige tus fechas para ver la disponibilidad" : cabe ? "Tarifa según temporada, confirmada por el hotel" : `Capacidad máxima: ${c.maxHuespedes} huéspedes`}
+                      </p>
+                      {listo ? (
+                        <button
+                          type="button"
+                          disabled={!cabe}
+                          onClick={() => elegir(c)}
+                          className="mt-5 inline-flex items-center gap-4 bg-granate px-8 py-4 text-[0.86rem] uppercase tracking-[0.18em] text-crema transition-colors hover:bg-carmesi disabled:cursor-not-allowed disabled:bg-granate/30"
+                        >
+                          Seleccionar <span aria-hidden>→</span>
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setElegida(c);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                            setTimeout(() => setPanel("fechas"), 450);
+                          }}
+                          className="mt-5 inline-flex items-center gap-4 border border-granate/50 px-8 py-4 text-[0.86rem] uppercase tracking-[0.18em] text-granate transition-colors hover:bg-granate hover:text-crema"
+                        >
+                          Elegir fechas <span aria-hidden>→</span>
+                        </button>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          {/* Tarifas (estructura de Hillbrook; datos del cliente) */}
+          <section id="tarifas" className="border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
+            <h2 className="text-center font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.4vw,4.6rem)] leading-[1.02] text-granate">
+              Tarifas en <span className="t-italic">Gardners Hills</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-center text-[0.92rem] uppercase leading-[1.7] tracking-[0.2em] text-granate/75">{tarifasIntro}</p>
+
+            <ul className="mx-auto mt-16 grid max-w-6xl gap-6 lg:grid-cols-3">
+              {tarifas.map((t) => (
+                <li key={t.id} className="flex flex-col border border-granate/20 p-8">
+                  <h3 className="border-b border-granate/15 pb-5 text-center text-[1rem] uppercase tracking-[0.24em] text-granate">{t.nombre}</h3>
+                  <div className="grid grid-cols-2 border-b border-granate/15">
+                    <div className="flex flex-col justify-center border-r border-granate/15 py-5 pr-4 text-center">
+                      <span className="text-granate/60">Capacidad</span>
+                      <span className="mt-1 text-[0.9rem] uppercase tracking-[0.2em] text-granate">{t.capacidad}</span>
+                    </div>
+                    <div className="space-y-3 py-5 pl-4 text-center">
+                      {t.temporadas.map((x) => (
+                        <div key={x.nombre}>
+                          <span className="block text-[0.86rem] text-granate/60">{x.nombre}</span>
+                          <span className="block font-[family-name:var(--font-display)] text-[1.9rem] leading-none text-granate">{cop(x.valor)}</span>
                         </div>
-                        <div className="lg:text-right">
-                          <p className="text-[0.95rem] text-granate/70">
-                            {cabe ? "Tarifa según fechas, confirmada por el hotel" : `Capacidad máxima: ${c.maxHuespedes} huéspedes`}
-                          </p>
-                          <button
-                            type="button"
-                            disabled={!cabe}
-                            onClick={() => elegir(c)}
-                            className="mt-5 inline-flex items-center gap-4 bg-granate px-8 py-4 text-[0.86rem] uppercase tracking-[0.18em] text-crema transition-colors hover:bg-carmesi disabled:cursor-not-allowed disabled:bg-granate/30"
-                          >
-                            Seleccionar <span aria-hidden>→</span>
-                          </button>
-                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <ul className="mt-6 flex-1 space-y-2 text-granate/85">
+                    {t.incluye.map((x) => (
+                      <li key={x} className="flex items-center gap-3">
+                        <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-granate" />
+                        {x}
                       </li>
-                    );
-                  })}
-                </ul>
-              </>
-            )}
+                    ))}
+                  </ul>
+                  <p className="mt-6 border-t border-granate/15 pt-5 text-[0.9rem] leading-[1.5] text-granate/65">
+                    Desde {cop(t.temporadas[0].valor)} por noche. {tarifasNota}
+                  </p>
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        setTimeout(() => setPanel("fechas"), 450);
+                      }}
+                      className="inline-flex items-center gap-4 border border-granate/50 px-8 py-3 text-[0.86rem] uppercase tracking-[0.18em] text-granate transition-colors hover:bg-granate hover:text-crema"
+                    >
+                      Reservar <span aria-hidden>→</span>
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </section>
         </>
       )}
