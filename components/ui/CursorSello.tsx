@@ -66,13 +66,8 @@ export function CursorSello() {
               <textPath href="#sello-circulo">{texto}</textPath>
             </text>
           </g>
-          {/* Sol central */}
-          <g fill="#ffffff">
-            {Array.from({ length: 16 }).map((_, i) => (
-              <path key={i} d="M62 37 L64.4 50 L59.6 50 Z" transform={`rotate(${i * 22.5} 62 62)`} />
-            ))}
-            <circle cx="62" cy="62" r="11" />
-          </g>
+          {/* Punto central (se ve negro sobre fondos claros por el mix-blend-difference) */}
+          <circle cx="62" cy="62" r="7" fill="#ffffff" />
         </svg>
       </div>
     </div>
