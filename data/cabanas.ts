@@ -14,6 +14,7 @@
  * Fotos: fotogramas del video oficial; ocultas mientras MOSTRAR_FOTOS = false.
  */
 import type { Lang } from "@/lib/routes";
+import { MAQUETA, fotosCabana } from "@/lib/maqueta";
 
 export type CategoriaSlug = "refugio" | "premium";
 
@@ -318,8 +319,10 @@ const CAT_EN: Record<CategoriaSlug, string> = {
 
 /** Cabaña en el idioma pedido (los nombres propios no cambian) */
 export function enIdioma(c: Cabana, lang: Lang): Cabana {
-  if (lang === "es") return c;
-  return { ...c, ...EN[c.slug], instalaciones: tr(c.instalaciones), destacados: tr(c.destacados), servicios: tr(c.servicios) };
+  // Maqueta local: fotos de referencia por cabaña (lib/maqueta.ts)
+  const base = MAQUETA ? { ...c, fotos: fotosCabana(cabanas.indexOf(c)) } : c;
+  if (lang === "es") return base;
+  return { ...base, ...EN[c.slug], instalaciones: tr(c.instalaciones), destacados: tr(c.destacados), servicios: tr(c.servicios) };
 }
 export const cabanasL = (lang: Lang = "es") => cabanas.map((c) => enIdioma(c, lang));
 export const categoriasL = (lang: Lang = "es"): Categoria[] =>

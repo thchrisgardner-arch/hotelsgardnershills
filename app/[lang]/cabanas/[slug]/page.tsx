@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { MotionController } from "@/components/layout/MotionController";
 import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
+import { Foto as Image } from "@/components/ui/Foto";
 import { Pill } from "@/components/ui/Pill";
 import { L } from "@/components/ui/L";
 import { CabanaCard } from "@/components/rooms/CabanaCard";
@@ -113,8 +114,15 @@ export default async function CabanaPage({ params }: Props) {
       <MotionController />
       <main>
         {/* Portada */}
-        <section data-header-light className="bg-granate text-marfil">
-          <div className="flex min-h-[86vh] flex-col items-center justify-center px-[var(--gutter)] pb-24 pt-[calc(var(--header-h)+4rem)] text-center">
+        <section data-header-light className="relative overflow-hidden bg-granate text-marfil">
+          {/* Foto de la cabaña de fondo con velo oscuro (solo si las fotos están activas) */}
+          {c.fotos[0] && (
+            <div aria-hidden className="absolute inset-0">
+              <Image src={c.fotos[0]} alt="" fill sizes="100vw" priority className="object-cover" />
+              <div className="absolute inset-0 bg-black/45" />
+            </div>
+          )}
+          <div className="relative flex min-h-[86vh] flex-col items-center justify-center px-[var(--gutter)] pb-24 pt-[calc(var(--header-h)+4rem)] text-center">
             <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil">
               <L href={`/cabanas?categoria=${c.categoria}#listado`} className="inline-flex min-h-11 items-center hover:underline">
                 {categoria.nombre}

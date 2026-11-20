@@ -1,5 +1,6 @@
 import { Foto as Image } from "@/components/ui/Foto";
 import { tone, PLACEHOLDER_COLOR, MOSTRAR_FOTOS } from "@/lib/brand";
+import { MAQUETA, fotoAmbiente } from "@/lib/maqueta";
 
 /**
  * Marco en arco (lenguaje del XD y los wireframes, eco de las fachadas de las cabañas).
@@ -29,6 +30,8 @@ export function Arch({
   // Todas las imágenes van con esquinas rectas (decisión del cliente 2026-11-19); `shape` se conserva por compatibilidad.
   const radius = { arch: "", circle: "", pill: "" }[shape];
   const t = tone[PLACEHOLDER_COLOR ?? "rosa"];
+  // Maqueta local: los espacios sin foto reciben una de referencia (Foto la sustituye si hace falta)
+  if (!src && MAQUETA) src = fotoAmbiente(alt + className);
   return (
     <figure
       data-reveal-media={reveal ? "" : undefined}

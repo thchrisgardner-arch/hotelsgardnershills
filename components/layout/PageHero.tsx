@@ -1,5 +1,6 @@
 import { Foto as Image } from "@/components/ui/Foto";
 import { Lines } from "@/components/ui/Lines";
+import { MAQUETA, fotoAmbiente } from "@/lib/maqueta";
 
 /**
  * Cabecera de página interna con el mismo esquema del hero del home:
@@ -18,6 +19,7 @@ export function PageHero({
   foto?: string;
   alt?: string;
 }) {
+  if (!foto && MAQUETA) foto = fotoAmbiente(String(titulo));
   return (
     <section data-header-light className="relative overflow-hidden bg-granate text-marfil">
       {foto && (
