@@ -4,22 +4,30 @@ import { useState } from "react";
 import { site } from "@/data/site";
 import { ContactForm } from "./ContactForm";
 import { Pill } from "@/components/ui/Pill";
+import { useLang } from "@/lib/i18n";
+
+const TXT = {
+  es: { aria: "Canales de contacto", correo: "Correo", formulario: "Formulario", rapida: "La forma más rápida", rapidaP: "Escríbenos por WhatsApp para consultar disponibilidad, resolver dudas o preparar tu llegada. Te respondemos en el mismo chat.", numero: "Número", abrir: "Abrir WhatsApp", detalle: "Para solicitudes con más detalle", detalleP: "Celebraciones, estancias largas o grupos: cuéntanos por correo lo que necesitas y te respondemos lo antes posible.", dir: "Dirección de correo", escribir: "Escribir un correo" },
+  en: { aria: "Contact channels", correo: "Email", formulario: "Form", rapida: "The fastest way", rapidaP: "Message us on WhatsApp to check availability, ask questions or prepare your arrival. We reply in the same chat.", numero: "Number", abrir: "Open WhatsApp", detalle: "For more detailed requests", detalleP: "Celebrations, long stays or groups: tell us by email what you need and we will reply as soon as possible.", dir: "Email address", escribir: "Write an email" },
+};
 
 type Tab = "whatsapp" | "correo" | "formulario";
 
 /** Pestañas de canal de contacto (estructura de pestañas de la referencia, contenido propio) */
 export function ContactTabs() {
+  const { lang } = useLang();
+  const T = TXT[lang];
   const [tab, setTab] = useState<Tab>("whatsapp");
   const { contact } = site;
   const tabs: { id: Tab; label: string }[] = [
     { id: "whatsapp", label: "WhatsApp" },
-    { id: "correo", label: "Correo" },
-    { id: "formulario", label: "Formulario" },
+    { id: "correo", label: T.correo },
+    { id: "formulario", label: T.formulario },
   ];
 
   return (
     <div>
-      <div role="tablist" aria-label="Canales de contacto" className="flex gap-9">
+      <div role="tablist" aria-label={T.aria} className="flex flex-wrap gap-x-9 gap-y-2">
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -27,8 +35,8 @@ export function ContactTabs() {
             aria-selected={tab === t.id}
             aria-controls={`panel-${t.id}`}
             onClick={() => setTab(t.id)}
-            className={`relative pb-2 text-[0.88rem] font-normal uppercase tracking-[0.2em] transition-colors ${
-              tab === t.id ? "text-carmesi" : "text-granate/45 hover:text-granate/80"
+            className={`relative min-h-11 pb-2 text-[0.92rem] font-normal uppercase tracking-[0.2em] transition-colors ${
+              tab === t.id ? "text-carmesi" : "text-granate/70 hover:text-granate"
             }`}
           >
             {t.label}
@@ -41,35 +49,29 @@ export function ContactTabs() {
         {tab === "whatsapp" && (
           <div className="space-y-6">
             <div>
-              <p className="text-carmesi">La forma más rápida</p>
-              <p className="mt-2 text-granate/85">
-                Escríbenos por WhatsApp para consultar disponibilidad, resolver dudas o preparar tu llegada. Te
-                respondemos en el mismo chat.
-              </p>
+              <p className="text-carmesi">{T.rapida}</p>
+              <p className="mt-2 text-granate">{T.rapidaP}</p>
             </div>
             <div>
-              <p className="text-carmesi">Número</p>
-              <p className="mt-2 text-granate/85">{contact.whatsappLabel}</p>
+              <p className="text-carmesi">{T.numero}</p>
+              <p className="mt-2 text-granate">{contact.whatsappLabel}</p>
             </div>
             <Pill href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer">
-              Abrir WhatsApp
+              {T.abrir}
             </Pill>
           </div>
         )}
         {tab === "correo" && (
           <div className="space-y-6">
             <div>
-              <p className="text-carmesi">Para solicitudes con más detalle</p>
-              <p className="mt-2 text-granate/85">
-                Celebraciones, estancias largas o grupos: cuéntanos por correo lo que necesitas y te respondemos lo
-                antes posible.
-              </p>
+              <p className="text-carmesi">{T.detalle}</p>
+              <p className="mt-2 text-granate">{T.detalleP}</p>
             </div>
             <div>
-              <p className="text-carmesi">Dirección de correo</p>
-              <p className="mt-2 text-granate/85">{contact.email}</p>
+              <p className="text-carmesi">{T.dir}</p>
+              <p className="mt-2 break-all text-granate">{contact.email}</p>
             </div>
-            <Pill href={`mailto:${contact.email}`}>Escribir un correo</Pill>
+            <Pill href={`mailto:${contact.email}`}>{T.escribir}</Pill>
           </div>
         )}
         {tab === "formulario" && <ContactForm />}

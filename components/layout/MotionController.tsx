@@ -52,8 +52,10 @@ export function MotionController({ intro = false }: { intro?: boolean }) {
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
-      // Estados iniciales
-      gsap.set("[data-reveal-lines] .line > span, [data-hero-lines] .line > span", { yPercent: 110 });
+      // Estados iniciales. Al navegar sin recargar, GSAP podía heredar un desplazamiento en px
+      // (y) además del yPercent; se limpia y se fija y: 0 para que el título siempre vuelva a su sitio.
+      gsap.set("[data-reveal-lines] .line > span, [data-hero-lines] .line > span", { clearProps: "transform" });
+      gsap.set("[data-reveal-lines] .line > span, [data-hero-lines] .line > span", { yPercent: 110, y: 0 });
       gsap.set("[data-reveal]", { autoAlpha: 0, y: 28 });
       gsap.set("[data-hero-fade]", { autoAlpha: 0, y: 16 });
       gsap.set("[data-reveal-media]", { clipPath: "inset(100% 0% 0% 0%)" });
@@ -63,6 +65,7 @@ export function MotionController({ intro = false }: { intro?: boolean }) {
       gsap.utils.toArray<HTMLElement>("[data-reveal-lines]").forEach((el) => {
         gsap.to(el.querySelectorAll(".line > span"), {
           yPercent: 0,
+          y: 0,
           duration: 1.2,
           ease: "power4.out",
           stagger: 0.09,
@@ -124,7 +127,7 @@ export function MotionController({ intro = false }: { intro?: boolean }) {
     // Secuencia del hero tras la intro
     const off = onIntroDone(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-      tl.to("[data-hero-lines] .line > span", { yPercent: 0, duration: 1.4, stagger: 0.12 })
+      tl.to("[data-hero-lines] .line > span", { yPercent: 0, y: 0, duration: 1.4, stagger: 0.12 })
         .to("[data-hero-fade]", { autoAlpha: 1, y: 0, duration: 1, stagger: 0.08 }, "-=0.9")
         .to("[data-hero-media]", { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "expo.inOut" }, "-=1.2")
         .to("[data-hero-media] [data-media-inner]", { scale: 1, duration: 2, ease: "expo.out" }, "<");
@@ -146,7 +149,16 @@ export function MotionController({ intro = false }: { intro?: boolean }) {
         ScrollTrigger.refresh();
       });
     };
-    const timers = [setTimeout(refresh, 150), setTimeout(refresh, 800), setTimeout(refresh, 2000)];
+    // Respaldo para la navegación interna: lo que ya está en pantalla se muestra aunque el disparador no salte
+    const mostrarVisibles = () => {
+      document.querySelectorAll<HTMLElement>("[data-reveal-lines]").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) gsap.to(el.querySelectorAll(".line > span"), { yPercent: 0, y: 0, duration: 1.2, ease: "power4.out", stagger: 0.09 });
+      });
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) gsap.to(el, { autoAlpha: 1, y: 0, duration: 1.1, ease: "power3.out" });
+      });
+    };
+    const timers = [setTimeout(refresh, 150), setTimeout(refresh, 800), setTimeout(refresh, 2000), setTimeout(mostrarVisibles, 900)];
     document.fonts?.ready.then(refresh).catch(() => {});
     let debounce: ReturnType<typeof setTimeout> | undefined;
     const ro = new ResizeObserver(() => {

@@ -2,24 +2,28 @@ import { Lines } from "@/components/ui/Lines";
 import { Arch } from "@/components/ui/Arch";
 import { Pill } from "@/components/ui/Pill";
 import { actividades } from "@/data/actividades";
+import type { Lang } from "@/lib/routes";
 
-/** Actividades en los alrededores (antes página propia; ahora dentro de Servicios) */
-export function ActividadesLista() {
+/** Actividades en los alrededores (dentro de Servicios) */
+export function ActividadesLista({ lang }: { lang: Lang }) {
+  const t = {
+    es: { aria: "Actividades", l1: "Explora las actividades", l2a: "que te esperan", l2b: "cerca", p: "Villanueva está a los pies de la Serranía del Perijá: montaña, música vallenata y vida local para descubrir sin prisa, y volver a la calma de la cabaña al final del día.", cta: "Reservar ahora" },
+    en: { aria: "Activities", l1: "Explore the activities", l2a: "waiting for you", l2b: "nearby", p: "Villanueva lies at the foot of the Serranía del Perijá: mountains, vallenato music and local life to discover unhurried, then return to the calm of your cabin at the end of the day.", cta: "Book now" },
+  }[lang];
   return (
-    <section id="actividades" aria-label="Actividades" className="scroll-mt-24 border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
+    <section id="actividades" aria-label={t.aria} className="scroll-mt-24 border-t border-granate/15 px-[var(--gutter)] py-28 sm:py-36">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
         <Lines
           as="h2"
-          className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.6rem,4.8vw,4.8rem)] leading-[1.02] text-granate"
-          lines={["Explora las actividades", <>que te esperan <span key="i" className="t-italic">cerca</span></>]}
+          className="t-recto font-[family-name:var(--font-display)] text-[clamp(2.2rem,4.8vw,4.8rem)] leading-[1.02] text-granate"
+          lines={[t.l1, <>{t.l2a} <span key="i" className="t-italic">{t.l2b}</span></>]}
         />
         <div className="lg:justify-self-end">
-          <p data-reveal className="max-w-md text-granate/85">
-            Villanueva está a los pies de la Serranía del Perijá: montaña, música vallenata y vida local para
-            descubrir sin prisa, y volver a la calma de la cabaña al final del día.
+          <p data-reveal className="max-w-md text-granate">
+            {t.p}
           </p>
           <div data-reveal className="mt-8">
-            <Pill href="/reservas">Reserva más</Pill>
+            <Pill href="/reservas">{t.cta}</Pill>
           </div>
         </div>
       </div>
@@ -27,13 +31,12 @@ export function ActividadesLista() {
       <ul className="mt-20 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
         {actividades.map((a, i) => (
           <li key={a.id} className="flex flex-col">
-            <Arch className="aspect-[4/5] w-full" />
+            <Arch alt={a.titulo[lang]} className="aspect-[4/5] w-full" />
             <div data-reveal className="mt-7 flex items-baseline justify-between border-b border-granate/20 pb-3">
-              <h3 className="font-[family-name:var(--font-display)] text-[2rem] leading-none text-granate">{a.titulo}</h3>
-              <span className="text-[0.86rem] font-normal tracking-[0.18em] text-granate/50">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="font-[family-name:var(--font-display)] text-[2rem] leading-none text-granate">{a.titulo[lang]}</h3>
+              <span className="text-[0.875rem] font-normal tracking-[0.18em] text-granate">{String(i + 1).padStart(2, "0")}</span>
             </div>
-            <p data-reveal className="mt-4 text-granate/80">{a.texto}</p>
-            {a.distancia && <p className="mt-2 text-[0.98rem] uppercase tracking-[0.16em] text-carmesi">{a.distancia}</p>}
+            <p data-reveal className="mt-4 text-granate">{a.texto[lang]}</p>
           </li>
         ))}
       </ul>

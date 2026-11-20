@@ -13,9 +13,12 @@
  *
  * Fotos: fotogramas del video oficial; ocultas mientras MOSTRAR_FOTOS = false.
  */
+import type { Lang } from "@/lib/routes";
+
 export type CategoriaSlug = "refugio" | "premium";
 
 export type Categoria = { slug: CategoriaSlug; nombre: string; intro: string };
+export type TarifaId = "basica" | "media" | "premium";
 
 export type Cabana = {
   slug: string;
@@ -29,6 +32,8 @@ export type Cabana = {
   capacidad: string;
   /** Huéspedes máximos (para el buscador de reservas) */
   maxHuespedes: number;
+  /** Nivel de tarifa (data/tarifas.ts). ⚠ Asignación de ejemplo: confirmar con el cliente */
+  tarifa: TarifaId;
   camas: string;
   instalaciones: string[];
   destacados: string[];
@@ -39,12 +44,12 @@ export type Cabana = {
 export const categorias: Categoria[] = [
   {
     slug: "refugio",
-    nombre: "Cabañas Refugio",
+    nombre: "Refugio",
     intro: "Comodidad y practicidad frente a la sierra: cama Queen, ducha tipo lluvia y todo lo necesario para descansar.",
   },
   {
     slug: "premium",
-    nombre: "Cabañas Premium",
+    nombre: "Premium",
     intro: "Más espacio, patio privado y tina para dejar que el tiempo se detenga.",
   },
 ];
@@ -84,6 +89,7 @@ export const cabanas: Cabana[] = [
     area: "18–20 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
+    tarifa: "basica",
     camas: "1 Queen",
     instalaciones: ["Armario", "Espejo de piso a techo"],
     destacados: ["Cama Queen", "Espejo de piso a techo", "Ducha tipo lluvia"],
@@ -101,6 +107,7 @@ export const cabanas: Cabana[] = [
     area: "18–20 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
+    tarifa: "basica",
     camas: "1 Queen",
     instalaciones: ["Armario", "Espejo de piso a techo"],
     destacados: ["Cama Queen", "Espejo de piso a techo", "Ducha tipo lluvia"],
@@ -118,6 +125,7 @@ export const cabanas: Cabana[] = [
     area: "22–24 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
+    tarifa: "media",
     camas: "1 Queen",
     instalaciones: ["Terraza", "Jacuzzi"],
     destacados: ["Jacuzzi en la terraza", "Cama Queen", "Amenidades exclusivas"],
@@ -135,6 +143,7 @@ export const cabanas: Cabana[] = [
     area: "22–24 m²",
     capacidad: "2 adultos",
     maxHuespedes: 2,
+    tarifa: "media",
     camas: "1 Queen",
     instalaciones: ["Terraza", "Jacuzzi"],
     destacados: ["Jacuzzi en la terraza", "Baño amplio", "Luz natural"],
@@ -153,6 +162,7 @@ export const cabanas: Cabana[] = [
     area: "36 m² + patio",
     capacidad: "2 adultos + 1 niño",
     maxHuespedes: 3,
+    tarifa: "premium",
     camas: "1 King + sofá cama",
     instalaciones: ["Patio privado", "Tina"],
     destacados: ["Patio privado", "Tina", "Zona de estar"],
@@ -170,6 +180,7 @@ export const cabanas: Cabana[] = [
     area: "36 m² + patio",
     capacidad: "2 adultos + 1 niño",
     maxHuespedes: 3,
+    tarifa: "premium",
     camas: "1 King + sofá cama",
     instalaciones: ["Patio privado", "Tina"],
     destacados: ["Patio privado", "Espacio abierto", "Tina"],
@@ -187,6 +198,7 @@ export const cabanas: Cabana[] = [
     area: "48 m² en dos niveles + patio",
     capacidad: "4 personas",
     maxHuespedes: 4,
+    tarifa: "premium",
     camas: "1 King + 1 Queen",
     instalaciones: ["Dúplex", "Patio privado", "Tina"],
     destacados: ["Dúplex de dos niveles", "Patio privado", "Tina"],
@@ -204,6 +216,7 @@ export const cabanas: Cabana[] = [
     area: "60 m² + patio",
     capacidad: "4 personas",
     maxHuespedes: 4,
+    tarifa: "premium",
     camas: "1 King + 2 sencillas",
     instalaciones: ["Patio privado", "Tina"],
     destacados: ["La más grande", "Máxima privacidad", "Patio privado"],
@@ -212,7 +225,112 @@ export const cabanas: Cabana[] = [
   },
 ];
 
+/* ───────────── Inglés ─────────────
+ * Los nombres propios de las cabañas no se traducen. */
+type Trad = Pick<Cabana, "frase" | "descripcion" | "resumen" | "area" | "capacidad" | "camas" | "instalaciones" | "destacados" | "servicios">;
+
+const T: Record<string, string> = {
+  "Wi-Fi": "Wi-Fi",
+  "Aire acondicionado": "Air conditioning",
+  "Baño privado": "Private bathroom",
+  "Ducha tipo lluvia": "Rain shower",
+  "Espejo de piso a techo": "Floor-to-ceiling mirror",
+  Armario: "Wardrobe",
+  "Amenidades de baño": "Bath amenities",
+  "Ropa de cama de algodón": "Cotton bed linen",
+  "Terraza con jacuzzi": "Terrace with jacuzzi",
+  "Amenidades exclusivas Gardners Hills": "Exclusive Gardners Hills amenities",
+  "Patio privado": "Private patio",
+  Tina: "Bathtub",
+  "Batas y pantuflas": "Bathrobes and slippers",
+  "Smart TV": "Smart TV",
+  Terraza: "Terrace",
+  Jacuzzi: "Jacuzzi",
+  Dúplex: "Duplex",
+  "Cama Queen": "Queen bed",
+  "Jacuzzi en la terraza": "Jacuzzi on the terrace",
+  "Amenidades exclusivas": "Exclusive amenities",
+  "Baño amplio": "Spacious bathroom",
+  "Luz natural": "Natural light",
+  "Zona de estar": "Lounge area",
+  "Espacio abierto": "Open space",
+  "Dúplex de dos niveles": "Two-level duplex",
+  "La más grande": "The largest",
+  "Máxima privacidad": "Maximum privacy",
+};
+const tr = (l: string[]) => l.map((x) => T[x] ?? x);
+
+const EN: Record<string, Omit<Trad, "instalaciones" | "destacados" | "servicios">> = {
+  "cabo-de-la-vela": {
+    frase: "Comfort and practicality.",
+    descripcion: "Perfect for those looking for comfort and practicality. With a modern, functional design, it has a Queen bed, rain shower, floor-to-ceiling mirror and a practical wardrobe. At 18–20 m², it is the ideal space for travellers looking for the perfect rest.",
+    resumen: "Modern and functional: Queen bed, rain shower and floor-to-ceiling mirror. 18–20 m² for the perfect rest.",
+    area: "18–20 m²", capacidad: "2 adults", camas: "1 Queen",
+  },
+  "dunas-de-taroa": {
+    frase: "The essentials, in just the right measure.",
+    descripcion: "The essentials, in just the right measure. A Queen bed to rest unhurried, a rain shower to start the day, a floor-to-ceiling mirror and a wardrobe to keep everything in its place. At 18–20 m², it is a simple, cosy refuge for two.",
+    resumen: "A simple, cosy refuge for two: Queen bed, rain shower and everything in its place. 18–20 m² of calm.",
+    area: "18–20 m²", capacidad: "2 adults", camas: "1 Queen",
+  },
+  "pilon-de-azucar": {
+    frase: "More space to take it easy.",
+    descripcion: "More space to settle in and take it easy. A Queen bed, a rain shower and a quiet terrace to enjoy a coffee or breathe deeply. The terrace jacuzzi is there for whatever comes up, and the exclusive Gardners Hills amenities take care of the rest. 22–24 m². Simple, easy, just what you need.",
+    resumen: "More space to take it easy: a Queen bed and a terrace with jacuzzi for morning coffee or sunset.",
+    area: "22–24 m²", capacidad: "2 adults", camas: "1 Queen",
+  },
+  "serrania-del-perija": {
+    frase: "More space, more experiences.",
+    descripcion: "More space, more experiences, more of everything you love. At 22–24 m², the Serranía del Perijá cabin has a Queen bed, a spacious bathroom with an amazing shower, a jacuzzi on the terrace, plenty of natural light from its windows and the exclusive Gardners Hills amenities.",
+    resumen: "Spacious bathroom, plenty of natural light and a jacuzzi on the terrace. 22–24 m² with exclusive Gardners Hills amenities.",
+    area: "22–24 m²", capacidad: "2 adults", camas: "1 Queen",
+  },
+  "golden-dunes": {
+    frase: "The king's mansion.",
+    descripcion: "The king's mansion, the place everyone wants to be. More space, more fresh air, more ways to relax. Golden Dunes, with its private patio, has everything you love.",
+    resumen: "The king's mansion, the place everyone wants to be: more space, more fresh air and a private patio to relax your way.",
+    area: "36 m² + patio", capacidad: "2 adults + 1 child", camas: "1 King + sofa bed",
+  },
+  "wind-of-jepira": {
+    frase: "Let the wind carry you.",
+    descripcion: "Let the wind carry you. A wide, open space with a private patio to sunbathe, feel the breeze and let the hours go by unhurried. Wind of Jepira is ideal for those who want to disconnect without giving anything up.",
+    resumen: "Wide and open, with a private patio to sunbathe and feel the breeze while the hours go by unhurried.",
+    area: "36 m² + patio", capacidad: "2 adults + 1 child", camas: "1 King + sofa bed",
+  },
+  "sunset-ridge": {
+    frase: "A duplex designed to surprise.",
+    descripcion: "For travellers seeking maximum space and comfort, Sunset Ridge is an impressive two-level duplex designed to surprise.",
+    resumen: "An impressive two-level duplex for those seeking maximum space and comfort.",
+    area: "48 m² on two levels + patio", capacidad: "4 guests", camas: "1 King + 1 Queen",
+  },
+  "spirit-of-the-cape": {
+    frase: "The largest and most exclusive.",
+    descripcion: "The largest and most exclusive cabin at Gardners Hills, designed for those seeking privacy and uninterrupted rest.",
+    resumen: "The largest and most exclusive cabin at Gardners Hills, designed for privacy and uninterrupted rest.",
+    area: "60 m² + patio", capacidad: "4 guests", camas: "1 King + 2 singles",
+  },
+};
+
+const CAT_EN: Record<CategoriaSlug, string> = {
+  refugio: "Comfort and practicality facing the mountains: Queen bed, rain shower and everything you need to rest.",
+  premium: "More space, a private patio and a bathtub to let time stand still.",
+};
+
+/** Cabaña en el idioma pedido (los nombres propios no cambian) */
+export function enIdioma(c: Cabana, lang: Lang): Cabana {
+  if (lang === "es") return c;
+  return { ...c, ...EN[c.slug], instalaciones: tr(c.instalaciones), destacados: tr(c.destacados), servicios: tr(c.servicios) };
+}
+export const cabanasL = (lang: Lang = "es") => cabanas.map((c) => enIdioma(c, lang));
+export const categoriasL = (lang: Lang = "es"): Categoria[] =>
+  lang === "es" ? categorias : categorias.map((c) => ({ ...c, intro: CAT_EN[c.slug] }));
+
 export const totalCabanas = cabanas.length;
-export const getCabana = (slug: string) => cabanas.find((c) => c.slug === slug);
-export const getCategoria = (slug: CategoriaSlug) => categorias.find((c) => c.slug === slug)!;
-export const cabanasDe = (slug: CategoriaSlug) => cabanas.filter((c) => c.categoria === slug);
+export const getCabana = (slug: string, lang: Lang = "es") => {
+  const c = cabanas.find((x) => x.slug === slug);
+  return c ? enIdioma(c, lang) : undefined;
+};
+export const getCategoria = (slug: CategoriaSlug, lang: Lang = "es") => categoriasL(lang).find((c) => c.slug === slug)!;
+export const cabanasDe = (slug: CategoriaSlug, lang: Lang = "es") => cabanasL(lang).filter((c) => c.categoria === slug);
+/** «Cabaña Golden Dunes» → «Golden Dunes» */
+export const nombreCorto = (c: Cabana) => c.nombre.replace(/^Cabaña /, "");

@@ -8,7 +8,7 @@ export function Reservas() {
     <section id="reservas" aria-labelledby="res-title" className="bg-marfil/40 px-[var(--gutter)] py-28 sm:py-36">
       <div className="grid gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <p data-reveal className="text-[0.86rem] font-normal uppercase tracking-[0.24em] text-granate/70">
+          <p data-reveal className="text-[0.875rem] font-normal uppercase tracking-[0.24em] text-granate">
             Petición de reserva
           </p>
           <Lines
@@ -22,11 +22,11 @@ export function Reservas() {
           </p>
           <dl data-reveal className="mt-10 space-y-3 text-granate">
             <div className="flex gap-4">
-              <dt className="w-24 text-[0.82rem] font-normal uppercase tracking-[0.18em] text-granate/60">WhatsApp</dt>
+              <dt className="w-24 text-[0.875rem] font-normal uppercase tracking-[0.18em] text-granate">WhatsApp</dt>
               <dd><a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-carmesi">{site.contact.whatsappLabel}</a></dd>
             </div>
             <div className="flex gap-4">
-              <dt className="w-24 text-[0.82rem] font-normal uppercase tracking-[0.18em] text-granate/60">Correo</dt>
+              <dt className="w-24 text-[0.875rem] font-normal uppercase tracking-[0.18em] text-granate">Correo</dt>
               <dd><a href={`mailto:${site.contact.email}`} className="hover:text-carmesi">{site.contact.email}</a></dd>
             </div>
           </dl>

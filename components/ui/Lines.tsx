@@ -20,6 +20,8 @@ export function Lines({
       {lines.map((l, i) => (
         <span className="line" key={i}>
           <span>{l}</span>
+          {/* espacio entre líneas para que el texto se lea completo («Reserva tu estancia», no «Reservatu») */}
+          {i < lines.length - 1 && " "}
         </span>
       ))}
     </Tag>

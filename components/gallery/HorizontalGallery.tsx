@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { galeria } from "@/data/galeria";
 import { prefersReducedMotion } from "@/lib/motion";
+import { useLang } from "@/lib/i18n";
 
 /**
  * Carrusel con scroll horizontal (referencia: Grand Hotel Miramare, «Pool, Beach, Wellness & Fitness»):
@@ -14,6 +15,7 @@ import { prefersReducedMotion } from "@/lib/motion";
  * Con movimiento reducido (o sin JS) queda como fila desplazable nativa.
  */
 export function HorizontalGallery({ titulo }: { titulo: React.ReactNode }) {
+  const { lang } = useLang();
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLUListElement>(null);
 
@@ -56,12 +58,12 @@ export function HorizontalGallery({ titulo }: { titulo: React.ReactNode }) {
     <section
       id="galeria"
       ref={section}
-      aria-label="Nuestra galería"
+      aria-label={lang === "es" ? "Nuestra galería" : "Our gallery"}
       className="flex h-[100svh] flex-col justify-center overflow-hidden border-t border-granate/15 bg-crema"
     >
       <div className="mb-10 flex items-end justify-between gap-6 px-[var(--gutter)]">
         {titulo}
-        <p className="hidden text-granate/60 md:block">Desliza para recorrer →</p>
+        <p className="hidden text-granate md:block">{lang === "es" ? "Desliza para recorrer →" : "Scroll to explore →"}</p>
       </div>
       <ul
         ref={track}
@@ -72,7 +74,7 @@ export function HorizontalGallery({ titulo }: { titulo: React.ReactNode }) {
             key={p.id}
             className={`relative h-[min(68vh,720px)] shrink-0 overflow-hidden bg-rosa ${i % 3 === 1 ? "aspect-[4/3]" : "aspect-[4/5]"}`}
           >
-            {p.src && <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 50vw, 90vw" className="object-cover" />}
+            {p.src && <Image src={p.src} alt={lang === "es" ? p.alt : p.altEn ?? p.alt} fill sizes="(min-width: 1024px) 50vw, 90vw" className="object-cover" />}
           </li>
         ))}
       </ul>

@@ -1,19 +1,24 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext } from "react";
+import { localizar, type Lang } from "@/lib/routes";
 
 /**
- * Idioma del sitio (ES / EN). Se guarda en localStorage y actualiza <html lang>.
- * Por ahora se traducen las piezas comunes (cabecera, menú, footer, aviso de cookies).
- * El contenido de cada página sigue en español: traducirlo es la siguiente fase.
+ * Idioma activo (ES / EN). Lo fija app/[lang]/layout.tsx según la URL (/ o /en/…).
+ * - t(clave): textos compartidos de la interfaz (cabecera, footer, cookies…)
+ * - href(ruta): convierte una ruta canónica en español a la URL del idioma activo
+ * Los textos propios de cada página viven en su componente (objeto { es, en }).
  */
-export type Lang = "es" | "en";
+export type { Lang } from "@/lib/routes";
 
 const dict = {
   reservar: { es: "Reservar", en: "Book" },
   abrirMenu: { es: "Abrir menú", en: "Open menu" },
   cerrarMenu: { es: "Cerrar menú", en: "Close menu" },
   idioma: { es: "Cambiar idioma", en: "Change language" },
+  menuPrincipal: { es: "Principal", en: "Main" },
+  inicio: { es: "Gardners Hills, inicio", en: "Gardners Hills, home" },
+  saltar: { es: "Saltar al contenido", en: "Skip to content" },
   frase1: { es: "Un refugio donde", en: "A refuge where" },
   frase2: { es: "el tiempo se detiene.", en: "time stands still." },
   reservarEstancia: { es: "Reservar tu estancia", en: "Book your stay" },
@@ -36,38 +41,22 @@ const dict = {
   cookiesAceptar: { es: "Aceptar", en: "Accept" },
   cookiesRechazar: { es: "Solo necesarias", en: "Necessary only" },
   cookiesMas: { es: "Más información", en: "Learn more" },
+  whatsapp: { es: "Escríbenos por WhatsApp", en: "Message us on WhatsApp" },
+  whatsappMsg: { es: "Hola, Gardners Hills. Quisiera más información.", en: "Hello, Gardners Hills. I would like more information." },
+  descubreMas: { es: "Descubre más", en: "Discover more" },
 } as const;
 
 export type Clave = keyof typeof dict;
 
-const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({ lang: "es", setLang: () => {} });
+const Ctx = createContext<Lang>("es");
 
-export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("es");
-
-  useEffect(() => {
-    try {
-      const guardado = localStorage.getItem("gh-lang");
-      if (guardado === "en" || guardado === "es") setLangState(guardado);
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
-
-  const setLang = (l: Lang) => {
-    setLangState(l);
-    try {
-      localStorage.setItem("gh-lang", l);
-    } catch {}
-  };
-
-  return <Ctx.Provider value={{ lang, setLang }}>{children}</Ctx.Provider>;
+export function LangProvider({ lang, children }: { lang: Lang; children: React.ReactNode }) {
+  return <Ctx.Provider value={lang}>{children}</Ctx.Provider>;
 }
 
 export function useLang() {
-  const { lang, setLang } = useContext(Ctx);
+  const lang = useContext(Ctx);
   const t = (k: Clave) => dict[k][lang];
-  return { lang, setLang, t };
+  const href = (ruta: string) => localizar(ruta, lang);
+  return { lang, t, href };
 }

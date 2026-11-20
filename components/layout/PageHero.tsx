@@ -28,7 +28,7 @@ export function PageHero({
       )}
       <div className="relative flex min-h-[86vh] flex-col items-center justify-center px-[var(--gutter)] pb-24 pt-[calc(var(--header-h)+4rem)] text-center">
         {kicker && (
-          <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil/90">
+          <p data-reveal className="text-[0.92rem] font-normal uppercase tracking-[0.3em] text-marfil">
             {kicker}
           </p>
         )}

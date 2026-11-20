@@ -7,3 +7,7 @@ next-env.d.ts
 
 # Video no usado en la web (grabación de pantalla vertical)
 public/video/video-001.mp4
+
+# Material de trabajo (no lo usa la web)
+/Fotos Profesionales/
+/capturas/

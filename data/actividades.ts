@@ -1,74 +1,56 @@
-import type { BrandColor } from "@/lib/brand";
-
 /**
  * Actividades cercanas a Villanueva, La Guajira.
- * NO se publican distancias, horarios ni operadores hasta verificarlos:
- * `distancia` y `enlace` quedan en null.
- * Para añadir una actividad basta con agregar un objeto a esta lista.
+ * NO se publican distancias, horarios ni operadores hasta verificarlos.
  */
+type Texto = { es: string; en: string };
 export type Actividad = {
   id: string;
-  titulo: string;
-  texto: string;
+  titulo: Texto;
+  texto: Texto;
   icono: "mountain" | "music" | "footprints" | "utensils" | "droplets" | "landmark";
-  tono: BrandColor;
-  distancia: string | null;
-  enlace: string | null;
 };
 
 export const actividades: Actividad[] = [
   {
     id: "perija",
-    titulo: "Serranía del Perijá",
-    texto: "La montaña que enmarca Villanueva. Paisaje, aire fresco y caminos para recorrer sin prisa.",
+    titulo: { es: "Serranía del Perijá", en: "Serranía del Perijá" },
+    texto: {
+      es: "La montaña que enmarca Villanueva. Paisaje, aire fresco y caminos para recorrer sin prisa.",
+      en: "The mountain range that frames Villanueva. Scenery, fresh air and trails to explore unhurried.",
+    },
     icono: "mountain",
-    tono: "verde",
-    distancia: null,
-    enlace: null,
   },
   {
     id: "vallenato",
-    titulo: "Cultura vallenata",
-    texto: "Villanueva es tierra de acordeoneros. Su música se vive en la calle y en el Festival Cuna de Acordeones.",
+    titulo: { es: "Cultura vallenata", en: "Vallenato culture" },
+    texto: {
+      es: "Villanueva es tierra de acordeoneros. Su música se vive en la calle y en el Festival Cuna de Acordeones.",
+      en: "Villanueva is a land of accordion players. Its music lives in the streets and at the Cuna de Acordeones Festival.",
+    },
     icono: "music",
-    tono: "carmesi",
-    distancia: null,
-    enlace: null,
   },
   {
     id: "senderos",
-    titulo: "Senderos y caminatas",
-    texto: "Rutas de naturaleza en los alrededores.",
+    titulo: { es: "Senderos y caminatas", en: "Trails and walks" },
+    texto: { es: "Rutas de naturaleza en los alrededores.", en: "Nature routes in the surrounding area." },
     icono: "footprints",
-    tono: "dorado",
-    distancia: null,
-    enlace: null,
   },
   {
     id: "rios",
-    titulo: "Ríos y balnearios",
-    texto: "Agua fría que baja de la sierra.",
+    titulo: { es: "Ríos y balnearios", en: "Rivers and swimming spots" },
+    texto: { es: "Agua fría que baja de la sierra.", en: "Cool water flowing down from the mountains." },
     icono: "droplets",
-    tono: "rosa",
-    distancia: null,
-    enlace: null,
   },
   {
     id: "gastronomia-local",
-    titulo: "Cocina de la región",
-    texto: "Sabores guajiros y del Cesar a pocos pasos.",
+    titulo: { es: "Cocina de la región", en: "Regional cuisine" },
+    texto: { es: "Sabores guajiros y del Cesar a pocos pasos.", en: "Flavours of La Guajira and Cesar just steps away." },
     icono: "utensils",
-    tono: "coral",
-    distancia: null,
-    enlace: null,
   },
   {
     id: "pueblo",
-    titulo: "El pueblo",
-    texto: "Calles tranquilas, plaza y vida local para descubrir a pie.",
+    titulo: { es: "El pueblo", en: "The town" },
+    texto: { es: "Calles tranquilas, plaza y vida local para descubrir a pie.", en: "Quiet streets, a main square and local life to discover on foot." },
     icono: "landmark",
-    tono: "granate",
-    distancia: null,
-    enlace: null,
   },
 ];

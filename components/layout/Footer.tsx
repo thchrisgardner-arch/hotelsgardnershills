@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { L } from "@/components/ui/L";
 import { Logo } from "@/components/ui/Logo";
 import { Pill } from "@/components/ui/Pill";
 import { site, menuPrincipal, legales } from "@/data/site";
@@ -22,8 +22,8 @@ export function Footer() {
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}
-          <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate/70">{t("villanueva1")}</p>
-          <p className="t-italic mt-6 text-left text-[clamp(3rem,5vw,5.2rem)] leading-[1]">
+          <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate">{t("villanueva1")}</p>
+          <p className="t-italic mt-6 text-left text-[clamp(2.6rem,5vw,5.2rem)] leading-[1]">
             {t("villanueva2")}
             <br />
             {t("villanueva3")}
@@ -37,11 +37,11 @@ export function Footer() {
 
         {cols.map((c) => (
           <nav key={c.titulo} aria-label={c.titulo} className="lg:col-span-2">
-            <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{t(c.titulo)}</h2>
+            <h2 className="mb-5 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate">{t(c.titulo)}</h2>
             <ul className="space-y-2.5 text-[1.2rem]">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="transition-colors hover:text-carmesi">{lang === "en" ? l.en : l.label}</Link>
+                  <L href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-carmesi lg:min-h-0">{lang === "en" ? l.en : l.label}</L>
                 </li>
               ))}
             </ul>
@@ -49,11 +49,11 @@ export function Footer() {
         ))}
 
         <div className="lg:col-span-3">
-          <h2 className="mb-5 text-[0.84rem] font-normal uppercase tracking-[0.2em] text-granate/60">{t("contacto")}</h2>
+          <h2 className="mb-5 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate">{t("contacto")}</h2>
           <ul className="space-y-2.5 text-[1.2rem]">
             <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-carmesi">WhatsApp {contact.whatsappLabel}</a></li>
             <li><a href={`mailto:${contact.email}`} className="hover:text-carmesi">{contact.email}</a></li>
-            <li className="text-granate/75">{t("ubicacion")}</li>
+            <li className="text-granate">{t("ubicacion")}</li>
           </ul>
         </div>
       </div>
@@ -64,12 +64,12 @@ export function Footer() {
       </div>
 
       <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate">
-        <div className="flex gap-10">
+        <div className="flex flex-wrap gap-x-10 gap-y-1">
           {legales.map((l) => (
-            <Link key={l.href} href={l.href} className="transition-colors hover:text-carmesi">{t(l.clave)}</Link>
+            <L key={l.href} href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-carmesi">{t(l.clave)}</L>
           ))}
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-3">
           {/* Redes en línea negra (Facebook, Instagram, YouTube, LinkedIn); se activan al poner la URL en data/site.ts */}
           {[
             {
@@ -99,14 +99,14 @@ export function Footer() {
               target={r.href ? "_blank" : undefined}
               rel="noreferrer"
               aria-label={r.label}
-              className={`text-granate transition-colors hover:text-carmesi ${r.href ? "" : "pointer-events-none"}`}
+              className={`grid h-11 w-11 place-items-center text-granate transition-colors hover:text-carmesi ${r.href ? "" : "pointer-events-none"}`}
             >
               <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 {r.icon}
               </svg>
             </a>
           ))}
-          <span className="normal-case tracking-normal text-[1.1rem]">© 2027 Gardners Hills</span>
+          <span className="ml-2 normal-case tracking-normal text-[1.1rem]">© 2027 Gardners Hills</span>
         </div>
       </div>
     </footer>

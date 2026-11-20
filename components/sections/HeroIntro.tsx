@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Pill } from "@/components/ui/Pill";
+import { useLang } from "@/lib/i18n";
 import { finishIntro, motion, prefersReducedMotion } from "@/lib/motion";
 
 const KEY = "gh-intro-seen";
@@ -139,6 +140,25 @@ export function HeroIntro() {
     };
   }, []);
 
+  const { lang } = useLang();
+  const video = useRef<HTMLVideoElement>(null);
+  const [pausado, setPausado] = useState(false);
+  const alternar = () => {
+    const v = video.current;
+    if (!v) return;
+    if (v.paused) {
+      void v.play();
+      setPausado(false);
+    } else {
+      v.pause();
+      setPausado(true);
+    }
+  };
+  const T = {
+    es: { kicker: "Tu sueño en Gardners Hills", sub: "Cabañas boutique en Villanueva, La Guajira.", cta: "Reservar", pausa: "Pausar el video", play: "Reproducir el video", resto: "az, Historia y Silencio" },
+    en: { kicker: "Your dream at Gardners Hills", sub: "Boutique cabins in Villanueva, La Guajira.", cta: "Book", pausa: "Pause the video", play: "Play the video", resto: "eace, History and Silence" },
+  }[lang];
+
   return (
     <section
       id="inicio"
@@ -151,6 +171,7 @@ export function HeroIntro() {
       {/* Ventana con el video (se abre y se expande en la intro) */}
       <div data-frame className="absolute inset-0" style={{ clipPath: "inset(0% 0% 0% 0% round 0px)" }}>
         <video
+          ref={video}
           className="absolute inset-0 h-full w-full scale-[1.3] object-cover"
           src="/video/hero-banner.mp4"
           poster="/images/cabanas/hero-poster.jpg"
@@ -161,7 +182,8 @@ export function HeroIntro() {
           preload="auto"
           aria-hidden
         />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/55" />
+        <div aria-hidden className="absolute inset-0 bg-black/40" />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/30" />
       </div>
 
       {/* Logotipo en dos piezas: posición final en esquinas opuestas */}
@@ -181,23 +203,39 @@ export function HeroIntro() {
 
       {/* Texto del hero centrado; título inclinado como la portada de Gastronomía de la referencia */}
       <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center px-[var(--gutter)] text-center">
-        <p data-intro-fade className="text-[0.92rem] uppercase tracking-[0.3em] text-marfil/90">
-          Tu sueño en Gardners Hills
+        <p data-intro-fade className="text-[0.92rem] uppercase tracking-[0.3em] text-marfil">
+          {T.kicker}
         </p>
         {/* Título recto en una línea: «P» en recta de palo y el resto en cursiva serif */}
         <div data-intro-fade className="mt-6">
-          <h1 className="whitespace-nowrap text-[clamp(3.4rem,6.6vw,7.2rem)] leading-none">
+          <h1 className="text-[clamp(2.6rem,6.6vw,7.2rem)] leading-[1.02] sm:whitespace-nowrap">
             <span className="font-[family-name:var(--font-sans)] font-light not-italic">P</span>
-            <span className="t-italic">az, Historia y Silencio</span>
+            <span className="t-italic">{T.resto}</span>
           </h1>
         </div>
-        <p data-intro-fade className="mt-10 text-marfil/90">Cabañas boutique en Villanueva, La Guajira.</p>
+        <p data-intro-fade className="mt-10 text-marfil">{T.sub}</p>
         <div data-intro-fade className="mt-7">
           <Pill href="/reservas" tone="marfil">
-            Reservar
+            {T.cta}
           </Pill>
         </div>
       </div>
+
+      {/* Pausar / reproducir el video (accesibilidad) */}
+      <button
+        type="button"
+        data-intro-fade
+        onClick={alternar}
+        aria-label={pausado ? T.play : T.pausa}
+        aria-pressed={pausado}
+        className="absolute bottom-6 left-[var(--gutter)] z-10 grid h-11 w-11 place-items-center rounded-full border border-marfil/80 text-marfil transition-colors hover:bg-marfil hover:text-granate max-md:bottom-[92px]"
+      >
+        {pausado ? (
+          <svg viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden><path d="M4 2.5v11l9-5.5z" /></svg>
+        ) : (
+          <svg viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" /></svg>
+        )}
+      </button>
     </section>
   );
 }

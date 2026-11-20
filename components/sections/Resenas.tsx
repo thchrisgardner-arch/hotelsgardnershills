@@ -3,10 +3,13 @@
 import { useRef } from "react";
 import { Foto as Image } from "@/components/ui/Foto";
 import { resenas, resenasPlaceholder } from "@/data/resenas";
+import { useLang } from "@/lib/i18n";
 
 function Estrellas({ nota, vacia = false }: { nota: number; vacia?: boolean }) {
+  const { lang } = useLang();
+  const label = lang === "es" ? (vacia ? "Sin calificación todavía" : `${nota} de 5 estrellas`) : vacia ? "Not rated yet" : `${nota} out of 5 stars`;
   return (
-    <span className="flex gap-1" aria-label={vacia ? "Sin calificación todavía" : `${nota} de 5 estrellas`}>
+    <span className="flex gap-1" role="img" aria-label={label}>
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} viewBox="0 0 20 20" className="h-4 w-4" aria-hidden>
           <path
@@ -26,6 +29,7 @@ function Estrellas({ nota, vacia = false }: { nota: number; vacia?: boolean }) {
  * y fila de tarjetas deslizable (arrastre / rueda horizontal / flechas).
  */
 export function Resenas() {
+  const { lang } = useLang();
   const track = useRef<HTMLUListElement>(null);
   const hay = resenas.length > 0;
   const promedio = hay ? resenas.reduce((s, r) => s + r.nota, 0) / resenas.length : 0;
@@ -48,7 +52,7 @@ export function Resenas() {
   const titulo = (
     <span className="flex shrink-0 items-start gap-4 pr-16">
       <span className="font-[family-name:var(--font-display)] text-[clamp(4rem,9vw,9rem)] leading-none text-granate">
-        Reseñas <span className="t-italic">recientes</span>
+        {lang === "es" ? <>Reseñas <span className="t-italic">recientes</span></> : <>Recent <span className="t-italic">reviews</span></>}
       </span>
       {hay && (
         <span className="mt-3 grid h-9 min-w-9 place-items-center bg-marfil px-2 text-[0.92rem] text-granate/70">{resenas.length}</span>
@@ -59,7 +63,7 @@ export function Resenas() {
   return (
     <section id="resenas" aria-labelledby="resenas-title" className="overflow-hidden border-t border-granate/15 py-24 sm:py-32">
       <h2 id="resenas-title" className="sr-only">
-        Reseñas recientes
+        {lang === "es" ? "Reseñas recientes" : "Recent reviews"}
       </h2>
 
       {/* Título en bucle */}
@@ -75,17 +79,17 @@ export function Resenas() {
         <p className="text-granate/70">
           {hay ? (
             <>
-              <span className="text-granate">{promedio.toFixed(2)}</span> / 5 · {resenas.length} reseñas
+              <span className="text-granate">{promedio.toFixed(2)}</span> / 5 · {resenas.length} {lang === "es" ? "reseñas" : "reviews"}
             </>
           ) : (
-            "Las primeras reseñas de nuestros huéspedes aparecerán aquí."
+            (lang === "es" ? "Las primeras reseñas de nuestros huéspedes aparecerán aquí." : "Our guests’ first reviews will appear here.")
           )}
         </p>
         <div className="flex gap-3">
-          <button type="button" onClick={() => mover(-1)} aria-label="Reseñas anteriores" className="grid h-11 w-11 place-items-center rounded-full border border-granate/40 text-granate transition-colors hover:bg-granate hover:text-crema">
+          <button type="button" onClick={() => mover(-1)} aria-label={lang === "es" ? "Reseñas anteriores" : "Previous reviews"} className="grid h-11 w-11 place-items-center rounded-full border border-granate/40 text-granate transition-colors hover:bg-granate hover:text-crema">
             <svg viewBox="0 0 16 16" className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
           </button>
-          <button type="button" onClick={() => mover(1)} aria-label="Reseñas siguientes" className="grid h-11 w-11 place-items-center rounded-full border border-granate/40 text-granate transition-colors hover:bg-granate hover:text-crema">
+          <button type="button" onClick={() => mover(1)} aria-label={lang === "es" ? "Reseñas siguientes" : "Next reviews"} className="grid h-11 w-11 place-items-center rounded-full border border-granate/40 text-granate transition-colors hover:bg-granate hover:text-crema">
             <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
           </button>
         </div>
@@ -112,10 +116,10 @@ export function Resenas() {
               </div>
 
               {r ? (
-                <blockquote className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate">“{r.texto}”</blockquote>
+                <blockquote className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate">“{lang === "es" ? r.texto : r.textoEn ?? r.texto}”</blockquote>
               ) : (
                 <p className="mt-8 flex-1 text-[1.2rem] leading-[1.45] text-granate/40">
-                  Espacio reservado para la reseña de un huésped de Gardners Hills.
+                  {lang === "es" ? "Espacio reservado para la reseña de un huésped de Gardners Hills." : "Space reserved for a Gardners Hills guest review."}
                 </p>
               )}
 
@@ -124,7 +128,7 @@ export function Resenas() {
                   {r?.foto ? <Image src={r.foto} alt="" fill sizes="40px" className="object-cover" /> : r?.autor.charAt(0)}
                 </span>
                 <span className={r ? "text-granate" : "text-granate/40"}>
-                  {r ? r.autor : "Por publicar"}
+                  {r ? r.autor : lang === "es" ? "Por publicar" : "Coming soon"}
                   {r?.fuente && <span className="ml-2 text-[0.92rem] text-granate/55">· {r.fuente}</span>}
                 </span>
               </div>

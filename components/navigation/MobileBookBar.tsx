@@ -1,48 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { L } from "@/components/ui/L";
+import { useLang } from "@/lib/i18n";
+import { canonica } from "@/lib/routes";
 
-/** Barra fija de reserva en móvil: aparece tras el hero y se oculta en reservas y footer */
+/**
+ * Botón Reservar fijo abajo en móvil y tablet (< 1024 px). Lleva al mismo flujo que el resto del sitio
+ * (/reservas). En la página de reserva no se muestra porque el buscador ya está ahí.
+ */
 export function MobileBookBar() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const visible = new Set<string>();
-    const update = () => setShow(window.scrollY > window.innerHeight * 0.7 && visible.size === 0);
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id)));
-        update();
-      },
-      { threshold: 0.05 }
-    );
-    ["reservas", "contacto"].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) io.observe(el);
-    });
-    window.addEventListener("scroll", update, { passive: true });
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", update);
-    };
-  }, []);
+  const pathname = usePathname();
+  const { t } = useLang();
+  if (canonica(pathname ?? "/").path.startsWith("/reservas")) return null;
 
   return (
-    <div
-      data-chrome
-      className={`fixed inset-x-0 bottom-0 z-30 p-3 transition-transform duration-700 ease-[var(--ease-soft)] md:hidden ${
-        show ? "translate-y-0" : "translate-y-[120%]"
-      }`}
-    >
-      <a
-        href="/reservas"
-        tabIndex={show ? 0 : -1}
-        aria-hidden={!show}
-        className="t-label flex w-full items-center justify-between bg-carmesi px-5 py-4 text-marfil"
-      >
-        <span>Reservar</span>
+    <div data-chrome className="fixed inset-x-0 bottom-0 z-30 border-t border-granate/15 bg-crema/95 p-3 backdrop-blur lg:hidden">
+      <L href="/reservas" className="flex min-h-12 w-full items-center justify-between bg-granate px-5 text-[0.95rem] uppercase tracking-[0.16em] text-crema">
+        <span>{t("reservarEstancia")}</span>
         <span aria-hidden>→</span>
-      </a>
+      </L>
     </div>
   );
 }

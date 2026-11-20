@@ -154,9 +154,9 @@ export const cookies: { intro: string; secciones: Seccion[] } = {
     {
       titulo: "Cookies necesarias",
       parrafos: [
-        "Permiten que el sitio funcione y recuerdan tus preferencias, como el idioma, si ya viste la animación de entrada y tu decisión sobre las cookies. No requieren tu consentimiento.",
+        "Permiten que el sitio funcione y recuerdan tus preferencias, como si ya viste la animación de entrada y tu decisión sobre las cookies. No requieren tu consentimiento.",
       ],
-      lista: ["gh-lang: idioma elegido.", "gh-intro-seen: evita repetir la animación de entrada en la misma visita.", "gh-cookies: tu elección en el aviso de cookies."],
+      lista: ["gh-intro-seen: evita repetir la animación de entrada en la misma visita.", "gh-cookies: tu elección en el aviso de cookies."],
     },
     {
       titulo: "Cookies de analítica",

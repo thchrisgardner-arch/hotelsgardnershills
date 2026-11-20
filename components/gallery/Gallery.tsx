@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import { Foto as Image } from "@/components/ui/Foto";
 import { galeria } from "@/data/galeria";
+import { useLang } from "@/lib/i18n";
 
 /**
  * Carrusel en arcos del wireframe «Nuestra Galería»: arco central grande,
  * arcos laterales asomando y flechas en círculo.
  */
 export function Gallery() {
+  const { lang } = useLang();
+  const alt = (p: (typeof galeria)[number]) => (lang === "es" ? p.alt : p.altEn ?? p.alt);
   // empieza en la segunda foto para que asomen arcos a ambos lados (wireframe)
   const [i, setI] = useState(1);
   const n = galeria.length;
@@ -32,7 +35,7 @@ export function Gallery() {
   const offset = 50 - W / 2 - i * (W + GAP);
 
   return (
-    <div className="relative" aria-roledescription="carrusel" aria-label="Galería de fotos">
+    <div className="relative" aria-roledescription={lang === "es" ? "carrusel" : "carousel"} aria-label={lang === "es" ? "Galería de fotos" : "Photo gallery"}>
       <div className="overflow-hidden">
         <ul
           className="flex transition-transform duration-[1.1s] ease-[var(--ease-soft)]"
@@ -45,7 +48,7 @@ export function Gallery() {
               className={`relative shrink-0 overflow-hidden bg-rosa transition-opacity duration-700 ${k === i ? "opacity-100" : "opacity-60"}`}
               style={{ width: `${W}vw`, height: `${W * 0.72}vw` }}
             >
-              {p.src && <Image src={p.src} alt={p.alt} fill sizes="46vw" className="object-cover" />}
+              {p.src && <Image src={p.src} alt={alt(p)} fill sizes="46vw" className="object-cover" />}
             </li>
           ))}
         </ul>
@@ -54,7 +57,7 @@ export function Gallery() {
       <button
         type="button"
         onClick={() => go(-1)}
-        aria-label="Foto anterior"
+        aria-label={lang === "es" ? "Foto anterior" : "Previous photo"}
         className="absolute left-[calc(27vw-24px)] top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-granate/50 bg-crema/80 text-granate transition-colors hover:bg-granate hover:text-crema"
       >
         <svg viewBox="0 0 16 16" className="h-4 w-4 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
@@ -62,13 +65,13 @@ export function Gallery() {
       <button
         type="button"
         onClick={() => go(1)}
-        aria-label="Foto siguiente"
+        aria-label={lang === "es" ? "Foto siguiente" : "Next photo"}
         className="absolute right-[calc(27vw-24px)] top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-granate/50 bg-crema/80 text-granate transition-colors hover:bg-granate hover:text-crema"
       >
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
       </button>
 
-      <p className="mt-8 text-center text-[0.86rem] font-normal uppercase tracking-[0.24em] text-granate/70" aria-live="polite">
+      <p className="mt-8 text-center text-[0.875rem] font-normal uppercase tracking-[0.24em] text-granate" aria-live="polite">
         {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")} · {galeria[i].alt}
       </p>
     </div>

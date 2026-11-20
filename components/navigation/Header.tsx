@@ -2,20 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Foto as Image } from "@/components/ui/Foto";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Foto as Image } from "@/components/ui/Foto";
 import { Logo } from "@/components/ui/Logo";
 import { Pill } from "@/components/ui/Pill";
+import { L } from "@/components/ui/L";
 import { menuPrincipal, menuSecundario } from "@/data/site";
 import { motion } from "@/lib/motion";
 import { useLang } from "@/lib/i18n";
+import { canonica, cambiarIdioma, LANGS } from "@/lib/routes";
 
 /**
- * Navegación inspirada en Grand Hotel Miramare:
- *  - barra fija: hamburguesa (izq.), logo centrado, «Reservar ahora» (der.)
- *  - menú a pantalla completa sobre crema: lista grande a la izquierda,
- *    enlaces secundarios abajo y tarjeta con video a la derecha.
+ * Cabecera fija.
+ *  - Escritorio (≥ 1024 px): menú completo a ambos lados del logo centrado + es/en + Reservar.
+ *  - Tablet y móvil: hamburguesa, logo centrado y Reservar; el menú se abre a pantalla completa.
+ * El selector es/en lleva a la misma página en el otro idioma.
  */
 export function Header() {
   const [solid, setSolid] = useState(false);
@@ -23,20 +24,28 @@ export function Header() {
   const menu = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
-  const { lang, setLang, t } = useLang();
+  const { lang, t } = useLang();
+  const actual = canonica(pathname).path;
+  const activo = (href: string) => (href === "/" ? actual === "/" : actual === href || actual.startsWith(href + "/"));
+  const nav = menuPrincipal.filter((m) => m.href !== "/reservas");
+  const izquierda = nav.slice(0, 3);
+  const derecha = nav.slice(3);
+  const label = (m: (typeof menuPrincipal)[number]) => (lang === "en" ? m.en : m.label);
 
   // Claro sobre la cabecera oscura de cada página ([data-header-light]); sólido al pasarla.
-  // Páginas sin cabecera oscura: sólido desde el inicio.
   useEffect(() => {
     let limite = 0;
     const medir = () => {
       const hero = document.querySelector<HTMLElement>("[data-header-light]");
-      limite = hero ? Math.max(hero.offsetHeight - 90, 0) : 0;
+      limite = hero ? Math.max(hero.offsetTop + hero.offsetHeight - 90, 0) : 0;
     };
     const onScroll = () => setSolid(!limite || window.scrollY > limite);
     medir();
     onScroll();
-    const onResize = () => { medir(); onScroll(); };
+    const onResize = () => {
+      medir();
+      onScroll();
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     return () => {
@@ -69,7 +78,32 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Al cambiar de página se cierra el menú
+  useEffect(() => setOpen(false), [pathname]);
+
   const color = solid ? "text-granate" : "text-marfil";
+  const enlace = "relative inline-flex min-h-11 items-center text-[0.95rem] font-normal tracking-[0.04em] transition-opacity hover:opacity-70";
+
+  const Idiomas = ({ className = "" }: { className?: string }) => (
+    <div role="group" aria-label={t("idioma")} className={`flex items-center gap-1 text-[0.95rem] uppercase tracking-[0.16em] ${className}`}>
+      {LANGS.map((l, k) => (
+        <span key={l} className="flex items-center gap-1">
+          {k > 0 && <span aria-hidden className="opacity-50">/</span>}
+          {/* Recarga completa: cambia el layout raíz (<html lang>) y reinicia las animaciones */}
+          <a
+            href={cambiarIdioma(pathname, l)}
+            hrefLang={l}
+            lang={l}
+            aria-current={lang === l ? "true" : undefined}
+            aria-label={l === "es" ? "Español" : "English"}
+            className={`grid min-h-11 min-w-8 place-items-center transition-opacity ${lang === l ? "opacity-100 underline underline-offset-4" : "opacity-70 hover:opacity-100"}`}
+          >
+            {l}
+          </a>
+        </span>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -79,117 +113,126 @@ export function Header() {
           solid ? "border-b border-granate/15 bg-crema/95 backdrop-blur-sm" : "border-b border-transparent"
         }`}
       >
-        <div className={`grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center px-[var(--gutter)] ${color}`}>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-expanded={open}
-            aria-controls="menu-principal"
-            aria-label={t("abrirMenu")}
-            className="group flex h-11 w-12 flex-col justify-center gap-[7px] justify-self-start"
-          >
-            <span className="h-px w-11 bg-current" />
-            <span className="h-px w-11 bg-current transition-[width] duration-500 group-hover:w-8" />
-            <span className="h-px w-11 bg-current" />
-          </button>
+        <div className={`grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center gap-4 px-[var(--gutter)] ${color}`}>
+          {/* Izquierda: hamburguesa (< 1024) o enlaces (≥ 1024) */}
+          <div className="flex items-center justify-self-start">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="menu-principal"
+              aria-label={t("abrirMenu")}
+              className="group flex h-11 w-12 flex-col justify-center gap-[7px] lg:hidden"
+            >
+              <span className="h-px w-10 bg-current" />
+              <span className="h-px w-10 bg-current transition-[width] duration-500 group-hover:w-7" />
+              <span className="h-px w-10 bg-current" />
+            </button>
+            <nav aria-label={t("menuPrincipal")} className="hidden lg:block">
+              <ul className="flex items-center gap-8 xl:gap-10">
+                {izquierda.map((m) => (
+                  <li key={m.href}>
+                    <L href={m.href} aria-current={activo(m.href) ? "page" : undefined} className={`${enlace} ${activo(m.href) ? "underline underline-offset-[6px]" : ""}`}>
+                      {label(m)}
+                    </L>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
 
           {/* data-logo-menu: destino final de la intro del hero */}
-          <Link href="/" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
+          <L href="/" aria-label={t("inicio")} className="block w-[96px] sm:w-[120px] lg:w-[136px]">
             <span data-logo-menu className="block">
               <Logo className="w-full" />
             </span>
-          </Link>
+          </L>
 
-          <div className="flex items-center gap-7 justify-self-end">
-            {/* Cambio de idioma */}
-            <div role="group" aria-label={t("idioma")} className="flex items-center gap-1.5 text-[0.92rem] font-normal uppercase tracking-[0.16em]">
-              {(["es", "en"] as const).map((l, k) => (
-                <span key={l} className="flex items-center gap-1.5">
-                  {k > 0 && <span aria-hidden className="opacity-40">/</span>}
-                  <button
-                    type="button"
-                    onClick={() => setLang(l)}
-                    aria-pressed={lang === l}
-                    className={`transition-opacity ${lang === l ? "opacity-100" : "opacity-45 hover:opacity-100"}`}
-                  >
-                    {l}
-                  </button>
-                </span>
+          {/* Derecha: enlaces (≥ 1024), idioma y Reservar */}
+          <div className="flex items-center justify-self-end gap-5 xl:gap-8">
+            <ul className="hidden items-center gap-8 lg:flex xl:gap-10">
+              {derecha.map((m) => (
+                <li key={m.href}>
+                  <L href={m.href} aria-current={activo(m.href) ? "page" : undefined} className={`${enlace} ${activo(m.href) ? "underline underline-offset-[6px]" : ""}`}>
+                    {label(m)}
+                  </L>
+                </li>
               ))}
-            </div>
-            <Link
+            </ul>
+            <Idiomas className="hidden sm:flex" />
+            <L
               href="/reservas"
-              className="group relative text-[0.92rem] font-normal uppercase tracking-[0.16em]"
+              className={`inline-flex min-h-11 items-center border px-4 text-[0.875rem] font-normal uppercase tracking-[0.16em] transition-colors sm:px-5 ${
+                solid ? "border-granate bg-granate text-crema hover:bg-carmesi" : "border-marfil/70 hover:bg-marfil hover:text-granate"
+              }`}
             >
               {t("reservar")}
-              <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-[var(--ease-soft)] group-hover:origin-left group-hover:scale-x-100" />
-            </Link>
+            </L>
           </div>
         </div>
       </header>
 
-      {/* Menú a pantalla completa */}
+      {/* Menú a pantalla completa (tablet y móvil) */}
       <div
         id="menu-principal"
         ref={menu}
         role="dialog"
         aria-modal="true"
-        aria-label="Menú"
+        aria-label={t("menuPrincipal")}
         style={{ display: "none" }}
         className="fixed inset-0 z-[60] grid-rows-[auto_1fr] overflow-y-auto bg-crema text-carmesi"
         onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}
       >
         <div className="grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center px-[var(--gutter)]">
-          <button
-            data-m-close
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label={t("cerrarMenu")}
-            className="relative h-11 w-11 justify-self-start"
-          >
+          <button data-m-close type="button" onClick={() => setOpen(false)} aria-label={t("cerrarMenu")} className="relative h-11 w-11 justify-self-start">
             <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current" />
             <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-current" />
           </button>
-          <Link href="/" aria-label="Gardners Hills, inicio" className="block w-[112px] sm:w-[136px]">
+          <L href="/" aria-label={t("inicio")} className="block w-[96px] sm:w-[120px]">
             <Logo className="w-full" />
-          </Link>
-          <span />
+          </L>
+          <Idiomas className="justify-self-end text-granate" />
         </div>
 
         <div className="grid gap-12 px-[var(--gutter)] pb-12 pt-6 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:pt-10">
           <div className="flex flex-col justify-between gap-14 lg:h-full">
-            <nav aria-label="Principal">
+            <nav aria-label={t("menuPrincipal")}>
               <ul>
                 {menuPrincipal.map((n) => (
                   <li key={n.href} className="overflow-hidden">
-                    <Link
+                    <L
                       data-m-link
                       href={n.href}
-                      aria-current={pathname === n.href ? "page" : undefined}
-                      className={`group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-menu)] text-[clamp(2.4rem,4.2vw,4.2rem)] leading-[1.04] transition-colors hover:text-carmesi ${
-                        pathname === n.href ? "italic text-carmesi" : "text-granate"
+                      aria-current={activo(n.href) ? "page" : undefined}
+                      className={`group inline-flex items-baseline gap-4 py-0.5 font-[family-name:var(--font-menu)] text-[clamp(2.2rem,4.2vw,4.2rem)] leading-[1.06] transition-colors hover:text-carmesi ${
+                        activo(n.href) ? "italic text-carmesi" : "text-granate"
                       }`}
                     >
-                      <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{lang === "en" ? n.en : n.label}</span>
-                    </Link>
+                      <span className="transition-transform duration-500 ease-[var(--ease-soft)] group-hover:translate-x-2 group-hover:italic">{label(n)}</span>
+                    </L>
                   </li>
                 ))}
               </ul>
             </nav>
-            <div data-m-fade className="flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-granate/15 pt-6 text-[0.92rem] font-normal uppercase tracking-[0.16em] text-granate">
+            <div data-m-fade className="flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-granate/15 pt-6 text-[0.95rem] font-normal uppercase tracking-[0.16em] text-granate">
               <span>Villanueva · La Guajira</span>
               {menuSecundario.map((n) => (
-                <a key={n.href} href={n.href} target={n.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="normal-case tracking-normal text-[1.2rem] hover:text-carmesi">
+                <a key={n.href} href={n.href} target={n.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="text-[1.2rem] normal-case tracking-normal hover:text-carmesi">
                   {n.label}
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Tarjeta propia: arco de la marca + frase del manual */}
-          <div data-m-card className="mx-auto flex w-full max-w-[380px] flex-col items-center text-center">
+          <div data-m-card className="mx-auto hidden w-full max-w-[380px] flex-col items-center text-center sm:flex">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-rosa">
-              <Image src="/images/cabanas/cabana-arco.jpg" alt="Cabaña de Gardners Hills frente a la sierra" fill sizes="460px" className="object-cover" />
+              <Image
+                src="/images/cabanas/cabana-arco.jpg"
+                alt={lang === "es" ? "Cabaña de Gardners Hills con ventanal en arco frente a la sierra" : "Gardners Hills cabin with an arched window facing the mountains"}
+                fill
+                sizes="460px"
+                className="object-cover"
+              />
             </div>
             <p className="t-italic mt-8 text-[clamp(1.8rem,2.6vw,2.6rem)] leading-[1.05] text-granate">
               {t("frase1")}

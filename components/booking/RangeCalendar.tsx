@@ -2,12 +2,16 @@
 
 import { useMemo, useState } from "react";
 import { reservas } from "@/data/reservas";
+import { useLang } from "@/lib/i18n";
 
 /** Utilidades de fecha en hora local, formato AAAA-MM-DD */
 export const iso = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-const MESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-const DIAS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+const MESES_ES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const DIAS_ES = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+const MESES_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const DIAS_EN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const precio = (v: number) =>
   v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1).replace(".", ",")}M $` : `${(v / 1000).toFixed(1).replace(".", ",")}K $`;
@@ -21,6 +25,9 @@ type Props = {
 
 /** Calendario de dos meses con selección de rango (entrada → salida) */
 export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) {
+  const { lang } = useLang();
+  const MESES = lang === "es" ? MESES_ES : MESES_EN;
+  const DIAS = lang === "es" ? DIAS_ES : DIAS_EN;
   const hoy = useMemo(() => iso(new Date()), []);
   const base = useMemo(() => {
     const d = new Date();
@@ -53,7 +60,7 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
         </p>
         <div className="grid grid-cols-7 text-center">
           {DIAS.map((d) => (
-            <span key={d} className="pb-3 text-[0.82rem] font-normal uppercase tracking-[0.14em] text-granate/55">
+            <span key={d} className="pb-3 text-[0.875rem] font-normal uppercase tracking-[0.14em] text-granate">
               {d}
             </span>
           ))}
@@ -71,9 +78,9 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
                 disabled={pasado}
                 onClick={() => pick(d)}
                 onMouseEnter={() => setHover(d)}
-                aria-label={`${Number(d.slice(8))} de ${MESES[Number(d.slice(5, 7)) - 1]}${esInicio ? ", entrada" : ""}${esFin ? ", salida" : ""}`}
+                aria-label={lang === "es" ? `${Number(d.slice(8))} de ${MESES[Number(d.slice(5, 7)) - 1]}${esInicio ? ", entrada" : ""}${esFin ? ", salida" : ""}` : `${MESES[Number(d.slice(5, 7)) - 1]} ${Number(d.slice(8))}${esInicio ? ", check-in" : ""}${esFin ? ", check-out" : ""}`}
                 aria-pressed={esInicio || esFin}
-                className={`relative flex h-14 flex-col items-center justify-center transition-colors ${
+                className={`relative flex h-11 flex-col sm:h-14 items-center justify-center transition-colors ${
                   pasado ? "cursor-not-allowed text-granate/25" : "text-granate hover:bg-rosa/40"
                 } ${enRango ? "bg-rosa/45" : ""} ${esInicio || esFin ? "!bg-granate !text-crema" : ""} ${
                   esInicio ? "rounded-l-full" : ""
@@ -82,7 +89,7 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
                 <span className={`text-[1.16rem] leading-none ${d === hoy ? "font-semibold underline underline-offset-4" : ""}`}>
                   {Number(d.slice(8))}
                 </span>
-                {tarifa && !pasado && <span className="mt-1 text-[0.75rem] opacity-70">{precio(tarifa)}</span>}
+                {tarifa && !pasado && <span className="mt-1 text-[0.875rem] opacity-70">{precio(tarifa)}</span>}
               </button>
             );
           })}
@@ -98,16 +105,16 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
           type="button"
           onClick={() => setOffset((o) => Math.max(0, o - 1))}
           disabled={offset === 0}
-          aria-label="Meses anteriores"
-          className="absolute left-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema disabled:pointer-events-none disabled:opacity-0"
+          aria-label={lang === "es" ? "Meses anteriores" : "Previous months"}
+          className="absolute -top-2 left-0 grid h-11 w-11 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema disabled:pointer-events-none disabled:opacity-0"
         >
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
         </button>
         <button
           type="button"
           onClick={() => setOffset((o) => o + 1)}
-          aria-label="Meses siguientes"
-          className="absolute right-0 top-0 grid h-8 w-8 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema"
+          aria-label={lang === "es" ? "Meses siguientes" : "Next months"}
+          className="absolute -top-2 right-0 grid h-11 w-11 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema"
         >
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
         </button>

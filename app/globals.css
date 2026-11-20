@@ -194,10 +194,25 @@ body:has([data-intro-active]) [data-chrome] {
   to { opacity: 1; transform: none; }
 }
 
-/* ── Foco visible accesible ── */
-:where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
+/* ── Foco visible accesible ──
+   Doble anillo (negro por dentro, blanco por fuera): se ve igual sobre fondos claros y oscuros. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #100f0e;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #ffffff;
+  border-radius: 2px;
+}
+
+/* Móvil y tablet: espacio para el botón Reservar fijo abajo; nunca desborde horizontal */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 76px;
+  }
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* ── Movimiento reducido ── */

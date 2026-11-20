@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { L } from "@/components/ui/L";
 import Script from "next/script";
 import { useLang } from "@/lib/i18n";
 
@@ -46,24 +46,24 @@ export function CookieBanner() {
           data-chrome
           role="region"
           aria-label="Cookies"
-          className="fixed bottom-[112px] left-4 z-[45] w-[min(380px,calc(100vw-2rem))] border border-granate/15 bg-crema p-6 text-granate shadow-[0_18px_50px_-18px_rgba(16,15,14,0.35)]"
+          className="fixed bottom-[112px] left-4 max-lg:bottom-[92px] z-[45] w-[min(380px,calc(100vw-2rem))] border border-granate/15 bg-crema p-6 text-granate shadow-[0_18px_50px_-18px_rgba(16,15,14,0.35)]"
         >
           <p className="text-[1rem] leading-[1.45] text-granate/85">
             {t("cookiesTexto")}{" "}
-            <Link href="/cookies" className="underline underline-offset-4 hover:text-carmesi">{t("cookiesMas")}</Link>
+            <L href="/cookies" className="underline underline-offset-4 hover:text-carmesi">{t("cookiesMas")}</L>
           </p>
           <div className="mt-5 flex gap-3">
             <button
               type="button"
               onClick={() => elegir("aceptadas")}
-              className="flex-1 bg-granate py-2.5 text-[0.82rem] uppercase tracking-[0.16em] text-crema transition-colors hover:bg-carmesi"
+              className="flex-1 bg-granate min-h-11 py-2.5 text-[0.875rem] uppercase tracking-[0.16em] text-crema transition-colors hover:bg-carmesi"
             >
               {t("cookiesAceptar")}
             </button>
             <button
               type="button"
               onClick={() => elegir("necesarias")}
-              className="flex-1 border border-granate/40 py-2.5 text-[0.82rem] uppercase tracking-[0.16em] transition-colors hover:bg-granate hover:text-crema"
+              className="flex-1 border border-granate/40 min-h-11 py-2.5 text-[0.875rem] uppercase tracking-[0.16em] transition-colors hover:bg-granate hover:text-crema"
             >
               {t("cookiesRechazar")}
             </button>

@@ -1,7 +1,12 @@
-import Link from "next/link";
-import type { ComponentProps } from "react";
+"use client";
 
-/** Botón en píldora con flecha en círculo (wireframe V2 / XD). Rutas internas con next/link. */
+import type { ComponentProps } from "react";
+import { L } from "@/components/ui/L";
+
+/**
+ * Botón en píldora con flecha en círculo. Rutas internas con el idioma activo (componente L).
+ * Altura mínima 44 px para que sea un objetivo táctil cómodo.
+ */
 type Props = ComponentProps<"a"> & { href: string; tone?: "granate" | "marfil" | "solid" };
 
 export function Pill({ tone = "granate", className = "", children, href, ...rest }: Props) {
@@ -10,7 +15,7 @@ export function Pill({ tone = "granate", className = "", children, href, ...rest
     marfil: "border-marfil/60 text-marfil hover:bg-marfil hover:text-granate",
     solid: "border-granate bg-granate text-crema hover:bg-carmesi hover:border-carmesi",
   }[tone];
-  const cls = `group inline-flex items-center gap-5 rounded-full border py-1.5 pl-6 pr-1.5 text-[0.86rem] font-normal uppercase tracking-[0.16em] transition-colors duration-500 ease-[var(--ease-soft)] ${styles} ${className}`;
+  const cls = `group inline-flex min-h-11 items-center gap-5 rounded-full border py-1.5 pl-6 pr-1.5 text-[0.875rem] font-normal uppercase tracking-[0.16em] transition-colors duration-500 ease-[var(--ease-soft)] ${styles} ${className}`;
   const inner = (
     <>
       <span>{children}</span>
@@ -26,9 +31,9 @@ export function Pill({ tone = "granate", className = "", children, href, ...rest
   );
   if (href.startsWith("/")) {
     return (
-      <Link href={href} className={cls} {...rest}>
+      <L href={href} className={cls} {...rest}>
         {inner}
-      </Link>
+      </L>
     );
   }
   return (
