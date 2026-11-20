@@ -12,7 +12,7 @@ export function Alrededores({ lang }: { lang: Lang }) {
     en: { l1: "Explore the activities", l2a: "waiting for you", l2b: "nearby.", p: "Villanueva, at the foot of the Serranía del Perijá: mountains, vallenato music and local life to discover unhurried.", cta: "See activities" },
   }[lang];
   return (
-    <section id="actividades" aria-labelledby="act-title" className="bg-amarillo px-[var(--gutter)] py-28 sm:py-36">
+    <section id="actividades" aria-labelledby="act-title" className="bg-amarillo px-[var(--gutter)] py-28 sm:py-36 lg:flex lg:min-h-[100svh] lg:flex-col lg:justify-center lg:pb-28 lg:pt-[calc(var(--header-h)+1.5rem)]">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
         <Lines
           id="act-title"
@@ -29,14 +29,15 @@ export function Alrededores({ lang }: { lang: Lang }) {
         </div>
       </div>
 
-      <ul className="mt-20 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+      {/* En escritorio toda la sección cabe en una pantalla: fotos con alto según la ventana */}
+      <ul className="mt-20 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
         {items.map((a) => (
           <li key={a.id} className="flex flex-col" data-cursor>
-            <Arch alt={a.titulo[lang]} className="aspect-[3/4] w-full" />
-            <h3 data-reveal className="mt-7 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
+            <Arch alt={a.titulo[lang]} className="aspect-[3/4] w-full lg:aspect-auto lg:h-[clamp(200px,30svh,340px)]" />
+            <h3 data-reveal className="mt-7 lg:mt-5 border-b border-granate/20 pb-3 text-[0.92rem] font-normal uppercase tracking-[0.2em] text-granate">
               {a.titulo[lang]}
             </h3>
-            <p data-reveal className="mt-4 text-[1.2rem] leading-[1.4] text-granate">
+            <p data-reveal className="mt-4 text-[1.2rem] leading-[1.4] text-granate lg:mt-3 lg:text-[1.05rem]">
               {a.texto[lang]}
             </p>
           </li>
