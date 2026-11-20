@@ -23,7 +23,7 @@ export function Footer() {
         <div className="lg:col-span-5">
           {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}
           <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate/70">{t("villanueva1")}</p>
-          <p className="t-hero t-italic mt-6 text-[clamp(3rem,5vw,5.2rem)] leading-[1]">
+          <p className="t-italic mt-6 text-left text-[clamp(3rem,5vw,5.2rem)] leading-[1]">
             {t("villanueva2")}
             <br />
             {t("villanueva3")}
