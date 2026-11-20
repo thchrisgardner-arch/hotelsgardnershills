@@ -18,19 +18,20 @@ export function Footer() {
   const { contact, instagram, facebook } = site;
   const { lang, t } = useLang();
   return (
-    <footer id="contacto" className="border-t border-granate/15 bg-crema px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24 lg:sticky lg:bottom-0 lg:z-0 lg:pb-20 lg:pt-14">
+    <footer id="contacto" className="border-t border-granate/15 bg-crema px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24 lg:sticky lg:bottom-0 lg:z-0 lg:pb-20 lg:pt-[calc(var(--header-h)+1.5rem)]">
+      {/* En escritorio el footer queda fijo debajo de la cabecera: el espacio superior la deja libre para que no tape los títulos */}
       <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-5">
           {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}
           <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate">{t("villanueva1")}</p>
-          <p className="t-italic mt-6 text-left text-[clamp(2.6rem,5vw,5.2rem)] leading-[1]">
+          <p className="t-italic mt-6 text-left text-[clamp(2.6rem,5vw,5.2rem)] leading-[1] lg:text-[clamp(2.6rem,4.2vw,4.4rem)]">
             {t("villanueva2")}
             <br />
             {t("villanueva3")}
             <br />
             {t("villanueva4")}
           </p>
-          <div className="mt-14">
+          <div className="mt-14 lg:mt-10">
             <Pill href="/reservas">{t("reservarAhora")}</Pill>
           </div>
         </div>
@@ -59,11 +60,11 @@ export function Footer() {
       </div>
 
       {/* Logo limitado por alto de pantalla para que todo el footer quepa en una vista */}
-      <div data-reveal className="mt-14 sm:mt-16">
-        <Logo className="mx-auto w-[min(100%,62vh,820px)]" />
+      <div data-reveal className="mt-14 sm:mt-16 lg:mt-8">
+        <Logo className="mx-auto w-[min(100%,62vh,820px)] lg:w-[min(100%,48vh,820px)]" />
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate">
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 lg:mt-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate">
         <div className="flex flex-wrap gap-x-10 gap-y-1">
           {legales.map((l) => (
             <L key={l.href} href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-carmesi">{t(l.clave)}</L>

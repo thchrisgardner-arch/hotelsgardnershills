@@ -72,7 +72,7 @@ export default async function RootLayout({ children, params }: LangParams & { ch
           <Header />
           {/* Efecto «cortina» (referencia Grand Hotel Miramare): en escritorio el contenido pasa por encima
               y al final se desliza dejando ver el footer, que queda fijo detrás (ver Footer: sticky bottom-0) */}
-          <div id="contenido" className="relative z-10 bg-crema lg:shadow-[0_40px_60px_-30px_rgba(16,15,14,0.35)]">
+          <div id="contenido" className="relative z-10 bg-crema lg:border-b lg:border-granate/10">
             {children}
           </div>
           <Footer />
