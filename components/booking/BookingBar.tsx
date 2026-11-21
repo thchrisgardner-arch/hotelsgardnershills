@@ -93,7 +93,7 @@ export function BookingBar() {
   const small = "block text-[0.92rem] leading-tight text-granate";
   const value = "block whitespace-nowrap text-[1.16rem] leading-snug text-granate";
   const step =
-    "grid h-9 w-9 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
+    "grid h-8 w-8 place-items-center rounded-[4px] border border-granate/50 text-granate transition-colors hover:bg-granate hover:text-crema disabled:border-transparent disabled:bg-granate/10 disabled:text-granate/30 disabled:hover:bg-granate/10";
 
   // En la página de reserva el buscador ya está en la propia página
   if (canonica(pathname ?? "/").path.startsWith("/reservas")) return null;
@@ -102,7 +102,7 @@ export function BookingBar() {
     <div ref={root} data-chrome className="fixed bottom-4 left-1/2 z-40 hidden -translate-x-1/2 lg:block" role="search" aria-label={T.buscarAria}>
       {/* ── Calendario ── */}
       {panel === "fechas" && (
-        <div role="dialog" aria-label={T.fechasAria} className={`${panelBox} left-1/2 w-[min(880px,calc(100vw-2rem))] -translate-x-1/2 px-8 pb-6 pt-7`}>
+        <div role="dialog" aria-label={T.fechasAria} className={`${panelBox} left-1/2 w-[min(660px,calc(100vw-2rem))] -translate-x-1/2 px-6 pb-4 pt-5`}>
           <RangeCalendar
             llegada={llegada}
             salida={salida}
@@ -112,8 +112,9 @@ export function BookingBar() {
               setError(null);
             }}
             onComplete={() => setTimeout(() => setPanel("quien"), 250)}
+            compacto
           />
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-granate/12 pt-5 text-[1.02rem] text-granate/70">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-granate/12 pt-3 text-[0.92rem] text-granate/70">
             <p className="flex items-center gap-2">
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8v.5" /></svg>
               {reservas.nota}
@@ -127,12 +128,12 @@ export function BookingBar() {
 
       {/* ── Huéspedes por cabaña ── */}
       {panel === "quien" && (
-        <div role="dialog" aria-label={T.huespedes} className={`${panelBox} left-[190px] w-[380px] overflow-hidden`}>
+        <div role="dialog" aria-label={T.huespedes} className={`${panelBox} left-[190px] w-[300px] overflow-hidden`}>
           <div className="max-h-[56vh] overflow-y-auto">
             {cabanas.map((c, i) => (
-              <div key={i} className="border-b border-granate/12 px-6 pb-5 pt-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <p className="font-[family-name:var(--font-display)] text-[1.5rem] leading-none text-granate">
+              <div key={i} className="border-b border-granate/12 px-5 pb-3 pt-4">
+                <div className="mb-1 flex items-center justify-between">
+                  <p className="font-[family-name:var(--font-display)] text-[1.2rem] leading-none text-granate">
                     {T.Cabana} <span className="t-italic">{i + 1}</span>
                   </p>
                   {cabanas.length > 1 && (
@@ -145,16 +146,16 @@ export function BookingBar() {
                   { k: "adultos", label: T.Adultos, sub: reservas.edadAdultos, min: 1, max: reservas.maxAdultosPorCabana },
                   { k: "ninos", label: T.Ninos, sub: reservas.edadNinos, min: 0, max: reservas.maxNinosPorCabana },
                 ] as const).map((r) => (
-                  <div key={r.k} className="flex items-center justify-between py-2.5">
+                  <div key={r.k} className="flex items-center justify-between py-1.5">
                     <div>
-                      <p className="text-granate">{r.label}</p>
-                      {r.sub && <p className="text-[0.98rem] text-granate/60">{r.sub}</p>}
+                      <p className="text-[1rem] text-granate">{r.label}</p>
+                      {r.sub && <p className="text-[0.85rem] text-granate/60">{r.sub}</p>}
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                       <button type="button" className={step} disabled={c[r.k] <= r.min} onClick={() => setCab(i, r.k, c[r.k] - 1)} aria-label={`${T.quitarX} ${r.label.toLowerCase()} ${T.en} ${i + 1}`}>
                         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10" /></svg>
                       </button>
-                      <span className="w-5 text-center text-[1.2rem] text-granate" aria-live="polite">{c[r.k]}</span>
+                      <span className="w-5 text-center text-[1rem] text-granate" aria-live="polite">{c[r.k]}</span>
                       <button type="button" className={step} disabled={c[r.k] >= r.max} onClick={() => setCab(i, r.k, c[r.k] + 1)} aria-label={`${T.anadirX} ${r.label.toLowerCase()} ${T.en} ${i + 1}`}>
                         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="1.4"><path d="M3 8h10M8 3v10" /></svg>
                       </button>
@@ -164,16 +165,16 @@ export function BookingBar() {
               </div>
             ))}
           </div>
-          <div className="space-y-3 p-5">
+          <div className="space-y-1 px-5 pb-3 pt-4">
             <button
               type="button"
               disabled={cabanas.length >= reservas.maxCabanas}
               onClick={() => setCabanas((cs) => [...cs, { adultos: 2, ninos: 0 }])}
-              className="w-full rounded-[4px] border border-granate/60 py-3 text-[1.08rem] text-granate transition-colors hover:bg-granate hover:text-crema disabled:opacity-40"
+              className="w-full rounded-[4px] border border-granate/60 py-2 text-[0.95rem] text-granate transition-colors hover:bg-granate hover:text-crema disabled:opacity-40"
             >
               {T.anadir}
             </button>
-            <button type="button" onClick={() => setPanel(null)} className="min-h-11 w-full py-1 text-[0.875rem] font-normal uppercase tracking-[0.16em] text-granate hover:text-carmesi">
+            <button type="button" onClick={() => setPanel(null)} className="min-h-10 w-full py-1 text-[0.8rem] font-normal uppercase tracking-[0.16em] text-granate hover:text-carmesi">
               {T.listo}
             </button>
           </div>

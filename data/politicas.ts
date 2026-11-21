@@ -18,8 +18,9 @@ export const politicas: Politica[] = [
     id: "cancelacion",
     titulo: { es: "Cancelación", en: "Cancellation" },
     texto: {
-      es: "Gratis hasta 7 días antes de la llegada. Después, se cobra la primera noche.",
-      en: "Free up to 7 days before arrival. After that, the first night is charged.",
+      // Regla y ejemplos en lib/cancelacion.ts; la fecha exacta se calcula en el resumen de la reserva
+      es: "Gratis durante las 24 horas siguientes a tu reserva, siempre que falten más de 24 horas para el check-in. Si llegas antes, el plazo termina 24 horas antes del check-in. Después, se cobra la primera noche.",
+      en: "Free within 24 hours of booking, as long as check-in is more than 24 hours away. If you arrive sooner, the window closes 24 hours before check-in. After that, the first night is charged.",
     },
   },
   {

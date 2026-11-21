@@ -21,10 +21,12 @@ type Props = {
   salida: string;
   onChange: (llegada: string, salida: string) => void;
   onComplete?: () => void;
+  /** Versión reducida para el panel flotante de la barra de reserva */
+  compacto?: boolean;
 };
 
 /** Calendario de dos meses con selección de rango (entrada → salida) */
-export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) {
+export function RangeCalendar({ llegada, salida, onChange, onComplete, compacto = false }: Props) {
   const { lang } = useLang();
   const MESES = lang === "es" ? MESES_ES : MESES_EN;
   const DIAS = lang === "es" ? DIAS_ES : DIAS_EN;
@@ -55,12 +57,12 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
     for (let i = 1; i <= dias; i++) celdas.push(iso(new Date(first.getFullYear(), first.getMonth(), i)));
     return (
       <div key={k} className="min-w-0">
-        <p className="mb-5 text-center font-[family-name:var(--font-display)] text-[1.7rem] leading-none text-granate">
+        <p className={`text-center font-[family-name:var(--font-display)] leading-none text-granate ${compacto ? "mb-3 text-[1.3rem]" : "mb-5 text-[1.7rem]"}`}>
           {MESES[first.getMonth()]} <span className="t-italic">{first.getFullYear()}</span>
         </p>
         <div className="grid grid-cols-7 text-center">
           {DIAS.map((d) => (
-            <span key={d} className="pb-3 text-[0.875rem] font-normal uppercase tracking-[0.14em] text-granate">
+            <span key={d} className={`font-normal uppercase tracking-[0.14em] text-granate ${compacto ? "pb-1.5 text-[0.75rem]" : "pb-3 text-[0.875rem]"}`}>
               {d}
             </span>
           ))}
@@ -80,13 +82,13 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
                 onMouseEnter={() => setHover(d)}
                 aria-label={lang === "es" ? `${Number(d.slice(8))} de ${MESES[Number(d.slice(5, 7)) - 1]}${esInicio ? ", entrada" : ""}${esFin ? ", salida" : ""}` : `${MESES[Number(d.slice(5, 7)) - 1]} ${Number(d.slice(8))}${esInicio ? ", check-in" : ""}${esFin ? ", check-out" : ""}`}
                 aria-pressed={esInicio || esFin}
-                className={`relative flex h-11 flex-col sm:h-14 items-center justify-center transition-colors ${
+                className={`relative flex flex-col items-center ${compacto ? "h-9" : "h-11 sm:h-14"} justify-center transition-colors ${
                   pasado ? "cursor-not-allowed text-granate/25" : "text-granate hover:bg-rosa/40"
                 } ${enRango ? "bg-rosa/45" : ""} ${esInicio || esFin ? "!bg-granate !text-crema" : ""} ${
                   esInicio ? "rounded-l-full" : ""
                 } ${esFin ? "rounded-r-full" : ""} ${esInicio && !finRango ? "rounded-full" : ""}`}
               >
-                <span className={`text-[1.16rem] leading-none ${d === hoy ? "font-semibold underline underline-offset-4" : ""}`}>
+                <span className={`leading-none ${compacto ? "text-[0.98rem]" : "text-[1.16rem]"} ${d === hoy ? "font-semibold underline underline-offset-4" : ""}`}>
                   {Number(d.slice(8))}
                 </span>
                 {tarifa && !pasado && <span className="mt-1 text-[0.875rem] opacity-70">{precio(tarifa)}</span>}
@@ -100,13 +102,13 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
 
   return (
     <div onMouseLeave={() => setHover(null)}>
-      <div className="relative grid gap-10 sm:grid-cols-2">
+      <div className={`relative grid sm:grid-cols-2 ${compacto ? "gap-8" : "gap-10"}`}>
         <button
           type="button"
           onClick={() => setOffset((o) => Math.max(0, o - 1))}
           disabled={offset === 0}
           aria-label={lang === "es" ? "Meses anteriores" : "Previous months"}
-          className="absolute -top-2 left-0 grid h-11 w-11 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema disabled:pointer-events-none disabled:opacity-0"
+          className={`absolute left-0 grid place-items-center ${compacto ? "-top-1.5 h-9 w-9" : "-top-2 h-11 w-11"} rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema disabled:pointer-events-none disabled:opacity-0`}
         >
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 rotate-180" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
         </button>
@@ -114,7 +116,7 @@ export function RangeCalendar({ llegada, salida, onChange, onComplete }: Props) 
           type="button"
           onClick={() => setOffset((o) => o + 1)}
           aria-label={lang === "es" ? "Meses siguientes" : "Next months"}
-          className="absolute -top-2 right-0 grid h-11 w-11 place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema"
+          className={`absolute right-0 grid place-items-center rounded-full border border-granate/30 text-granate transition-colors hover:bg-granate hover:text-crema ${compacto ? "-top-1.5 h-9 w-9" : "-top-2 h-11 w-11"}`}
         >
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M2 8h11M9 4l4 4-4 4" /></svg>
         </button>

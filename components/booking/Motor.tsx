@@ -9,6 +9,7 @@ import { FiltroCategorias } from "@/components/rooms/FiltroCategorias";
 import { cabanasL, getCabana, getCategoria, nombreCorto, type Cabana, type CategoriaSlug } from "@/data/cabanas";
 import { cop, desde, getTarifa, tarifasConCabanas, tarifasIntro, tarifasNota } from "@/data/tarifas";
 import { site } from "@/data/site";
+import { formatoLimite, limiteCancelacion } from "@/lib/cancelacion";
 import { useLang } from "@/lib/i18n";
 
 /**
@@ -54,6 +55,7 @@ const TXT = {
     errores: { nombre: "Escribe tu nombre.", correo: "Escribe un correo válido.", telefono: "Escribe un teléfono de contacto.", acepto: "Debes aceptar los términos para continuar." },
     tuReserva: "Tu solicitud", llegada: "Entrada", salidaR: "Salida", nochesR: "Noches", huespedesR: "Huéspedes", codigoR: "Código",
     resumenNota: "Precio estimado según la temporada. El hotel confirma disponibilidad y tarifa final en menos de 24 horas.",
+    cancelaHasta: "Cancelación gratis hasta el", cancelaNo: "Esta reserva no tiene cancelación gratuita: faltan menos de 24 horas para el check-in.", cancelaHora: "(hora de Colombia)", cancelaCobro: "Después se cobra la primera noche.",
     okKicker: "Solicitud enviada", okTitulo: "Gracias,", okTexto: "Recibimos tu solicitud de reserva. Te responderemos a tu correo en menos de 24 horas con la disponibilidad y la tarifa final.",
     manualKicker: "Último paso", manualTitulo: "Envía tu solicitud,", manualTexto: "No pudimos enviarla automáticamente. Envíala por correo con un clic; el hotel te responde en menos de 24 horas.",
     porCorreo: "Enviar por correo", apoyoWa: "¿Prefieres WhatsApp? También puedes escribirnos", nuevo: "Hacer otra solicitud",
@@ -85,6 +87,7 @@ const TXT = {
     errores: { nombre: "Please enter your name.", correo: "Please enter a valid email.", telefono: "Please enter a contact phone.", acepto: "You must accept the terms to continue." },
     tuReserva: "Your request", llegada: "Check-in", salidaR: "Check-out", nochesR: "Nights", huespedesR: "Guests", codigoR: "Code",
     resumenNota: "Estimated price by season. The hotel confirms availability and final rate within 24 hours.",
+    cancelaHasta: "Free cancellation until", cancelaNo: "This booking has no free cancellation: check-in is less than 24 hours away.", cancelaHora: "(Colombia time)", cancelaCobro: "After that, the first night is charged.",
     okKicker: "Request sent", okTitulo: "Thank you,", okTexto: "We have received your booking request. We will reply to your email within 24 hours with availability and the final rate.",
     manualKicker: "Last step", manualTitulo: "Send your request,", manualTexto: "We couldn’t send it automatically. Send it by email in one click; the hotel replies within 24 hours.",
     porCorreo: "Send by email", apoyoWa: "Prefer WhatsApp? You can also message us", nuevo: "Make another request",
@@ -181,6 +184,13 @@ export function Motor() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // Plazo de cancelación gratuita según la fecha de llegada y el momento de la reserva (lib/cancelacion.ts)
+  const cancelacionTexto = () => {
+    if (!llegada) return "";
+    const l = limiteCancelacion(llegada);
+    return l ? `${T.cancelaHasta} ${formatoLimite(l, lang)} ${T.cancelaHora}. ${T.cancelaCobro}` : T.cancelaNo;
+  };
+
   const resumenTexto = () =>
     [
       T.mensajeHola,
@@ -190,6 +200,7 @@ export function Motor() {
       `• ${T.huespedesR}: ${huespedesTexto}`,
       elegida && noches ? `• ${T.total}: ${cop(totalEstancia(elegida, llegada, salida))} COP` : "",
       codigo ? `• ${T.codigoR}: ${codigo}` : "",
+      llegada ? `• ${cancelacionTexto()}` : "",
       `• ${T.campos.nombre}: ${datos.nombre}`,
       `• ${T.campos.correo}: ${datos.correo}`,
       `• ${T.campos.telefono}: ${datos.telefono}`,
@@ -270,6 +281,7 @@ export function Motor() {
           </div>
         ))}
       </dl>
+      {llegada && <p className="mt-6 border-l-2 border-granate pl-4 text-[0.95rem] leading-[1.45] text-granate">{cancelacionTexto()}</p>}
       <p className="mt-6 text-[0.95rem] leading-[1.45] text-granate">{T.resumenNota}</p>
     </aside>
   );
