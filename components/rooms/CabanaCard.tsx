@@ -75,49 +75,53 @@ export function CabanaCard({ cabana }: { cabana: Cabana }) {
         {nombre}
       </h3>
 
-      <p data-reveal className="mt-3 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate">
+      {/* Rótulo «Categoría · frase» y precio: ocultos en celular (< 768 px) */}
+      <p data-reveal className="mt-3 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate max-md:hidden">
         {getCategoria(cabana.categoria, lang).nombre} · {cabana.frase}
       </p>
 
       <div data-reveal className="mt-5 grid gap-6 sm:grid-cols-[1fr_auto] sm:gap-10">
         <div>
           <p className="max-w-md text-[1.05rem] leading-[1.45] text-granate">{cabana.resumen}</p>
-          <p className="mt-3 text-[1rem] text-granate">
+          <p className="mt-3 text-[1rem] text-granate max-md:hidden">
             {T.desde} <span className="font-[family-name:var(--font-display)] text-[1.5rem]">{cop(desde(cabana.tarifa))}</span> / {T.noche}
           </p>
-          <div className="mt-6 flex flex-wrap gap-6">
-            <L
-              href={`/cabanas/${cabana.slug}`}
-              className="inline-flex min-h-11 items-center border-b border-carmesi/60 text-[0.875rem] font-normal uppercase tracking-[0.16em] text-carmesi transition-colors hover:border-granate hover:text-granate"
-            >
-              {T.mas}
-            </L>
-            <L
-              href={`/reservas?cabana=${cabana.slug}`}
-              className="inline-flex min-h-11 items-center border-b border-granate/40 text-[0.875rem] font-normal uppercase tracking-[0.16em] text-granate transition-colors hover:border-granate"
-            >
-              {T.res}
-            </L>
-          </div>
         </div>
-        <ul className="space-y-2.5 text-[1.02rem] text-granate sm:min-w-[210px]">
-          <li className="flex items-center gap-3">
+        {/* Móvil: tamaño, capacidad y camas en una sola línea; instalaciones debajo */}
+        <ul className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-[0.92rem] text-granate sm:block sm:min-w-[210px] sm:space-y-2.5 sm:text-[1.02rem]">
+          <li className="flex items-center gap-2 whitespace-nowrap sm:gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
             <span><span className="sr-only">{T.tam}: </span>{cabana.area}</span>
           </li>
-          <li className="flex items-center gap-3">
+          <li className="flex items-center gap-2 whitespace-nowrap sm:gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-4 3.6-6 7-6s6.2 2 7 6" /></svg>
             <span><span className="sr-only">{T.cap}: </span>{cabana.capacidad}</span>
           </li>
-          <li className="flex items-center gap-3">
+          <li className="flex items-center gap-2 whitespace-nowrap sm:gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M3 18v-6h18v6M3 15h18M5 12V8h14v4" /></svg>
             <span><span className="sr-only">{T.cam}: </span>{cabana.camas}</span>
           </li>
-          <li className="flex items-center gap-3">
+          <li className="flex basis-full items-center justify-center gap-2 sm:justify-start sm:gap-3">
             <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden><path d="M2.5 19.5 9 10l4 5 3-3.5 5.5 8" /><circle cx="17" cy="6" r="2" /></svg>
             <span>{cabana.instalaciones.join(" · ")}</span>
           </li>
         </ul>
+      </div>
+
+      {/* Botones de últimos, en una sola fila a lo ancho de la tarjeta: «Descubre más» con línea y «Reservar» en negro */}
+      <div className="mt-6 flex justify-center gap-2 sm:justify-start sm:gap-3">
+        <L
+          href={`/cabanas/${cabana.slug}`}
+          className="inline-flex min-h-11 items-center justify-center whitespace-nowrap border border-granate px-4 text-[0.875rem] font-normal uppercase tracking-[0.1em] sm:px-5 sm:tracking-[0.16em] text-granate transition-colors hover:bg-granate hover:text-crema"
+        >
+          {T.mas}
+        </L>
+        <L
+          href={`/reservas?cabana=${cabana.slug}`}
+          className="inline-flex min-h-11 items-center justify-center whitespace-nowrap border border-granate bg-granate px-4 text-[0.875rem] font-normal uppercase tracking-[0.1em] sm:px-5 sm:tracking-[0.16em] text-crema transition-colors hover:border-carmesi hover:bg-carmesi"
+        >
+          {T.res}
+        </L>
       </div>
     </article>
   );

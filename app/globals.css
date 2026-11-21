@@ -250,3 +250,53 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none !important;
   }
 }
+
+/* ── Móvil (< 768 px): todos los textos centrados (pedido 2026-11-20) ──
+   Escritorio y tablet no cambian. Los formularios conservan la alineación a la izquierda para escribir cómodo. */
+@media (max-width: 767px) {
+  #contenido main,
+  #contenido main .text-left,
+  footer,
+  footer .text-left {
+    text-align: center;
+  }
+  /* Bloques de texto con ancho máximo: centrados en la pantalla */
+  #contenido main [class*="max-w-"],
+  footer [class*="max-w-"] {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Filas de texto repartidas a los lados (nombre · dato): se agrupan al centro */
+  #contenido main .justify-between,
+  footer .justify-between {
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+  }
+  #contenido main .flex-wrap,
+  footer .flex-wrap {
+    justify-content: center;
+  }
+  #contenido main .justify-start,
+  #contenido main .items-start {
+    justify-content: center;
+    align-items: center;
+  }
+  /* Pestañas y listas con ícono o viñeta */
+  #contenido main [role="tablist"],
+  #contenido main li.flex,
+  #contenido main ul.flex {
+    justify-content: center;
+  }
+  /* Filas con desplazamiento horizontal (barra de secciones, carrusel): empiezan a la izquierda para no cortarse */
+  #contenido main .overflow-x-auto {
+    justify-content: flex-start !important;
+  }
+  #contenido main form,
+  #contenido main form .text-left {
+    text-align: left;
+  }
+  #contenido main form .justify-between {
+    justify-content: space-between;
+  }
+}

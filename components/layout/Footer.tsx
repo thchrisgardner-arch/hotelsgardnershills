@@ -19,8 +19,9 @@ export function Footer() {
   return (
     <footer id="contacto" className="border-t border-granate/15 bg-crema px-[var(--gutter)] pb-28 pt-20 text-granate sm:pt-24 lg:sticky lg:bottom-0 lg:z-0 lg:pb-20 lg:pt-[calc(var(--header-h)+1.5rem)]">
       {/* En escritorio el footer queda fijo debajo de la cabecera: el espacio superior la deja libre para que no tape los títulos */}
-      <div className="grid gap-14 lg:grid-cols-12">
-        <div className="lg:col-span-5">
+      {/* Móvil: título y contacto a lo ancho; Hotel y Explorar en dos columnas */}
+      <div className="grid gap-14 max-md:grid-cols-2 max-md:gap-x-6 max-md:gap-y-12 lg:grid-cols-12">
+        <div className="max-md:col-span-2 lg:col-span-5">
           {/* Sin animación de revelado: al final de la página el disparador podía no alcanzarse */}
           <p className="text-[0.92rem] uppercase tracking-[0.3em] text-granate">{t("villanueva1")}</p>
           <p className="t-italic mt-6 text-left text-[clamp(2.6rem,5vw,5.2rem)] leading-[1] lg:text-[clamp(2.6rem,4.2vw,4.4rem)]">
@@ -33,20 +34,29 @@ export function Footer() {
           {/* Sin botón de reserva aquí (2026-11-20): la reserva sigue en el enlace «Reservas» de Explorar */}
         </div>
 
-        {cols.map((c) => (
+        {cols.map((c, ci) => (
           <nav key={c.titulo} aria-label={c.titulo} className="lg:col-span-2">
             <h2 className="mb-5 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate">{t(c.titulo)}</h2>
             <ul className="space-y-2.5 text-[1.2rem]">
-              {c.links.map((l) => (
-                <li key={l.href}>
+              {c.links.map((l, li) => (
+                // Móvil: el último enlace de Hotel (Gastronomía & Bar) se muestra abajo, centrado entre las dos columnas
+                <li key={l.href} className={ci === 0 && li === c.links.length - 1 ? "max-md:hidden" : undefined}>
                   <L href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-carmesi lg:min-h-0">{lang === "en" ? l.en : l.label}</L>
                 </li>
               ))}
             </ul>
           </nav>
         ))}
+        {cols[0].links.length > 0 && (() => {
+          const l = cols[0].links[cols[0].links.length - 1];
+          return (
+            <div className="col-span-2 -mt-10 text-center text-[1.2rem] md:hidden">
+              <L href={l.href} className="inline-flex min-h-11 items-center whitespace-nowrap transition-colors hover:text-carmesi">{lang === "en" ? l.en : l.label}</L>
+            </div>
+          );
+        })()}
 
-        <div className="lg:col-span-3">
+        <div className="max-md:col-span-2 lg:col-span-3">
           <h2 className="mb-5 text-[0.875rem] font-normal uppercase tracking-[0.2em] text-granate">{t("contacto")}</h2>
           <ul className="space-y-2.5 text-[1.2rem]">
             <li><a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-carmesi">WhatsApp {contact.whatsappLabel}</a></li>
@@ -61,7 +71,7 @@ export function Footer() {
         <Logo className="mx-auto w-[min(100%,62vh,820px)] lg:w-[min(100%,48vh,820px)]" />
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 lg:mt-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate">
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-6 lg:mt-6 text-[1rem] font-normal uppercase tracking-[0.16em] text-granate max-md:text-[0.875rem] max-md:tracking-[0.12em]">
         <div className="flex flex-wrap gap-x-10 gap-y-1">
           {legales.map((l) => (
             <L key={l.href} href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-carmesi">{t(l.clave)}</L>
